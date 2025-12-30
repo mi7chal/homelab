@@ -10,7 +10,7 @@ services:
       - /opt/docker/gluetun:/gluetun
     environment:
       - TZ=${TZ}
-      - VPN_SERVICE_PROVIDER=windscribe
+      - VPN_SERVICE_PROVIDER=${VPN_SERVICE_PROVIDER}
       - VPN_TYPE=wireguard
       - WIREGUARD_PRIVATE_KEY=${WIREGUARD_PRIVATE_KEY}
       - WIREGUARD_PRESHARED_KEY=${WIREGUARD_PRESHARED_KEY}

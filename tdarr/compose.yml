@@ -21,8 +21,8 @@ services:
       - maxLogSizeMB=10
       - cronPluginUpdate=
     volumes:
-      - ./server:/app/server
-      - ./configs:/app/configs
-      - ./logs:/app/logs
+      - /opt/docker/tdarr/server:/app/server
+      - /opt/docker/tdarr/configs:/app/configs
+      - /opt/docker/tdarr/logs:/app/logs
       - ${MEDIA_PATH}:/data
-      - ./transcode_cache:/temp
+      - /opt/docker/tdarr/transcode_cache:/temp

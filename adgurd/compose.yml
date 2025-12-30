@@ -5,7 +5,7 @@ services:
     restart: unless-stopped
     network_mode: host
     volumes:
-      - ./adguard/work:/opt/adguardhome/work
-      - ./adguard/conf:/opt/adguardhome/conf
+      - /opt/docker/adguard/work:/opt/adguardhome/work
+      - /opt/docker/adguard/conf:/opt/adguardhome/conf
     environment:
       - TZ=${TZ}
