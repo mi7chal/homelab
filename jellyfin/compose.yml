@@ -6,12 +6,12 @@ services:
       - 8096:8096/tcp
       - 7359:7359/udp
     volumes:
-      - ./config:/config
-      - ./cache:/cache
+      - /opt/docker/jellyfin/config:/config
+      - /opt/docker/jellyfin/cache:/cache
       - type: bind
         source: ${MEDIA_PATH}
         target: /data
-    restart: 'unless-stopped'
+    restart: unless-stopped
     environment:
       JELLYFIN_PublishedServerUrl: ${JELLYFIN_PublishedServerUrl:-}
       PUID: ${PUID}

@@ -7,11 +7,10 @@ services:
     devices:
       - /dev/net/tun:/dev/net/tun
     volumes:
-      - ./gluetun:/gluetun
+      - /opt/docker/gluetun:/gluetun
     environment:
       - TZ=${TZ}
-      # config: ./gluetun/wireguard/wg0.conf
-      - VPN_SERVICE_PROVIDER=windscribe
+      - VPN_SERVICE_PROVIDER=${VPN_SERVICE_PROVIDER}
       - VPN_TYPE=wireguard
       - WIREGUARD_PRIVATE_KEY=${WIREGUARD_PRIVATE_KEY}
       - WIREGUARD_PRESHARED_KEY=${WIREGUARD_PRESHARED_KEY}
@@ -33,6 +32,7 @@ services:
       - "9696:9696"       # prowlarr
       - "8191:8191"       # flare solverr
       - "8989:8989"       # sonarr
+      - 6767:6767         # bazarr
     restart: unless-stopped
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:latest
@@ -50,7 +50,7 @@ services:
       - WEBUI_PORT=9095
       - UMASK_SET=022
     volumes:
-      - ./config:/config
+      - /opt/docker/qbittorrent/config:/config
       - ${MEDIA_PATH}/downloads:/data/downloads
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
@@ -67,7 +67,7 @@ services:
       - TZ=${TZ}
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - ./config:/config
+      - /opt/docker/sonarr/config:/config
       - ${MEDIA_PATH}:/data
   radarr:
     image: lscr.io/linuxserver/radarr:latest
@@ -83,7 +83,7 @@ services:
       - TZ=${TZ}
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - ./config:/config
+      - /opt/docker/radarr/config:/config
       - ${MEDIA_PATH}:/data
     restart: unless-stopped
   prowlarr:
@@ -101,8 +101,7 @@ services:
       - TZ=${TZ}
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - ./config:/config
-
+      - /opt/docker/prowlarr/config:/config
   overseerr:
     image: lscr.io/linuxserver/overseerr:latest
     restart: unless-stopped
@@ -113,7 +112,7 @@ services:
       TZ: ${TZ}
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - ./config:/config
+      - /opt/docker/overseerr/config:/config
     ports:
       - 5055:5055
   bazarr:
@@ -130,16 +129,18 @@ services:
       - TZ=${TZ}
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - ./config:/config
+      - /opt/docker/bazarr/config:/config
       - ${MEDIA_PATH}:/data
-    ports:
-      - 6767:6767
     restart: unless-stopped
   flaresolverr:
     restart: unless-stopped
     image: flaresolverr/flaresolverr:latest
     container_name: flaresolverr
-    network_mode: "service:gluetun"
+    network_mode: service:gluetun
+    depends_on:
+      gluetun:
+        condition: service_healthy
+        restart: true
     environment:
       - LOG_LEVEL=${LOG_LEVEL:-info}
       - LOG_HTML=${LOG_HTML:-false}
