@@ -50,7 +50,7 @@ services:
       - WEBUI_PORT=9095
       - UMASK_SET=022
     volumes:
-      - /opt/qbittorrent/config:/config
+      - /opt/docker/qbittorrent/config:/config
       - ${MEDIA_PATH}/downloads:/data/downloads
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
