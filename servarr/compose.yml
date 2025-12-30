@@ -33,6 +33,7 @@ services:
       - "9696:9696"       # prowlarr
       - "8191:8191"       # flare solverr
       - "8989:8989"       # sonarr
+      - 6767:6767         # bazarr
     restart: unless-stopped
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:latest
@@ -102,7 +103,6 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ./config:/config
-
   overseerr:
     image: lscr.io/linuxserver/overseerr:latest
     restart: unless-stopped
@@ -132,14 +132,16 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - ./config:/config
       - ${MEDIA_PATH}:/data
-    ports:
-      - 6767:6767
     restart: unless-stopped
   flaresolverr:
     restart: unless-stopped
     image: flaresolverr/flaresolverr:latest
     container_name: flaresolverr
-    network_mode: "service:gluetun"
+    network_mode: service:gluetun
+    depends_on:
+      gluetun:
+        condition: service_healthy
+        restart: true
     environment:
       - LOG_LEVEL=${LOG_LEVEL:-info}
       - LOG_HTML=${LOG_HTML:-false}
