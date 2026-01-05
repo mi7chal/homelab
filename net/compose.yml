@@ -32,8 +32,10 @@ services:
     image: tailscale/tailscale:latest
     container_name: tailscale
     hostname: home_server
+    network_mode: host
     environment:
       TS_STATE_DIR: /var/lib/tailscale
+      TS_ROUTES: ${TAILSCALE_ROUTES}
       TS_USERSPACE: false
       TZ: ${TZ}
     volumes:
