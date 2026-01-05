@@ -22,7 +22,7 @@ services:
       - /dev/dri:/dev/dri
     volumes:
       - /opt/docker/plex/config:/config
-      - ${MEDIA_PATH}:/data
+      - ${MEDIA_PATH}:/data:ro
   tautulli:
     image: lscr.io/linuxserver/tautulli:latest
     container_name: tautulli
