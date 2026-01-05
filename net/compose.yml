@@ -32,9 +32,10 @@ services:
     image: tailscale/tailscale:latest
     hostname: home_server
     environment:
-      - TS_EXTRA_ARGS=--advertise-tags=tag:container
-      - TS_STATE_DIR=/var/lib/tailscale
-      - TS_USERSPACE=false
+      TS_EXTRA_ARGS: --advertise-tags=tag:container
+      TS_STATE_DIR: /var/lib/tailscale
+      TS_USERSPACE: false
+      TZ: ${TZ}
     volumes:
       - /opt/docker/tailscale/state:/var/lib/tailscale
     devices:
