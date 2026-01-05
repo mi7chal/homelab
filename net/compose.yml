@@ -1,0 +1,50 @@
+services:
+  adguardhome:
+    image: adguard/adguardhome
+    container_name: adguardhome
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - /opt/docker/adguard/work:/opt/adguardhome/work
+      - /opt/docker/adguard/conf:/opt/adguardhome/conf
+    environment:
+      - TZ=${TZ}
+  nginx-proxy-manager:
+    image: jc21/nginx-proxy-manager:latest
+    container_name: nginx-proxy-manager
+    restart: unless-stopped
+    environment:
+      TZ: ${TZ}
+    ports:
+      - 80:80
+      - 81:81
+      - 443:443
+    volumes:
+      - /opt/docker/nginx-proxy-manager/data:/data
+      - /opt/docker/nginx-proxy-manager/letsencrypt:/etc/letsencrypt
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    healthcheck:
+      test: ["CMD", "/usr/bin/check-health"]
+      interval: 10s
+      timeout: 3s
+  tailscale:
+    image: tailscale/tailscale:latest
+    hostname: home_server
+    environment:
+      - TS_EXTRA_ARGS=--advertise-tags=tag:container
+      - TS_STATE_DIR=/var/lib/tailscale
+      - TS_USERSPACE=false
+    volumes:
+      - /opt/docker/tailscale/state:/var/lib/tailscale
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    cap_add:
+      - net_admin
+      - net_raw
+    restart: unless-stopped
+  nginx:
+    image: nginx
+    depends_on:
+      - tailscale-nginx
+    network_mode: service:tailscale-nginx
