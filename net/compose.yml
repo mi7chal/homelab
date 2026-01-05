@@ -44,4 +44,3 @@ services:
       - net_admin
       - net_raw
     restart: unless-stopped
-    network_mode: service:tailscale-nginx
