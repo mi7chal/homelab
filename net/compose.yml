@@ -43,8 +43,4 @@ services:
       - net_admin
       - net_raw
     restart: unless-stopped
-  nginx:
-    image: nginx
-    depends_on:
-      - tailscale-nginx
     network_mode: service:tailscale-nginx
