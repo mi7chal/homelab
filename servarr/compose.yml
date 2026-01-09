@@ -34,6 +34,7 @@ services:
       - "6767:6767"       # bazarr
     networks:
       - servarr_net
+      - proxy-net
     deploy:
       replicas: 1
       restart_policy:
@@ -41,6 +42,13 @@ services:
       placement:
         constraints:
           - node.role == manager
+      labels:
+        caddy: qbittorrent.home sonarr.home radarr.home prowlarr.home bazarr.home
+        caddy.qbittorrent.home.reverse_proxy: "{{upstreams 9095}}"
+        caddy.sonarr.home.reverse_proxy: "{{upstreams 8989}}"
+        caddy.radarr.home.reverse_proxy: "{{upstreams 7878}}"
+        caddy.prowlarr.home.reverse_proxy: "{{upstreams 9696}}"
+        caddy.bazarr.home.reverse_proxy: "{{upstreams 6767}}"
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:latest
     networks:
@@ -118,10 +126,14 @@ services:
       - "5055:5055"
     networks:
       - servarr_net
+      - proxy-net
     deploy:
       replicas: 1
       restart_policy:
         condition: unless-stopped
+      labels:
+        caddy: overseerr.home
+        caddy.reverse_proxy: "{{upstreams 5055}}"
   bazarr:
     image: lscr.io/linuxserver/bazarr:latest
     networks:
@@ -156,3 +168,7 @@ networks:
   servarr_net:
     driver: overlay
     attachable: true
+  proxy-net:
+    external: true
+    name: proxy-net
+

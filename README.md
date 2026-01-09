@@ -8,7 +8,7 @@ Docker Swarm stack configurations for a complete homelab with media services and
 - **plex**: Plex Media Server and Tautulli
 - **jellyfin**: Jellyfin media server
 - **tdarr**: Media transcoding
-- **net**: Networking (AdGuard Home, Caddy, Tailscale, Cloudflared)
+- **net**: Networking (AdGuard Home, Caddy Docker Proxy, Tailscale, Cloudflared)
 
 ## Quick Start
 
@@ -16,7 +16,7 @@ Docker Swarm stack configurations for a complete homelab with media services and
 # Initialize Swarm
 docker swarm init
 
-# Deploy networking stack first (creates networks for other services)
+# Deploy networking stack first (creates proxy-net network)
 docker stack deploy -c net/compose.yml --env-file net/stack.env net
 
 # Then deploy other stacks
@@ -30,11 +30,9 @@ docker stack deploy -c tdarr/compose.yml --env-file tdarr/stack.env tdarr
 
 Each stack has a `stack.env` file. Update with your values before deployment.
 
-Create `/opt/docker/caddy/Caddyfile` using the provided `net/Caddyfile.example` template.
-
 ## Service Domains
 
-Services are accessible via `.home` domains through Caddy reverse proxy:
+Services are accessible via `.home` domains through Caddy Docker Proxy (automatic configuration via labels):
 - overseerr.home
 - plex.home
 - tautulli.home
@@ -46,9 +44,16 @@ Services are accessible via `.home` domains through Caddy reverse proxy:
 - prowlarr.home
 - bazarr.home
 
+## Network Architecture
+
+- **proxy-net**: Shared overlay network for Caddy reverse proxy
+- **Stack networks**: Private overlay networks per stack (servarr_net, plex_net, jellyfin_net, tdarr_net)
+- **Host network**: Used by AdGuard Home and Tailscale for direct network access
+
 ## Notes
 
-- AdGuard Home and Tailscale use `network_mode: host` for direct network access
+- Caddy Docker Proxy automatically configures routes using service labels
+- AdGuard Home and Tailscale use host networking for direct network access
 - Servarr services share overlay network with Gluetun VPN
-- Media services can run on any node; critical network services pinned to manager nodes
+- Critical network services pinned to manager nodes; media services can run anywhere
  

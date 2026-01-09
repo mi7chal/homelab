@@ -23,10 +23,14 @@ services:
       - ${MEDIA_PATH}:/data:ro
     networks:
       - plex_net
+      - proxy-net
     deploy:
       replicas: 1
       restart_policy:
         condition: unless-stopped
+      labels:
+        caddy: plex.home
+        caddy.reverse_proxy: "{{upstreams 32400}}"
   tautulli:
     image: lscr.io/linuxserver/tautulli:latest
     environment:
@@ -39,12 +43,19 @@ services:
       - "8181:8181"
     networks:
       - plex_net
+      - proxy-net
     deploy:
       replicas: 1
       restart_policy:
         condition: unless-stopped
+      labels:
+        caddy: tautulli.home
+        caddy.reverse_proxy: "{{upstreams 8181}}"
 
 networks:
   plex_net:
     driver: overlay
     attachable: true
+  proxy-net:
+    external: true
+    name: proxy-net
