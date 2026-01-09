@@ -34,6 +34,9 @@ services:
       labels:
         caddy: tdarr.home
         caddy.reverse_proxy: "{{upstreams 8265}}"
+      placement:
+        constraints:
+          - node.role == manager
 
 networks:
   tdarr_net:

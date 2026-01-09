@@ -31,6 +31,9 @@ services:
       labels:
         caddy: plex.home
         caddy.reverse_proxy: "{{upstreams 32400}}"
+      placement:
+        constraints:
+          - node.role == manager
   tautulli:
     image: lscr.io/linuxserver/tautulli:latest
     environment:
@@ -51,6 +54,9 @@ services:
       labels:
         caddy: tautulli.home
         caddy.reverse_proxy: "{{upstreams 8181}}"
+      placement:
+        constraints:
+          - node.role == manager
 
 networks:
   plex_net:
