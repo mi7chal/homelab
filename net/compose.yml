@@ -1,9 +1,3 @@
-configs:
-  caddyfile:
-    file: /opt/docker/caddy/Caddyfile.custom
-    labels:
-      caddy:
-
 services:
   adguardhome:
     image: adguard/adguardhome
@@ -34,7 +28,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - /opt/docker/caddy/data:/data
       - /opt/docker/caddy/pages:/pages
-      # - /opt/docker/caddy/Caddyfile.custom:/etc/caddy/Caddyfile.custom
+       - /opt/docker/caddy/Caddyfile.custom:/etc/caddy/Caddyfile.custom
     environment:
       - CADDY_INGRESS_NETWORKS=proxy-net
       - TZ=${TZ}
@@ -52,7 +46,7 @@ services:
       labels:
         caddy.email: "admin@home"
         caddy.auto_https: "off"
-        # caddy.import: /etc/caddy/Caddyfile.custom
+        caddy.import: /etc/caddy/Caddyfile.custom
   tailscale:
     image: tailscale/tailscale:latest
     hostname: home_server
