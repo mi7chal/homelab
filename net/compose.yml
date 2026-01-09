@@ -14,7 +14,7 @@ services:
         constraints:
           - node.role == manager
       labels:
-        caddy: adguard.home
+        caddy: http://adguard.home
         caddy.reverse_proxy: "host.docker.internal:8012"
     networks:
       - host

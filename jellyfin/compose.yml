@@ -27,7 +27,7 @@ services:
       restart_policy:
         condition: any
       labels:
-        caddy: jellyfin.home
+        caddy: http://jellyfin.home
         caddy.reverse_proxy: "{{upstreams 8096}}"
 
 networks:

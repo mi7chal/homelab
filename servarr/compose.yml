@@ -43,19 +43,19 @@ services:
         constraints:
           - node.role == manager
       labels:
-        caddy_0: qbittorrent.home
+        caddy_0: http://qbittorrent.home
         caddy_0.reverse_proxy: "{{upstreams 9095}}"
 
-        caddy_1: sonarr.home
+        caddy_1: http://sonarr.home
         caddy_1.reverse_proxy: "{{upstreams 8989}}"
 
-        caddy_2: radarr.home
+        caddy_2: http://radarr.home
         caddy_2.reverse_proxy: "{{upstreams 7878}}"
 
-        caddy_3: prowlarr.home
+        caddy_3: http://prowlarr.home
         caddy_3.reverse_proxy: "{{upstreams 9696}}"
 
-        caddy_4: bazarr.home
+        caddy_4: http://bazarr.home
         caddy_4.reverse_proxy: "{{upstreams 6767}}"
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:latest
@@ -152,7 +152,7 @@ services:
       restart_policy:
         condition: any
       labels:
-        caddy: overseerr.home
+        caddy: http://overseerr.home
         caddy.reverse_proxy: "{{upstreams 5055}}"
       placement:
         constraints:

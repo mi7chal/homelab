@@ -32,7 +32,7 @@ services:
       restart_policy:
         condition: any
       labels:
-        caddy: tdarr.home
+        caddy: http://tdarr.home
         caddy.reverse_proxy: "{{upstreams 8265}}"
       placement:
         constraints:
