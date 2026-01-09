@@ -1,17 +1,15 @@
 services:
   jellyfin:
     image: jellyfin/jellyfin
-    container_name: jellyfin
     ports:
-      - 8096:8096/tcp
-      - 7359:7359/udp
+      - "8096:8096/tcp"
+      - "7359:7359/udp"
     volumes:
       - /opt/docker/jellyfin/config:/config
       - /opt/docker/jellyfin/cache:/cache
       - type: bind
         source: ${MEDIA_PATH}
         target: /data
-    restart: unless-stopped
     environment:
       JELLYFIN_PublishedServerUrl: ${JELLYFIN_PublishedServerUrl:-}
       PUID: ${PUID}
@@ -21,5 +19,21 @@ services:
       - /dev/dri:/dev/dri
     extra_hosts:
       - 'host.docker.internal:host-gateway'
-    
-      
+    networks:
+      - jellyfin_net
+      - proxy-net
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: unless-stopped
+      labels:
+        caddy: jellyfin.home
+        caddy.reverse_proxy: "{{upstreams 8096}}"
+
+networks:
+  jellyfin_net:
+    driver: overlay
+    attachable: true
+  proxy-net:
+    external: true
+    name: proxy-net

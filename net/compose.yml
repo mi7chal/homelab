@@ -1,40 +1,51 @@
 services:
   adguardhome:
     image: adguard/adguardhome
-    container_name: adguardhome
-    restart: unless-stopped
-    network_mode: host
     volumes:
       - /opt/docker/adguard/work:/opt/adguardhome/work
       - /opt/docker/adguard/conf:/opt/adguardhome/conf
     environment:
       - TZ=${TZ}
-  nginx-proxy-manager:
-    image: jc21/nginx-proxy-manager:latest
-    container_name: nginx-proxy-manager
-    restart: unless-stopped
-    environment:
-      TZ: ${TZ}
-    ports:
-      - 80:80
-      - 81:81
-      - 443:443
-    volumes:
-      - /opt/docker/nginx-proxy-manager/data:/data
-      - /opt/docker/nginx-proxy-manager/letsencrypt:/etc/letsencrypt
-    extra_hosts:
-      - 'host.docker.internal:host-gateway'
-    healthcheck:
-      test: ["CMD", "/usr/bin/check-health"]
-      interval: 10s
-      timeout: 3s
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: unless-stopped
+      placement:
+        constraints:
+          - node.role == manager
+      labels:
+        caddy: adguard.home
+        caddy.reverse_proxy: "host.docker.internal:8012"
     networks:
-      - cloudnet
+      - host
+  caddy:
+    image: lucaslorentz/caddy-docker-proxy:ci-alpine
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /opt/docker/caddy/data:/data
+    environment:
+      - CADDY_INGRESS_NETWORKS=proxy-net
+      - TZ=${TZ}
+    networks:
+      - proxy-net
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: unless-stopped
+      placement:
+        constraints:
+          - node.role == manager
+      labels:
+        caddy.email: "admin@home"
   tailscale:
     image: tailscale/tailscale:latest
-    container_name: tailscale
     hostname: home_server
-    network_mode: host
     environment:
       TS_STATE_DIR: /var/lib/tailscale
       TS_ROUTES: ${TAILSCALE_ROUTES}
@@ -48,17 +59,36 @@ services:
     cap_add:
       - net_admin
       - net_raw
-    restart: unless-stopped
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: unless-stopped
+      placement:
+        constraints:
+          - node.role == manager
+    networks:
+      - host
   cloudflared:
     image: cloudflare/cloudflared:latest
-    container_name: cloudflared
-    restart: unless-stopped
     command: tunnel run
     environment:
       TUNNEL_TOKEN: ${CLOUDFLARED_TUNNEL_TOKEN}
       TZ: ${TZ}
     networks:
       - cloudnet
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: unless-stopped
+
 networks:
   cloudnet:
-    driver: bridge
+    driver: overlay
+    attachable: true
+  proxy-net:
+    driver: overlay
+    name: proxy-net
+    attachable: true
+  host:
+    name: host
+    external: true
