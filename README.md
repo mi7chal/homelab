@@ -59,9 +59,22 @@ Each stack has its own `stack.env` file with required configuration. Update thes
 
 ### Deploy Stacks
 
+#### Quick Deploy (All Stacks)
+
+Use the provided deployment script to deploy all stacks at once:
+
+```bash
+./deploy-all.sh
+```
+
+#### Manual Deploy (Individual Stacks)
+
 Deploy each stack using the `docker stack deploy` command:
 
 ```bash
+# Deploy networking stack (deploy first for proxy/VPN)
+docker stack deploy -c net/compose.yml --env-file net/stack.env net
+
 # Deploy servarr stack (media management)
 docker stack deploy -c servarr/compose.yml --env-file servarr/stack.env servarr
 
@@ -73,9 +86,6 @@ docker stack deploy -c jellyfin/compose.yml --env-file jellyfin/stack.env jellyf
 
 # Deploy tdarr stack
 docker stack deploy -c tdarr/compose.yml --env-file tdarr/stack.env tdarr
-
-# Deploy networking stack
-docker stack deploy -c net/compose.yml --env-file net/stack.env net
 ```
 
 ### Verify Deployment
@@ -107,7 +117,17 @@ To update a stack after making changes to the compose file:
 docker stack deploy -c <stack>/compose.yml --env-file <stack>/stack.env <stack-name>
 ```
 
-### Remove a Stack
+### Remove Stacks
+
+#### Remove All Stacks
+
+Use the provided removal script:
+
+```bash
+./remove-all.sh
+```
+
+#### Remove Individual Stack
 
 ```bash
 docker stack rm <stack-name>
