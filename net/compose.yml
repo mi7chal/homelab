@@ -9,12 +9,12 @@ services:
     deploy:
       replicas: 1
       restart_policy:
-        condition: unless-stopped
+        condition: any
       placement:
         constraints:
           - node.role == manager
       labels:
-        caddy: adguard.home
+        caddy: http://adguard.home
         caddy.reverse_proxy: "host.docker.internal:8012"
     networks:
       - host
@@ -37,19 +37,20 @@ services:
     deploy:
       replicas: 1
       restart_policy:
-        condition: unless-stopped
+        condition: any
       placement:
         constraints:
           - node.role == manager
       labels:
         caddy.email: "admin@home"
+        caddy.auto_https: "off"
   tailscale:
     image: tailscale/tailscale:latest
     hostname: home_server
     environment:
       TS_STATE_DIR: /var/lib/tailscale
       TS_ROUTES: ${TAILSCALE_ROUTES}
-      TS_USERSPACE: false
+      TS_USERSPACE: "false"
       TS_EXTRA_ARGS: --snat-subnet-routes=true --accept-dns=false
       TZ: ${TZ}
     volumes:
@@ -62,7 +63,7 @@ services:
     deploy:
       replicas: 1
       restart_policy:
-        condition: unless-stopped
+        condition: any
       placement:
         constraints:
           - node.role == manager
@@ -79,7 +80,7 @@ services:
     deploy:
       replicas: 1
       restart_policy:
-        condition: unless-stopped
+        condition: any
 
 networks:
   cloudnet:

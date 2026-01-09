@@ -27,9 +27,9 @@ services:
     deploy:
       replicas: 1
       restart_policy:
-        condition: unless-stopped
+        condition: any
       labels:
-        caddy: plex.home
+        caddy: http://plex.home
         caddy.reverse_proxy: "{{upstreams 32400}}"
       placement:
         constraints:
@@ -50,9 +50,9 @@ services:
     deploy:
       replicas: 1
       restart_policy:
-        condition: unless-stopped
+        condition: any
       labels:
-        caddy: tautulli.home
+        caddy: http://tautulli.home
         caddy.reverse_proxy: "{{upstreams 8181}}"
       placement:
         constraints:
