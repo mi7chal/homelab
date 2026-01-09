@@ -38,7 +38,7 @@ services:
     deploy:
       replicas: 1
       restart_policy:
-        condition: unless-stopped
+        condition: any
       placement:
         constraints:
           - node.role == manager
@@ -73,7 +73,7 @@ services:
     deploy:
       replicas: 1
       restart_policy:
-        condition: unless-stopped
+        condition: any
       placement:
         constraints:
           - node.role == manager
@@ -92,7 +92,7 @@ services:
     deploy:
       replicas: 1
       restart_policy:
-        condition: unless-stopped
+        condition: any
       placement:
         constraints:
           - node.role == manager
@@ -111,7 +111,7 @@ services:
     deploy:
       replicas: 1
       restart_policy:
-        condition: unless-stopped
+        condition: any
       placement:
         constraints:
           - node.role == manager
@@ -129,7 +129,7 @@ services:
     deploy:
       replicas: 1
       restart_policy:
-        condition: unless-stopped
+        condition: any
       placement:
         constraints:
           - node.role == manager
@@ -150,7 +150,7 @@ services:
     deploy:
       replicas: 1
       restart_policy:
-        condition: unless-stopped
+        condition: any
       labels:
         caddy: overseerr.home
         caddy.reverse_proxy: "{{upstreams 5055}}"
@@ -172,7 +172,7 @@ services:
     deploy:
       replicas: 1
       restart_policy:
-        condition: unless-stopped
+        condition: any
       placement:
         constraints:
           - node.role == manager
@@ -188,7 +188,7 @@ services:
     deploy:
       replicas: 1
       restart_policy:
-        condition: unless-stopped
+        condition: any
       placement:
         constraints:
           - node.role == manager
