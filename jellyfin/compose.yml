@@ -25,9 +25,9 @@ services:
       replicas: 1
       restart_policy:
         condition: unless-stopped
-      placement:
-        constraints:
-          - node.role == manager
+      labels:
+        - "caddy=jellyfin.home"
+        - "caddy.reverse_proxy={{upstreams 8096}}"
 
 networks:
   jellyfin_net:

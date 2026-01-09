@@ -58,9 +58,9 @@ services:
       replicas: 1
       restart_policy:
         condition: unless-stopped
-      placement:
-        constraints:
-          - node.role == manager
+      labels:
+        - "caddy=qbittorrent.home"
+        - "caddy.reverse_proxy={{upstreams 9095}}"
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
     networks:
@@ -77,9 +77,9 @@ services:
       replicas: 1
       restart_policy:
         condition: unless-stopped
-      placement:
-        constraints:
-          - node.role == manager
+      labels:
+        - "caddy=sonarr.home"
+        - "caddy.reverse_proxy={{upstreams 8989}}"
   radarr:
     image: lscr.io/linuxserver/radarr:latest
     networks:
@@ -96,9 +96,9 @@ services:
       replicas: 1
       restart_policy:
         condition: unless-stopped
-      placement:
-        constraints:
-          - node.role == manager
+      labels:
+        - "caddy=radarr.home"
+        - "caddy.reverse_proxy={{upstreams 7878}}"
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
     networks:
@@ -114,9 +114,9 @@ services:
       replicas: 1
       restart_policy:
         condition: unless-stopped
-      placement:
-        constraints:
-          - node.role == manager
+      labels:
+        - "caddy=prowlarr.home"
+        - "caddy.reverse_proxy={{upstreams 9696}}"
   overseerr:
     image: lscr.io/linuxserver/overseerr:latest
     environment:
@@ -134,9 +134,9 @@ services:
       replicas: 1
       restart_policy:
         condition: unless-stopped
-      placement:
-        constraints:
-          - node.role == manager
+      labels:
+        - "caddy=overseerr.home"
+        - "caddy.reverse_proxy={{upstreams 5055}}"
   bazarr:
     image: lscr.io/linuxserver/bazarr:latest
     networks:
@@ -153,9 +153,9 @@ services:
       replicas: 1
       restart_policy:
         condition: unless-stopped
-      placement:
-        constraints:
-          - node.role == manager
+      labels:
+        - "caddy=bazarr.home"
+        - "caddy.reverse_proxy={{upstreams 6767}}"
   flaresolverr:
     image: flaresolverr/flaresolverr:latest
     networks:
@@ -169,9 +169,6 @@ services:
       replicas: 1
       restart_policy:
         condition: unless-stopped
-      placement:
-        constraints:
-          - node.role == manager
 
 networks:
   servarr_net:

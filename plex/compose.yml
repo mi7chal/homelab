@@ -27,9 +27,9 @@ services:
       replicas: 1
       restart_policy:
         condition: unless-stopped
-      placement:
-        constraints:
-          - node.role == manager
+      labels:
+        - "caddy=plex.home"
+        - "caddy.reverse_proxy={{upstreams 32400}}"
   tautulli:
     image: lscr.io/linuxserver/tautulli:latest
     environment:
@@ -46,9 +46,9 @@ services:
       replicas: 1
       restart_policy:
         condition: unless-stopped
-      placement:
-        constraints:
-          - node.role == manager
+      labels:
+        - "caddy=tautulli.home"
+        - "caddy.reverse_proxy={{upstreams 8181}}"
 
 networks:
   plex_net:

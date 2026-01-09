@@ -1,0 +1,57 @@
+# Caddy reverse proxy configuration for homelab services
+# Copy this file to /opt/docker/caddy/Caddyfile and customize as needed
+
+# Overseerr
+overseerr.home {
+    reverse_proxy overseerr:5055
+}
+
+# Plex
+plex.home {
+    reverse_proxy pms:32400
+}
+
+# Tautulli
+tautulli.home {
+    reverse_proxy tautulli:8181
+}
+
+# Jellyfin
+jellyfin.home {
+    reverse_proxy jellyfin:8096
+}
+
+# Tdarr
+tdarr.home {
+    reverse_proxy tdarr:8265
+}
+
+# qBittorrent
+qbittorrent.home {
+    reverse_proxy gluetun:9095
+}
+
+# Sonarr
+sonarr.home {
+    reverse_proxy gluetun:8989
+}
+
+# Radarr
+radarr.home {
+    reverse_proxy gluetun:7878
+}
+
+# Prowlarr
+prowlarr.home {
+    reverse_proxy gluetun:9696
+}
+
+# Bazarr
+bazarr.home {
+    reverse_proxy gluetun:6767
+}
+
+# AdGuard Home (if needed via proxy)
+# adguard.home {
+#     reverse_proxy localhost:3000
+# }
