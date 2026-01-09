@@ -1,24 +1,59 @@
 services:
   adguardhome:
     image: adguard/adguardhome
-    container_name: adguardhome
-    restart: unless-stopped
-    network_mode: host
+    ports:
+      - target: 53
+        published: 53
+        protocol: tcp
+        mode: host
+      - target: 53
+        published: 53
+        protocol: udp
+        mode: host
+      - target: 67
+        published: 67
+        protocol: udp
+        mode: host
+      - target: 68
+        published: 68
+        protocol: tcp
+        mode: host
+      - target: 80
+        published: 3000
+        protocol: tcp
+        mode: host
+      - target: 443
+        published: 3443
+        protocol: tcp
+        mode: host
+      - target: 853
+        published: 853
+        protocol: tcp
+        mode: host
+      - target: 3000
+        published: 3001
+        protocol: tcp
+        mode: host
     volumes:
       - /opt/docker/adguard/work:/opt/adguardhome/work
       - /opt/docker/adguard/conf:/opt/adguardhome/conf
     environment:
       - TZ=${TZ}
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: unless-stopped
+      placement:
+        constraints:
+          - node.role == manager
   nginx-proxy-manager:
     image: jc21/nginx-proxy-manager:latest
-    container_name: nginx-proxy-manager
-    restart: unless-stopped
     environment:
       TZ: ${TZ}
     ports:
-      - 80:80
-      - 81:81
-      - 443:443
+      - "80:80"
+      - "81:81"
+      - "443:443"
     volumes:
       - /opt/docker/nginx-proxy-manager/data:/data
       - /opt/docker/nginx-proxy-manager/letsencrypt:/etc/letsencrypt
@@ -30,11 +65,21 @@ services:
       timeout: 3s
     networks:
       - cloudnet
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: unless-stopped
+      placement:
+        constraints:
+          - node.role == manager
   tailscale:
     image: tailscale/tailscale:latest
-    container_name: tailscale
     hostname: home_server
-    network_mode: host
+    ports:
+      - target: 41641
+        published: 41641
+        protocol: udp
+        mode: host
     environment:
       TS_STATE_DIR: /var/lib/tailscale
       TS_ROUTES: ${TAILSCALE_ROUTES}
@@ -48,17 +93,30 @@ services:
     cap_add:
       - net_admin
       - net_raw
-    restart: unless-stopped
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: unless-stopped
+      placement:
+        constraints:
+          - node.role == manager
   cloudflared:
     image: cloudflare/cloudflared:latest
-    container_name: cloudflared
-    restart: unless-stopped
     command: tunnel run
     environment:
       TUNNEL_TOKEN: ${CLOUDFLARED_TUNNEL_TOKEN}
       TZ: ${TZ}
     networks:
       - cloudnet
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: unless-stopped
+      placement:
+        constraints:
+          - node.role == manager
+
 networks:
   cloudnet:
-    driver: bridge
+    driver: overlay
+    attachable: true
