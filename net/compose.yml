@@ -28,6 +28,10 @@ services:
       - TZ=${TZ}
     networks:
       - cloudnet
+      - servarr_net
+      - plex_net
+      - jellyfin_net
+      - tdarr_net
     deploy:
       replicas: 1
       restart_policy:
@@ -35,8 +39,6 @@ services:
       placement:
         constraints:
           - node.role == manager
-      labels:
-        - "caddy.home"
   tailscale:
     image: tailscale/tailscale:latest
     hostname: home_server
@@ -78,3 +80,11 @@ networks:
   cloudnet:
     driver: overlay
     attachable: true
+  servarr_net:
+    external: true
+  plex_net:
+    external: true
+  jellyfin_net:
+    external: true
+  tdarr_net:
+    external: true

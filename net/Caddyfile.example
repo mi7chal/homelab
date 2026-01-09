@@ -1,57 +1,58 @@
 # Caddy reverse proxy configuration for homelab services
 # Copy this file to /opt/docker/caddy/Caddyfile and customize as needed
 
-# Overseerr
+# Overseerr - on servarr_net
 overseerr.home {
-    reverse_proxy overseerr:5055
+    reverse_proxy servarr_overseerr:5055
 }
 
-# Plex
+# Plex - on plex_net
 plex.home {
-    reverse_proxy pms:32400
+    reverse_proxy plex_pms:32400
 }
 
-# Tautulli
+# Tautulli - on plex_net
 tautulli.home {
-    reverse_proxy tautulli:8181
+    reverse_proxy plex_tautulli:8181
 }
 
-# Jellyfin
+# Jellyfin - on jellyfin_net
 jellyfin.home {
-    reverse_proxy jellyfin:8096
+    reverse_proxy jellyfin_jellyfin:8096
 }
 
-# Tdarr
+# Tdarr - on tdarr_net
 tdarr.home {
-    reverse_proxy tdarr:8265
+    reverse_proxy tdarr_tdarr:8265
 }
 
-# qBittorrent
+# qBittorrent - on servarr_net, accessible through gluetun ports
 qbittorrent.home {
-    reverse_proxy gluetun:9095
+    reverse_proxy servarr_gluetun:9095
 }
 
-# Sonarr
+# Sonarr - on servarr_net, accessible through gluetun ports
 sonarr.home {
-    reverse_proxy gluetun:8989
+    reverse_proxy servarr_gluetun:8989
 }
 
-# Radarr
+# Radarr - on servarr_net, accessible through gluetun ports
 radarr.home {
-    reverse_proxy gluetun:7878
+    reverse_proxy servarr_gluetun:7878
 }
 
-# Prowlarr
+# Prowlarr - on servarr_net, accessible through gluetun ports
 prowlarr.home {
-    reverse_proxy gluetun:9696
+    reverse_proxy servarr_gluetun:9696
 }
 
-# Bazarr
+# Bazarr - on servarr_net, accessible through gluetun ports
 bazarr.home {
-    reverse_proxy gluetun:6767
+    reverse_proxy servarr_gluetun:6767
 }
 
 # AdGuard Home (if needed via proxy)
+# Note: AdGuard uses host networking, access directly or via localhost
 # adguard.home {
 #     reverse_proxy localhost:3000
 # }

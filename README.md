@@ -16,13 +16,21 @@ Docker Swarm stack configurations for a complete homelab with media services and
 # Initialize Swarm
 docker swarm init
 
-# Deploy a stack
-docker stack deploy -c <stack>/compose.yml --env-file <stack>/stack.env <stack-name>
+# Deploy networking stack first (creates networks for other services)
+docker stack deploy -c net/compose.yml --env-file net/stack.env net
+
+# Then deploy other stacks
+docker stack deploy -c servarr/compose.yml --env-file servarr/stack.env servarr
+docker stack deploy -c plex/compose.yml --env-file plex/stack.env plex
+docker stack deploy -c jellyfin/compose.yml --env-file jellyfin/stack.env jellyfin
+docker stack deploy -c tdarr/compose.yml --env-file tdarr/stack.env tdarr
 ```
 
 ## Configuration
 
 Each stack has a `stack.env` file. Update with your values before deployment.
+
+Create `/opt/docker/caddy/Caddyfile` using the provided `net/Caddyfile.example` template.
 
 ## Service Domains
 

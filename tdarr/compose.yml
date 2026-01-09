@@ -30,9 +30,6 @@ services:
       replicas: 1
       restart_policy:
         condition: unless-stopped
-      labels:
-        - "caddy=tdarr.home"
-        - "caddy.reverse_proxy={{upstreams 8265}}"
 
 networks:
   tdarr_net:
