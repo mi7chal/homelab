@@ -43,6 +43,7 @@ services:
           - node.role == manager
       labels:
         caddy.email: "admin@home"
+        caddy.auto_https: "off"
   tailscale:
     image: tailscale/tailscale:latest
     hostname: home_server
