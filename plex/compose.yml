@@ -1,17 +1,15 @@
 services:
   pms:
     image: lscr.io/linuxserver/plex:latest
-    container_name: plex
-    restart: unless-stopped
     ports:
-      - 32400:32400
-      - 1900:1900/udp
-      - 8324:8324
-      - 32410:32410/udp
-      - 32412:32412/udp
-      - 32413:32413/udp
-      - 32414:32414/udp
-      - 32469:32469
+      - "32400:32400"
+      - "1900:1900/udp"
+      - "8324:8324"
+      - "32410:32410/udp"
+      - "32412:32412/udp"
+      - "32413:32413/udp"
+      - "32414:32414/udp"
+      - "32469:32469"
     environment:
       - VERSION=docker
       - PUID=${PUID}
@@ -23,9 +21,18 @@ services:
     volumes:
       - /opt/docker/plex/config:/config
       - ${MEDIA_PATH}:/data:ro
+    networks:
+      - plex_net
+      - proxy-net
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: unless-stopped
+      labels:
+        caddy: plex.home
+        caddy.reverse_proxy: "{{upstreams 32400}}"
   tautulli:
     image: lscr.io/linuxserver/tautulli:latest
-    container_name: tautulli
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -33,5 +40,22 @@ services:
     volumes:
       - /opt/docker/tautulli/config:/config
     ports:
-      - 8181:8181
-    restart: unless-stopped
+      - "8181:8181"
+    networks:
+      - plex_net
+      - proxy-net
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: unless-stopped
+      labels:
+        caddy: tautulli.home
+        caddy.reverse_proxy: "{{upstreams 8181}}"
+
+networks:
+  plex_net:
+    driver: overlay
+    attachable: true
+  proxy-net:
+    external: true
+    name: proxy-net

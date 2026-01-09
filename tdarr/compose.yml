@@ -1,11 +1,9 @@
 services:
   tdarr:
-    container_name: tdarr
     image: haveagitgat/tdarr:latest
-    restart: unless-stopped
     ports:
-      - 8265:8265 # webUI port
-      - 8266:8266 # server port
+      - "8265:8265" # webUI port
+      - "8266:8266" # server port
     environment:
       - TZ=${TZ}
       - PUID=${PUID}
@@ -26,3 +24,21 @@ services:
       - /opt/docker/tdarr/logs:/app/logs
       - ${MEDIA_PATH}:/data
       - /opt/docker/tdarr/transcode_cache:/temp
+    networks:
+      - tdarr_net
+      - proxy-net
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: unless-stopped
+      labels:
+        caddy: tdarr.home
+        caddy.reverse_proxy: "{{upstreams 8265}}"
+
+networks:
+  tdarr_net:
+    driver: overlay
+    attachable: true
+  proxy-net:
+    external: true
+    name: proxy-net
