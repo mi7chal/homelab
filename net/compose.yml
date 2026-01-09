@@ -1,3 +1,9 @@
+configs:
+  caddyfile:
+    file: ./Caddyfile
+    labels:
+      caddy:
+
 services:
   adguardhome:
     image: adguard/adguardhome
