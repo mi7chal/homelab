@@ -16,11 +16,16 @@ if ! docker info 2>/dev/null | grep -q "Swarm: active"; then
     exit 1
 fi
 
+# Get list of existing stacks
+echo "Checking existing stacks..."
+EXISTING_STACKS=$(docker stack ls --format "{{.Name}}")
+echo ""
+
 # Function to remove a stack
 remove_stack() {
     local stack_name=$1
     
-    if docker stack ls --format "{{.Name}}" | grep -q "^${stack_name}$"; then
+    if echo "$EXISTING_STACKS" | grep -q "^${stack_name}$"; then
         echo "Removing $stack_name stack..."
         if docker stack rm "$stack_name"; then
             echo "✓ $stack_name stack removed successfully"

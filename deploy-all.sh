@@ -23,6 +23,17 @@ deploy_stack() {
     local compose_file=$2
     local env_file=$3
     
+    # Check if files exist
+    if [ ! -f "$compose_file" ]; then
+        echo "✗ Error: Compose file not found: $compose_file"
+        return 1
+    fi
+    
+    if [ ! -f "$env_file" ]; then
+        echo "✗ Error: Environment file not found: $env_file"
+        return 1
+    fi
+    
     echo "Deploying $stack_name stack..."
     if docker stack deploy -c "$compose_file" --env-file "$env_file" "$stack_name"; then
         echo "✓ $stack_name stack deployed successfully"

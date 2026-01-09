@@ -178,6 +178,35 @@ docker service scale <stack-name>_<service-name>=<replicas>
 - Device access (GPU for transcoding) is configured for Plex and Jellyfin
 - VPN routing through Gluetun is handled via shared network for servarr services
 
+## Important Notes
+
+### VPN Routing for Servarr Services
+
+**Critical:** In Docker Swarm, the `network_mode: service:X` feature is not supported. The original Docker Compose configuration routed qBittorrent, Sonarr, Radarr, Prowlarr, Bazarr, and FlareSolverr through Gluetun's VPN tunnel using this feature.
+
+In this Swarm migration, these services now run on a shared overlay network with Gluetun. **This means they do NOT automatically route through the VPN by default.**
+
+#### Solutions:
+
+1. **Configure HTTP/SOCKS Proxy (Recommended)**:
+   - Gluetun provides an HTTP proxy on port 8888
+   - Configure each servarr application to use Gluetun as proxy:
+     - In each app's settings, set HTTP proxy to: `http://gluetun:8888`
+   - This ensures traffic routes through the VPN
+
+2. **Use Docker Compose for Servarr Stack**:
+   - If VPN routing is critical and proxy configuration is not sufficient
+   - Deploy only the `servarr` stack using Docker Compose (not Swarm)
+   - Keep other stacks in Swarm mode
+
+3. **Host-level VPN**:
+   - Configure VPN at the host/network level
+   - Remove Gluetun container entirely
+
+### Host Network Mode Services
+
+The `net` stack services (AdGuard Home and Tailscale) originally used `network_mode: host`. In Swarm mode, these use host-mode port publishing, which should work equivalently but may have subtle differences in network behavior.
+
 ## Troubleshooting
 
 ### Service Won't Start
