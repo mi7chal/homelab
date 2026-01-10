@@ -1,0 +1,20 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tdarr-config
+  namespace: homelab
+data:
+  TZ: "Europe/Warsaw"
+  PUID: "1000"
+  PGID: "1000"
+  UMASK_SET: "002"
+  serverIP: "0.0.0.0"
+  serverPort: "8266"
+  webUIPort: "8265"
+  internalNode: "false"
+  inContainer: "true"
+  ffmpegVersion: "7"
+  auth: "true"
+  maxLogSizeMB: "10"
+  cronPluginUpdate: ""

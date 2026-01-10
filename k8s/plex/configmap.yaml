@@ -1,0 +1,11 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: plex-config
+  namespace: homelab
+data:
+  TZ: "Europe/Warsaw"
+  PUID: "1000"
+  PGID: "1000"
+  VERSION: "docker"
