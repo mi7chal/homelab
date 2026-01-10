@@ -1,0 +1,11 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: jellyfin-config
+  namespace: homelab
+data:
+  TZ: "Europe/Warsaw"
+  PUID: "1000"
+  PGID: "1000"
+  JELLYFIN_PublishedServerUrl: ""

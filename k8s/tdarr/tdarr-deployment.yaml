@@ -1,0 +1,161 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tdarr
+  namespace: homelab
+  labels:
+    app: tdarr
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: tdarr
+  template:
+    metadata:
+      labels:
+        app: tdarr
+    spec:
+      containers:
+      - name: tdarr
+        image: haveagitgat/tdarr:latest
+        env:
+        - name: TZ
+          valueFrom:
+            configMapKeyRef:
+              name: tdarr-config
+              key: TZ
+        - name: PUID
+          valueFrom:
+            configMapKeyRef:
+              name: tdarr-config
+              key: PUID
+        - name: PGID
+          valueFrom:
+            configMapKeyRef:
+              name: tdarr-config
+              key: PGID
+        - name: UMASK_SET
+          valueFrom:
+            configMapKeyRef:
+              name: tdarr-config
+              key: UMASK_SET
+        - name: serverIP
+          valueFrom:
+            configMapKeyRef:
+              name: tdarr-config
+              key: serverIP
+        - name: serverPort
+          valueFrom:
+            configMapKeyRef:
+              name: tdarr-config
+              key: serverPort
+        - name: webUIPort
+          valueFrom:
+            configMapKeyRef:
+              name: tdarr-config
+              key: webUIPort
+        - name: internalNode
+          valueFrom:
+            configMapKeyRef:
+              name: tdarr-config
+              key: internalNode
+        - name: inContainer
+          valueFrom:
+            configMapKeyRef:
+              name: tdarr-config
+              key: inContainer
+        - name: ffmpegVersion
+          valueFrom:
+            configMapKeyRef:
+              name: tdarr-config
+              key: ffmpegVersion
+        - name: auth
+          valueFrom:
+            configMapKeyRef:
+              name: tdarr-config
+              key: auth
+        - name: maxLogSizeMB
+          valueFrom:
+            configMapKeyRef:
+              name: tdarr-config
+              key: maxLogSizeMB
+        - name: cronPluginUpdate
+          valueFrom:
+            configMapKeyRef:
+              name: tdarr-config
+              key: cronPluginUpdate
+        ports:
+        - containerPort: 8265
+          name: webui
+        - containerPort: 8266
+          name: server
+        volumeMounts:
+        - name: tdarr-server
+          mountPath: /app/server
+        - name: tdarr-configs
+          mountPath: /app/configs
+        - name: tdarr-logs
+          mountPath: /app/logs
+        - name: media
+          mountPath: /data
+        - name: tdarr-transcode-cache
+          mountPath: /temp
+      volumes:
+      - name: tdarr-server
+        persistentVolumeClaim:
+          claimName: tdarr-server
+      - name: tdarr-configs
+        persistentVolumeClaim:
+          claimName: tdarr-configs
+      - name: tdarr-logs
+        persistentVolumeClaim:
+          claimName: tdarr-logs
+      - name: media
+        hostPath:
+          path: /mnt/media
+          type: Directory
+      - name: tdarr-transcode-cache
+        persistentVolumeClaim:
+          claimName: tdarr-transcode-cache
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tdarr
+  namespace: homelab
+spec:
+  selector:
+    app: tdarr
+  ports:
+  - name: webui
+    port: 8265
+    targetPort: 8265
+    protocol: TCP
+  - name: server
+    port: 8266
+    targetPort: 8266
+    protocol: TCP
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: tdarr-ingress
+  namespace: homelab
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+spec:
+  rules:
+  - host: tdarr.home
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: tdarr
+            port:
+              number: 8265

@@ -1,0 +1,77 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: adguardhome
+  namespace: homelab
+  labels:
+    app: adguardhome
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: adguardhome
+  template:
+    metadata:
+      labels:
+        app: adguardhome
+    spec:
+      hostNetwork: true
+      containers:
+      - name: adguardhome
+        image: adguard/adguardhome
+        env:
+        - name: TZ
+          valueFrom:
+            configMapKeyRef:
+              name: net-config
+              key: TZ
+        volumeMounts:
+        - name: adguard-work
+          mountPath: /opt/adguardhome/work
+        - name: adguard-conf
+          mountPath: /opt/adguardhome/conf
+      volumes:
+      - name: adguard-work
+        persistentVolumeClaim:
+          claimName: adguard-work
+      - name: adguard-conf
+        persistentVolumeClaim:
+          claimName: adguard-conf
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: adguard-ingress
+  namespace: homelab
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+spec:
+  rules:
+  - host: adguard.home
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: adguardhome-svc
+            port:
+              number: 8012
+---
+# Service for Ingress (even though using hostNetwork)
+apiVersion: v1
+kind: Service
+metadata:
+  name: adguardhome-svc
+  namespace: homelab
+spec:
+  selector:
+    app: adguardhome
+  ports:
+  - port: 8012
+    targetPort: 8012
+    protocol: TCP
+  type: ClusterIP

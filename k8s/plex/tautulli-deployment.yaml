@@ -1,0 +1,81 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tautulli
+  namespace: homelab
+  labels:
+    app: tautulli
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tautulli
+  template:
+    metadata:
+      labels:
+        app: tautulli
+    spec:
+      containers:
+      - name: tautulli
+        image: lscr.io/linuxserver/tautulli:latest
+        env:
+        - name: PUID
+          valueFrom:
+            configMapKeyRef:
+              name: plex-config
+              key: PUID
+        - name: PGID
+          valueFrom:
+            configMapKeyRef:
+              name: plex-config
+              key: PGID
+        - name: TZ
+          valueFrom:
+            configMapKeyRef:
+              name: plex-config
+              key: TZ
+        ports:
+        - containerPort: 8181
+          name: http
+        volumeMounts:
+        - name: tautulli-config
+          mountPath: /config
+      volumes:
+      - name: tautulli-config
+        persistentVolumeClaim:
+          claimName: tautulli-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tautulli
+  namespace: homelab
+spec:
+  selector:
+    app: tautulli
+  ports:
+  - port: 8181
+    targetPort: 8181
+    protocol: TCP
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: tautulli-ingress
+  namespace: homelab
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+spec:
+  rules:
+  - host: tautulli.home
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: tautulli
+            port:
+              number: 8181

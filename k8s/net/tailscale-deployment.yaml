@@ -1,0 +1,68 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tailscale
+  namespace: homelab
+  labels:
+    app: tailscale
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: tailscale
+  template:
+    metadata:
+      labels:
+        app: tailscale
+    spec:
+      hostNetwork: true
+      containers:
+      - name: tailscale
+        image: tailscale/tailscale:latest
+        env:
+        - name: TS_STATE_DIR
+          valueFrom:
+            configMapKeyRef:
+              name: net-config
+              key: TS_STATE_DIR
+        - name: TS_ROUTES
+          valueFrom:
+            configMapKeyRef:
+              name: net-config
+              key: TAILSCALE_ROUTES
+        - name: TS_USERSPACE
+          valueFrom:
+            configMapKeyRef:
+              name: net-config
+              key: TS_USERSPACE
+        - name: TS_EXTRA_ARGS
+          valueFrom:
+            configMapKeyRef:
+              name: net-config
+              key: TS_EXTRA_ARGS
+        - name: TZ
+          valueFrom:
+            configMapKeyRef:
+              name: net-config
+              key: TZ
+        volumeMounts:
+        - name: tailscale-state
+          mountPath: /var/lib/tailscale
+        - name: dev-net-tun
+          mountPath: /dev/net/tun
+        securityContext:
+          capabilities:
+            add:
+            - NET_ADMIN
+            - NET_RAW
+      volumes:
+      - name: tailscale-state
+        persistentVolumeClaim:
+          claimName: tailscale-state
+      - name: dev-net-tun
+        hostPath:
+          path: /dev/net/tun
+          type: CharDevice

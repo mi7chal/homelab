@@ -1,0 +1,56 @@
+---
+# Tdarr server PVC
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: tdarr-server
+  namespace: homelab
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: local-path
+---
+# Tdarr configs PVC
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: tdarr-configs
+  namespace: homelab
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: local-path
+---
+# Tdarr logs PVC
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: tdarr-logs
+  namespace: homelab
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: local-path
+---
+# Tdarr transcode cache PVC
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: tdarr-transcode-cache
+  namespace: homelab
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Gi
+  storageClassName: local-path

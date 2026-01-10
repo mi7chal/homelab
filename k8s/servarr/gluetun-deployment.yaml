@@ -1,0 +1,324 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gluetun-servarr
+  namespace: homelab
+  labels:
+    app: gluetun-servarr
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: gluetun-servarr
+  template:
+    metadata:
+      labels:
+        app: gluetun-servarr
+    spec:
+      hostNetwork: false
+      containers:
+      # Gluetun VPN Container
+      - name: gluetun
+        image: qmcgaw/gluetun:latest
+        securityContext:
+          capabilities:
+            add:
+              - NET_ADMIN
+        env:
+        - name: TZ
+          valueFrom:
+            configMapKeyRef:
+              name: servarr-config
+              key: TZ
+        - name: VPN_SERVICE_PROVIDER
+          valueFrom:
+            configMapKeyRef:
+              name: servarr-config
+              key: VPN_SERVICE_PROVIDER
+        - name: VPN_TYPE
+          valueFrom:
+            configMapKeyRef:
+              name: servarr-config
+              key: VPN_TYPE
+        - name: WIREGUARD_PRIVATE_KEY
+          valueFrom:
+            secretKeyRef:
+              name: servarr-secrets
+              key: WIREGUARD_PRIVATE_KEY
+        - name: WIREGUARD_PRESHARED_KEY
+          valueFrom:
+            secretKeyRef:
+              name: servarr-secrets
+              key: WIREGUARD_PRESHARED_KEY
+        - name: WIREGUARD_ADDRESSES
+          valueFrom:
+            configMapKeyRef:
+              name: servarr-config
+              key: WIREGUARD_ADDRESSES
+        - name: DNS
+          valueFrom:
+            configMapKeyRef:
+              name: servarr-config
+              key: DNS
+        - name: SERVER_CITIES
+          valueFrom:
+            configMapKeyRef:
+              name: servarr-config
+              key: SERVER_CITIES
+        - name: WIREGUARD_MTU
+          valueFrom:
+            configMapKeyRef:
+              name: servarr-config
+              key: WIREGUARD_MTU
+        - name: FIREWALL_VPN_INPUT_PORTS
+          valueFrom:
+            configMapKeyRef:
+              name: servarr-config
+              key: FIREWALL_VPN_INPUT_PORTS
+        - name: FIREWALL_OUTBOUND_SUBNETS
+          valueFrom:
+            secretKeyRef:
+              name: servarr-secrets
+              key: FIREWALL_OUTBOUND_SUBNETS
+        volumeMounts:
+        - name: gluetun-config
+          mountPath: /gluetun
+        - name: dev-net-tun
+          mountPath: /dev/net/tun
+        ports:
+        - containerPort: 9095
+          name: qbittorrent
+        - containerPort: 6881
+          name: qbit-tcp
+          protocol: TCP
+        - containerPort: 6881
+          name: qbit-udp
+          protocol: UDP
+        - containerPort: 55426
+          name: qbit-conn-tcp
+          protocol: TCP
+        - containerPort: 55426
+          name: qbit-conn-udp
+          protocol: UDP
+        - containerPort: 9000
+          name: qbit-alt-tcp
+          protocol: TCP
+        - containerPort: 9000
+          name: qbit-alt-udp
+          protocol: UDP
+        - containerPort: 7878
+          name: radarr
+        - containerPort: 9696
+          name: prowlarr
+        - containerPort: 8191
+          name: flaresolverr
+        - containerPort: 8989
+          name: sonarr
+        - containerPort: 6767
+          name: bazarr
+
+      # qBittorrent Container (shares network with Gluetun)
+      - name: qbittorrent
+        image: lscr.io/linuxserver/qbittorrent:latest
+        env:
+        - name: PUID
+          valueFrom:
+            configMapKeyRef:
+              name: servarr-config
+              key: PUID
+        - name: PGID
+          valueFrom:
+            configMapKeyRef:
+              name: servarr-config
+              key: PGID
+        - name: TZ
+          valueFrom:
+            configMapKeyRef:
+              name: servarr-config
+              key: TZ
+        - name: WEBUI_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: servarr-config
+              key: WEBUI_PORT
+        - name: UMASK_SET
+          valueFrom:
+            configMapKeyRef:
+              name: servarr-config
+              key: UMASK_SET
+        volumeMounts:
+        - name: qbittorrent-config
+          mountPath: /config
+        - name: media
+          mountPath: /data/downloads
+          subPath: downloads
+
+      # Sonarr Container (shares network with Gluetun)
+      - name: sonarr
+        image: lscr.io/linuxserver/sonarr:latest
+        env:
+        - name: PUID
+          valueFrom:
+            configMapKeyRef:
+              name: servarr-config
+              key: PUID
+        - name: PGID
+          valueFrom:
+            configMapKeyRef:
+              name: servarr-config
+              key: PGID
+        - name: TZ
+          valueFrom:
+            configMapKeyRef:
+              name: servarr-config
+              key: TZ
+        volumeMounts:
+        - name: sonarr-config
+          mountPath: /config
+        - name: media
+          mountPath: /data
+        - name: localtime
+          mountPath: /etc/localtime
+          readOnly: true
+
+      # Radarr Container (shares network with Gluetun)
+      - name: radarr
+        image: lscr.io/linuxserver/radarr:latest
+        env:
+        - name: PUID
+          valueFrom:
+            configMapKeyRef:
+              name: servarr-config
+              key: PUID
+        - name: PGID
+          valueFrom:
+            configMapKeyRef:
+              name: servarr-config
+              key: PGID
+        - name: TZ
+          valueFrom:
+            configMapKeyRef:
+              name: servarr-config
+              key: TZ
+        volumeMounts:
+        - name: radarr-config
+          mountPath: /config
+        - name: media
+          mountPath: /data
+        - name: localtime
+          mountPath: /etc/localtime
+          readOnly: true
+
+      # Prowlarr Container (shares network with Gluetun)
+      - name: prowlarr
+        image: lscr.io/linuxserver/prowlarr:latest
+        env:
+        - name: PUID
+          valueFrom:
+            configMapKeyRef:
+              name: servarr-config
+              key: PUID
+        - name: PGID
+          valueFrom:
+            configMapKeyRef:
+              name: servarr-config
+              key: PGID
+        - name: TZ
+          valueFrom:
+            configMapKeyRef:
+              name: servarr-config
+              key: TZ
+        volumeMounts:
+        - name: prowlarr-config
+          mountPath: /config
+        - name: localtime
+          mountPath: /etc/localtime
+          readOnly: true
+
+      # Bazarr Container (shares network with Gluetun)
+      - name: bazarr
+        image: lscr.io/linuxserver/bazarr:latest
+        env:
+        - name: PUID
+          valueFrom:
+            configMapKeyRef:
+              name: servarr-config
+              key: PUID
+        - name: PGID
+          valueFrom:
+            configMapKeyRef:
+              name: servarr-config
+              key: PGID
+        - name: TZ
+          valueFrom:
+            configMapKeyRef:
+              name: servarr-config
+              key: TZ
+        volumeMounts:
+        - name: bazarr-config
+          mountPath: /config
+        - name: media
+          mountPath: /data
+        - name: localtime
+          mountPath: /etc/localtime
+          readOnly: true
+
+      # FlareSolverr Container (shares network with Gluetun)
+      - name: flaresolverr
+        image: flaresolverr/flaresolverr:latest
+        env:
+        - name: LOG_LEVEL
+          valueFrom:
+            configMapKeyRef:
+              name: servarr-config
+              key: LOG_LEVEL
+        - name: LOG_HTML
+          valueFrom:
+            configMapKeyRef:
+              name: servarr-config
+              key: LOG_HTML
+        - name: CAPTCHA_SOLVER
+          valueFrom:
+            configMapKeyRef:
+              name: servarr-config
+              key: CAPTCHA_SOLVER
+        - name: TZ
+          valueFrom:
+            configMapKeyRef:
+              name: servarr-config
+              key: TZ
+
+      volumes:
+      - name: gluetun-config
+        persistentVolumeClaim:
+          claimName: gluetun-config
+      - name: qbittorrent-config
+        persistentVolumeClaim:
+          claimName: qbittorrent-config
+      - name: sonarr-config
+        persistentVolumeClaim:
+          claimName: sonarr-config
+      - name: radarr-config
+        persistentVolumeClaim:
+          claimName: radarr-config
+      - name: prowlarr-config
+        persistentVolumeClaim:
+          claimName: prowlarr-config
+      - name: bazarr-config
+        persistentVolumeClaim:
+          claimName: bazarr-config
+      - name: media
+        hostPath:
+          path: /mnt/media
+          type: Directory
+      - name: localtime
+        hostPath:
+          path: /etc/localtime
+          type: File
+      - name: dev-net-tun
+        hostPath:
+          path: /dev/net/tun
+          type: CharDevice

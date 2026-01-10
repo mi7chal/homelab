@@ -1,0 +1,115 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jellyfin
+  namespace: homelab
+  labels:
+    app: jellyfin
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: jellyfin
+  template:
+    metadata:
+      labels:
+        app: jellyfin
+    spec:
+      containers:
+      - name: jellyfin
+        image: jellyfin/jellyfin
+        env:
+        - name: JELLYFIN_PublishedServerUrl
+          valueFrom:
+            configMapKeyRef:
+              name: jellyfin-config
+              key: JELLYFIN_PublishedServerUrl
+        - name: PUID
+          valueFrom:
+            configMapKeyRef:
+              name: jellyfin-config
+              key: PUID
+        - name: PGID
+          valueFrom:
+            configMapKeyRef:
+              name: jellyfin-config
+              key: PGID
+        - name: TZ
+          valueFrom:
+            configMapKeyRef:
+              name: jellyfin-config
+              key: TZ
+        ports:
+        - containerPort: 8096
+          name: http
+          protocol: TCP
+        - containerPort: 7359
+          name: discovery
+          protocol: UDP
+        volumeMounts:
+        - name: jellyfin-config
+          mountPath: /config
+        - name: jellyfin-cache
+          mountPath: /cache
+        - name: media
+          mountPath: /data
+        - name: dev-dri
+          mountPath: /dev/dri
+        securityContext:
+          privileged: true
+      volumes:
+      - name: jellyfin-config
+        persistentVolumeClaim:
+          claimName: jellyfin-config
+      - name: jellyfin-cache
+        persistentVolumeClaim:
+          claimName: jellyfin-cache
+      - name: media
+        hostPath:
+          path: /mnt/media
+          type: Directory
+      - name: dev-dri
+        hostPath:
+          path: /dev/dri
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jellyfin
+  namespace: homelab
+spec:
+  selector:
+    app: jellyfin
+  ports:
+  - name: http
+    port: 8096
+    targetPort: 8096
+    protocol: TCP
+  - name: discovery
+    port: 7359
+    targetPort: 7359
+    protocol: UDP
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: jellyfin-ingress
+  namespace: homelab
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+spec:
+  rules:
+  - host: jellyfin.home
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: jellyfin
+            port:
+              number: 8096
