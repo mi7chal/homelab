@@ -1,0 +1,51 @@
+# Dependencies
+node_modules/
+vendor/
+*.lock
+*.sum
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Secrets and sensitive data
+*.key
+*.pem
+*.secret
+.env
+.env.local
+secrets/
+
+# Logs
+*.log
+logs/
+
+# Build artifacts
+dist/
+build/
+*.o
+*.a
+
+# Kubernetes
+kubeconfig
+kubeconfig-*
+
+# Terraform
+.terraform/
+*.tfstate*
+.tfvars
+override.tf
+
+# ArgoCD
+argocd-config.yaml
+
+# Helm
+charts/*/Chart.lock
+
+# OS
+Thumbs.db
+.DS_Store
