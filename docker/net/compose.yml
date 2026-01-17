@@ -3,8 +3,8 @@ services:
     image: adguard/adguardhome
     container_name: adguardhome
     volumes:
-      - ./work:/opt/adguardhome/work
-      - ./conf:/opt/adguardhome/conf
+      - /opt/docker/adguard/work:/opt/adguardhome/work
+      - /opt/docker/adguard/conf:/opt/adguardhome/conf
     environment:
       - TZ=${TZ}
     restart: unless-stopped
@@ -20,7 +20,7 @@ services:
       TS_EXTRA_ARGS: --snat-subnet-routes=true --accept-dns=false
       TZ: ${TZ}
     volumes:
-      - .state:/var/lib/tailscale
+      - /opt/docker/tailscale/state:/var/lib/tailscale
     devices:
       - /dev/net/tun:/dev/net/tun
     cap_add:
