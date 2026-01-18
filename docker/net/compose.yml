@@ -25,6 +25,7 @@ services:
     devices:
       - /dev/net/tun:/dev/net/tun
     cap_add:
-      - net_admin
-      - net_raw
+      - NET_ADMIN
+      - NET_RAW
+      - SYS_MODULE
     restart: unless-stopped
