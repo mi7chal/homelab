@@ -18,7 +18,7 @@ services:
       TS_STATE_DIR: /var/lib/tailscale
       TS_ROUTES: ${TAILSCALE_ROUTES}
       TS_USERSPACE: "false"
-      TS_EXTRA_ARGS: --snat-subnet-routes=true --accept-dns=false
+      TS_EXTRA_ARGS: --snat-subnet-routes=true --accept-dns=false --ipv6=false
       TZ: ${TZ}
     volumes:
       - /opt/docker/tailscale/state:/var/lib/tailscale
