@@ -31,8 +31,8 @@ spec:
       database: zitadel
       username: zitadel
       existingSecret: "zitadel-secret"
-      adminPasswordKey: "root_password"
       secretKeys:
+        adminPasswordKey: "root_password"
         userPasswordKey: "db_password"
     primary:
       persistence:
