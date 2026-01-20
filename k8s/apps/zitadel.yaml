@@ -29,6 +29,13 @@ spec:
   values:
     zitadel:
       masterkeySecretName: "zitadel-secret"
+      db:
+        host: "zitadel-postgresql" 
+        port: 5432
+        database: "zitadel"
+        user: "zitadel"
+        ssl:
+          mode: "disable"
       configmapConfig:
         ExternalDomain: "auth.home"
         ExternalSecure: false 
@@ -61,6 +68,8 @@ spec:
       hardware.home/tier: performance
       hardware.home/storage: nvme
     initJob:
+      annotations:
+        "helm.sh/hook": post-install,post-upgrade
       nodeSelector:
         hardware.home/tier: performance
     ingress:
