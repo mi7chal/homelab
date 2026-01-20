@@ -14,6 +14,8 @@ metadata:
   name: zitadel
   namespace: zitadel
 spec:
+  dependsOn:
+    - name: zitadel-db
   interval: 1h
   chart:
     spec:

@@ -23,6 +23,6 @@ parameters:
     ]
 allowedTopologies:
 - matchLabelExpressions:
-  - key: hardware.home.lan/storage
+  - key: hardware.home/storage
     values:
       - nvme
