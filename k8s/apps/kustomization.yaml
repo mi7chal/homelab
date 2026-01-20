@@ -4,3 +4,4 @@ resources:
   - zitadel.yaml
   - zitadel-secret.enc.yaml 
   - namespaces.yaml
+  - zitadel-db.yaml
