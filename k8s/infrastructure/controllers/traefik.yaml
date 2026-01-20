@@ -38,7 +38,8 @@ spec:
     ports:
       web:
         port: 8000
-        expose: true
+        expose: 
+          default: true
         exposedPort: 80
         protocol: TCP
         redirections:
@@ -48,7 +49,8 @@ spec:
             permanent: true
       websecure:
         port: 8443
-        expose: true
+        expose: 
+          default: true
         exposedPort: 443
         protocol: TCP
         http3:
