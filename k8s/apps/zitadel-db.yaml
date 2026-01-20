@@ -29,7 +29,7 @@ spec:
     createNamespace: true
   values:
     image:
-      tag: 17
+      registry: public.ecr.aws
     auth:
       database: zitadel
       username: zitadel
