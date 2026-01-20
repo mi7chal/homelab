@@ -27,6 +27,8 @@ spec:
   install:
     createNamespace: true
   values:
+    postgresql:
+      enabled: false
     zitadel:
       masterkeySecretName: "zitadel-secret"
       db:
@@ -40,36 +42,39 @@ spec:
         ExternalDomain: "auth.home"
         ExternalSecure: false 
         ExternalPort: 80
-    postgresql:
-      enabled: true
-      auth:
-        database: zitadel
-        username: zitadel
-        existingSecret: "zitadel-secret"
-        secretKeys:
-          userPasswordKey: "db_password"
-          adminPasswordKey: "root_password"
-      primary:
-        persistence:
-          enabled: true
-          storageClass: "longhorn-fast-single" 
-          size: 10Gi
-        resources:
-          requests:
-            cpu: 200m
-            memory: 512Mi
-          limits:
-            memory: 1024Mi
-        nodeSelector:
-          hardware.home/tier: performance
-          hardware.home/storage: nvme
+        Database:
+          Postgres:
+            Host: zitadel-postgresql 
+            Port: 5432
+            Database: zitadel
+            User:
+              Username: zitadel
+              SSL:
+                Mode: disable
+            Admin:
+              Username: postgres
+              SSL:
+                Mode: disable
+        secretConfig:
+      Database:
+        Postgres:
+          User:
+            Password:
+              valueFrom:
+                secretKeyRef:
+                  name: "zitadel-secret"
+                  key: "db_password"
+          Admin:
+            Password:
+              valueFrom:
+                secretKeyRef:
+                  name: "zitadel-secret"
+                  key: "root_password"
     replicaCount: 1
     nodeSelector:
       hardware.home/tier: performance
       hardware.home/storage: nvme
     initJob:
-      annotations:
-        "helm.sh/hook": post-install,post-upgrade
       nodeSelector:
         hardware.home/tier: performance
     ingress:
