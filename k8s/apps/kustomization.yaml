@@ -3,3 +3,8 @@ kind: Kustomization
 resources:
   - zitadel.yaml
   - zitadel-secret.enc.yaml 
+
+decryption:
+  provider: sops
+  secretRef:
+    name: sops-age
