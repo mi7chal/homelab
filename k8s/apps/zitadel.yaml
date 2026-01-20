@@ -28,8 +28,7 @@ spec:
     createNamespace: true
   values:
     zitadel:
-      masterkeyExistingSecret: "zitadel-secret"
-      masterkeyExistingSecretKey: "masterkey"
+      masterkeySecretName: "zitadel-secret"
       configmapConfig:
         ExternalDomain: "auth.home"
         ExternalSecure: false 
