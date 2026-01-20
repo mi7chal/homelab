@@ -21,8 +21,3 @@ parameters:
         "retain":3
       }
     ]
-allowedTopologies:
-- matchLabelExpressions:
-  - key: hardware.home/storage
-    values:
-      - nvme
