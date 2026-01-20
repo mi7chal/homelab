@@ -18,7 +18,7 @@ spec:
   chart:
     spec:
       chart: postgresql
-      version: "18.x.x"
+      version: "16.x.x"
       sourceRef:
         kind: HelmRepository
         name: bitnami
@@ -28,7 +28,7 @@ spec:
     createNamespace: true
   values:
     image:
-      tag: 16
+      tag: 17
     auth:
       database: zitadel
       username: zitadel
