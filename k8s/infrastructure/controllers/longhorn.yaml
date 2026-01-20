@@ -1,0 +1,70 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: longhorn
+  namespace: flux-system
+spec:
+  interval: 1h
+  url: https://charts.longhorn.io
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: longhorn
+  namespace: longhorn-system
+spec:
+  interval: 1h
+  chart:
+    spec:
+      chart: longhorn
+      version: "1.10.x"
+      sourceRef:
+        kind: HelmRepository
+        name: longhorn
+        namespace: flux-system
+  targetNamespace: longhorn-system
+  install:
+    createNamespace: true
+  values:
+    defaultSettings:
+      defaultReplicaCount: 2 # For now we have 2 nodes
+      autoSalvage: true
+      # Rpi adjustments
+      guaranteedEngineManagerCPU: 1
+      guaranteedReplicaManagerCPU: 1
+      v2DataEngine: false
+      createDefaultDiskTaggedLabel: true
+    persistence:
+      defaultClass: true
+      defaultClassReplicaCount: 2
+      reclaimPolicy: Delete
+      defaultFsType: ext4
+    ingress:
+      enabled: true
+      ingressClassName: traefik
+      host: longhorn.home
+      annotations:
+        kubernetes.io/ingress.class: traefik
+    longhornManager:
+      resources:
+        limits:
+          memory: 1536Mi
+        requests:
+          cpu: 50m
+          memory: 256Mi
+    longhornDriver:
+      resources:
+        requests:
+          cpu: 25m
+          memory: 96Mi
+        limits:
+          memory: 192Mi
+    longhornUI:
+      replicas: 1 
+      resources:
+        requests:
+          cpu: 20m
+          memory: 50Mi
+        limits:
+          memory: 320Mi

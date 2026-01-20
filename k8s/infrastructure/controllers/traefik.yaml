@@ -1,0 +1,61 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: traefik
+  namespace: flux-system
+spec:
+  interval: 1h
+  url: https://traefik.github.io/charts
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: traefik
+  namespace: traefik-system
+spec:
+  interval: 1h
+  chart:
+    spec:
+      chart: traefik
+      version: "38.x.x" 
+      sourceRef:
+        kind: HelmRepository
+        name: traefik
+        namespace: flux-system
+  targetNamespace: traefik-system
+  install:
+    createNamespace: true
+  values:
+    global:
+      sendAnonymousUsage: false
+    service:
+      enabled: true
+      type: LoadBalancer
+      loadBalancerIP: "192.168.0.32" # Need to be in metallb pool
+      annotations:
+        metallb.universe.tf/address-pool: home-pool
+    ports:
+      web:
+        port: 8000
+        expose: true
+        exposedPort: 80
+        protocol: TCP
+        redirections:
+          entryPoint:
+            to: websecure
+            scheme: https
+            permanent: true
+      websecure:
+        port: 8443
+        expose: true
+        exposedPort: 443
+        protocol: TCP
+        http3:
+          enabled: true
+    providers:
+      kubernetesCRD:
+        allowCrossNamespace: true # Allow Traefik to watch all namespaces
+      kubernetesIngress:
+        publishedService:
+          enabled: true
