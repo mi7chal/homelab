@@ -62,7 +62,7 @@ spec:
       hardware.home/storage: nvme
     initJob:
       nodeSelector:
-        hardware.home.lan/tier: performance
+        hardware.home/tier: performance
     ingress:
       enabled: true
       className: traefik
