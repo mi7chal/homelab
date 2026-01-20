@@ -28,6 +28,9 @@ spec:
   install:
     createNamespace: true
   values:
+    global:
+      security:
+        allowInsecureImages: true
     image:
       registry: public.ecr.aws
     auth:
