@@ -42,8 +42,8 @@ spec:
           mode: "disable"
       configmapConfig:
         ExternalDomain: "auth.home"
-        ExternalSecure: true 
-        ExternalPort: 443
+        ExternalSecure: false
+        ExternalPort: 80
         Database:
           Postgres:
             Host: zitadel-postgresql 
@@ -80,8 +80,7 @@ spec:
       className: traefik-system-traefik
       annotations:
         traefik.ingress.kubernetes.io/service.serversscheme: h2c
-        traefik.ingress.kubernetes.io/router.entrypoints: websecure
-        traefik.ingress.kubernetes.io/router.tls: "true"
+        traefik.ingress.kubernetes.io/router.entrypoints: web
       hosts:
         - host: auth.home
           paths:
@@ -94,8 +93,7 @@ spec:
         className: traefik-system-traefik
         annotations:
           traefik.ingress.kubernetes.io/service.serversscheme: http
-          traefik.ingress.kubernetes.io/router.entrypoints: websecure
-          traefik.ingress.kubernetes.io/router.tls: "true"
+          traefik.ingress.kubernetes.io/router.entrypoints: web
         hosts:
           - host: auth.home
             paths:
