@@ -31,7 +31,7 @@ spec:
       dashboard:
         enabled: true
         matchRule: Host(`traefik.example.com`)
-        entryPoints: ["web"]
+        entryPoints: ["websecure"]
     global:
       sendAnonymousUsage: false
     service:
