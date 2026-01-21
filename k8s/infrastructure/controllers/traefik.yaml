@@ -31,7 +31,7 @@ spec:
       dashboard:
         enabled: true
         matchRule: Host(`traefik.emoh.pl`)
-        entryPoints: ["web"]
+        entryPoints: ["websecure"]
     global:
       sendAnonymousUsage: false
     service:
