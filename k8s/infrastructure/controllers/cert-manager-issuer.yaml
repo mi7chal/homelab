@@ -23,6 +23,8 @@ kind: Certificate
 metadata:
   name: wildcard-emoh-pl
   namespace: traefik-system
+  annotations:
+    config.kubernetes.io/skip-api-validation: "true"
 spec:
   secretName: wildcard-emoh-pl-tls
   issuerRef:
