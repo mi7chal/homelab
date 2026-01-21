@@ -30,7 +30,7 @@ spec:
     ingressRoute:
       dashboard:
         enabled: true
-        matchRule: Host(`traefik.home`)
+        matchRule: Host(`traefik.emoh.pl`)
         entryPoints: ["web"]
     global:
       sendAnonymousUsage: false
@@ -47,12 +47,22 @@ spec:
           default: true
         exposedPort: 80
         protocol: TCP
+        redirections:
+          entryPoint:
+            to: websecure
+            scheme: https
       websecure:
         port: 8443
         expose: 
           default: true
         exposedPort: 443
         protocol: TCP
+        tls:
+          enabled: true
+    tlsStore:
+      default:
+        defaultCertificate:
+          secretName: wildcard-emoh-pl-tls
     providers:
       kubernetesCRD:
         allowCrossNamespace: true # Allow Traefik to watch all namespaces

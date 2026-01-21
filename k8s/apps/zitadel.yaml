@@ -41,11 +41,11 @@ spec:
         ssl:
           mode: "disable"
       configmapConfig:
-        ExternalDomain: "auth.home"
-        ExternalSecure: false
-        ExternalPort: 80
+        ExternalDomain: "auth.emoh.pl"
+        ExternalSecure: true
+        ExternalPort: 443
         TLS:
-          Enabled: false
+          Enabled: false  # Cloudflare zajmuje się TLS
         Database:
           Postgres:
             Host: zitadel-postgresql 
@@ -81,10 +81,11 @@ spec:
       enabled: true
       className: traefik-system-traefik
       annotations:
-        traefik.ingress.kubernetes.io/service.serversscheme: http
-        traefik.ingress.kubernetes.io/router.entrypoints: web
+        traefik.ingress.kubernetes.io/service.serversscheme: h2c
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        traefik.ingress.kubernetes.io/router.tls: "true"
       hosts:
-        - host: auth.home
+        - host: auth.emoh.pl
           paths:
             - path: /
               pathType: Prefix
@@ -95,9 +96,10 @@ spec:
         className: traefik-system-traefik
         annotations:
           traefik.ingress.kubernetes.io/service.serversscheme: http
-          traefik.ingress.kubernetes.io/router.entrypoints: web
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
+          traefik.ingress.kubernetes.io/router.tls: "true"
         hosts:
-          - host: auth.home
+          - host: auth.emoh.pl
             paths:
               - path: /ui/v2/login
                 pathType: Prefix

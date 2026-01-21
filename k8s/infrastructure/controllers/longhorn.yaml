@@ -43,7 +43,7 @@ spec:
     ingress:
       enabled: true
       ingressClassName: traefik-system-traefik
-      host: longhorn.home
+      host: longhorn.emoh.pl
     longhornManager:
       resources:
         limits:

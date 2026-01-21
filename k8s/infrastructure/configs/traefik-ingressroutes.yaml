@@ -8,7 +8,7 @@ metadata:
 spec:
   insecureSkipVerify: true
 ---
-# Proxmox
+# Proxmox - LOKALNY
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
@@ -16,15 +16,16 @@ metadata:
   namespace: traefik-system
 spec:
   entryPoints:
-    - web
+    - websecure
   routes:
-    - match: Host(`proxmox.home`)
+    - match: Host(`proxmox.emoh.pl`)
       kind: Rule
       services:
         - name: proxmox-external
           port: 8006
           scheme: https
           serversTransport: insecure-transport
+  tls: {}
 ---
 apiVersion: v1
 kind: Service
@@ -49,7 +50,7 @@ subsets:
     ports:
       - port: 8006
 ---
-# Home Assistant
+# Home Assistant - LOKALNY
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
@@ -57,13 +58,14 @@ metadata:
   namespace: traefik-system
 spec:
   entryPoints:
-    - web
+    - websecure
   routes:
-    - match: Host(`homeassistant.home`)
+    - match: Host(`homeassistant.emoh.pl`)
       kind: Rule
       services:
         - name: homeassistant-external
           port: 8123
+  tls: {}
 ---
 apiVersion: v1
 kind: Service
@@ -88,7 +90,7 @@ subsets:
     ports:
       - port: 8123
 ---
-# Portainer
+# Portainer - LOKALNY
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
@@ -96,13 +98,14 @@ metadata:
   namespace: traefik-system
 spec:
   entryPoints:
-    - web
+    - websecure
   routes:
-    - match: Host(`portainer.home`)
+    - match: Host(`portainer.emoh.pl`)
       kind: Rule
       services:
         - name: portainer-external
           port: 9123
+  tls: {}
 ---
 apiVersion: v1
 kind: Service
@@ -127,7 +130,7 @@ subsets:
     ports:
       - port: 9123
 ---
-# AdGuard Home
+# AdGuard Home - LOKALNY
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
@@ -135,13 +138,14 @@ metadata:
   namespace: traefik-system
 spec:
   entryPoints:
-    - web
+    - websecure
   routes:
-    - match: Host(`adguard.home`)
+    - match: Host(`adguard.emoh.pl`)
       kind: Rule
       services:
         - name: adguard-external
           port: 8012
+  tls: {}
 ---
 apiVersion: v1
 kind: Service
@@ -166,7 +170,7 @@ subsets:
     ports:
       - port: 8012
 ---
-# Qnap ui
+# Qnap ui - LOKALNY
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
@@ -174,13 +178,14 @@ metadata:
   namespace: traefik-system
 spec:
   entryPoints:
-    - web
+    - websecure
   routes:
-    - match: Host(`qnapui.home`)
+    - match: Host(`qnap.emoh.pl`)
       kind: Rule
       services:
         - name: qnapui-external
           port: 8080
+  tls: {}
 ---
 apiVersion: v1
 kind: Service
