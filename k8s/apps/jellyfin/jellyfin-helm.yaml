@@ -44,11 +44,7 @@ spec:
         enabled: true
         existingClaim: jellyfin-config
         mountPath: /config
-    
-    extraVolumes:
-      - name: hwa
-        hostPath:
-          path: /dev/dri
+  
     securityContext:
       capabilities:
         add:
