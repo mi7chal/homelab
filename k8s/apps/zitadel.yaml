@@ -77,7 +77,7 @@ spec:
         hardware.home/tier: performance
     ingress:
       enabled: true
-      className: traefik
+      className: traefik-system-traefik
       annotations:
         traefik.ingress.kubernetes.io/service.serversscheme: h2c
         traefik.ingress.kubernetes.io/router.entrypoints: websecure
@@ -91,7 +91,7 @@ spec:
       enabled: true
       ingress:
         enabled: true
-        className: traefik
+        className: traefik-system-traefik
         annotations:
           traefik.ingress.kubernetes.io/service.serversscheme: http
           traefik.ingress.kubernetes.io/router.entrypoints: websecure
