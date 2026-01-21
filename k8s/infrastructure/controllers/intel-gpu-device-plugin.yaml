@@ -28,7 +28,7 @@ spec:
     createNamespace: false
   values:
     nodeSelector:
-      hardware.home/gpu: "true"
+      intel.feature.node.kubernetes.io/gpu: "true"
     
     devicePlugin:
       image:
