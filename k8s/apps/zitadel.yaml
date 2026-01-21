@@ -44,6 +44,8 @@ spec:
         ExternalDomain: "auth.home"
         ExternalSecure: false
         ExternalPort: 80
+        TLS:
+          Enabled: false
         Database:
           Postgres:
             Host: zitadel-postgresql 
@@ -79,7 +81,7 @@ spec:
       enabled: true
       className: traefik-system-traefik
       annotations:
-        traefik.ingress.kubernetes.io/service.serversscheme: h2c
+        traefik.ingress.kubernetes.io/service.serversscheme: http
         traefik.ingress.kubernetes.io/router.entrypoints: web
       hosts:
         - host: auth.home
