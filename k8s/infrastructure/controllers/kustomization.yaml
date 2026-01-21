@@ -9,3 +9,4 @@ resources:
   - traefik.yaml
   - longhorn.yaml
   - cert-manager-letsencrypt.yaml
+  - intel-gpu-device-plugin.yaml
