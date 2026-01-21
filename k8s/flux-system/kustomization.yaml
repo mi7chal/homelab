@@ -6,3 +6,4 @@ resources:
 - infrastructure.yaml
 - configs.yaml
 - apps.yaml
+- infrastructure-services.yaml
