@@ -42,8 +42,8 @@ spec:
           mode: "disable"
       configmapConfig:
         ExternalDomain: "auth.home"
-        ExternalSecure: false 
-        ExternalPort: 80
+        ExternalSecure: true 
+        ExternalPort: 443
         Database:
           Postgres:
             Host: zitadel-postgresql 
@@ -78,11 +78,29 @@ spec:
     ingress:
       enabled: true
       className: traefik
+      annotations:
+        traefik.ingress.kubernetes.io/service.serversscheme: h2c
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        traefik.ingress.kubernetes.io/router.tls: "true"
       hosts:
         - host: auth.home
           paths:
             - path: /
               pathType: Prefix
+    login:
+      enabled: true
+      ingress:
+        enabled: true
+        className: traefik
+        annotations:
+          traefik.ingress.kubernetes.io/service.serversscheme: http
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
+          traefik.ingress.kubernetes.io/router.tls: "true"
+        hosts:
+          - host: auth.home
+            paths:
+              - path: /ui/v2/login
+                pathType: Prefix
     resources:
       requests:
         cpu: 100m
