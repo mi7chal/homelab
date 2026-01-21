@@ -57,21 +57,17 @@ spec:
               Username: postgres
               SSL:
                 Mode: disable
-      secretConfig:
-        Database:
-          Postgres:
-            User:
-              Password:
-                valueFrom:
-                  secretKeyRef:
-                    name: "zitadel-secret"
-                    key: "db_password"
-            Admin:
-              Password:
-                valueFrom:
-                  secretKeyRef:
-                    name: "zitadel-secret"
-                    key: "root_password"
+    env:
+      - name: ZITADEL_DATABASE_POSTGRES_ADMIN_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: "zitadel-secrets" 
+            key: "root_password"
+      - name: ZITADEL_DATABASE_POSTGRES_USER_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: "zitadel-secrets" 
+            key: "db_password"
     replicaCount: 1
     nodeSelector:
       hardware.home/tier: performance
