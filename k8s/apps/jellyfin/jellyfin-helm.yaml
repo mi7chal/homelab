@@ -1,0 +1,86 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: jellyfin
+  namespace: flux-system
+spec:
+  interval: 1h
+  url: https://charts.jellyfin.org
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: jellyfin
+  namespace: jellyfin
+spec:
+  interval: 1h
+  chart:
+    spec:
+      chart: jellyfin
+      version: "0.3.x"
+      sourceRef:
+        kind: HelmRepository
+        name: jellyfin
+        namespace: flux-system
+  targetNamespace: jellyfin
+  install:
+    createNamespace: true
+  values:
+    replicaCount: 1
+    defaultPodOptions:
+      nodeSelector:
+        hardware.home/gpu: "true"
+    nodeSelector:
+      hardware.home/gpu: "true"
+    
+    persistence:
+      media:
+        enabled: true
+        existingClaim: jellyfin-media-pvc
+        mountPath: /media
+        readOnly: true
+      config:
+        enabled: true
+        existingClaim: jellyfin-config
+        mountPath: /config
+    
+    extraVolumes:
+      - name: hwa
+        hostPath:
+          path: /dev/dri
+    securityContext:
+      capabilities:
+        add:
+          - "SYS_ADMIN"
+        drop:
+          - "ALL"
+        privileged: false
+
+    ingress:
+      enabled: true
+      ingressClassName: traefik-system-traefik
+      annotations:
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        traefik.ingress.kubernetes.io/router.tls: "true"
+      hosts:
+        - host: jellyfin.emoh.pl
+          paths:
+            - path: /
+              pathType: Prefix
+    jellyfin:
+      env:
+        - name: LIBVA_DRIVER_NAME
+          value: "i965"
+        - name: JELLYFIN_PublishedServerUrl
+          value: "https://jellyfin.emoh.pl"
+    
+    resources:
+      requests:
+        cpu: 500m
+        memory: 512Mi
+        gpu.intel.com/i915: 1
+      limits:
+        cpu: 2000m
+        memory: 2Gi
+        gpu.intel.com/i915: 1
