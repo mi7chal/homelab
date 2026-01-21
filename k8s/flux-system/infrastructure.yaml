@@ -7,7 +7,6 @@ spec:
   interval: 10m
   path: ./k8s/infrastructure/controllers
   prune: true
-  validation: client
   sourceRef:
     kind: GitRepository
     name: flux-system
