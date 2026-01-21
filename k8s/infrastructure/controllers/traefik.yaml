@@ -31,7 +31,7 @@ spec:
       dashboard:
         enabled: true
         matchRule: Host(`traefik.home`)
-        entryPoints: ["websecure"]
+        entryPoints: ["web"]
     global:
       sendAnonymousUsage: false
     service:
@@ -47,19 +47,12 @@ spec:
           default: true
         exposedPort: 80
         protocol: TCP
-        redirections:
-          entryPoint:
-            to: websecure
-            scheme: https
-            permanent: true
       websecure:
         port: 8443
         expose: 
           default: true
         exposedPort: 443
         protocol: TCP
-        http3:
-          enabled: true
     providers:
       kubernetesCRD:
         allowCrossNamespace: true # Allow Traefik to watch all namespaces
