@@ -42,10 +42,8 @@ spec:
       defaultFsType: ext4
     ingress:
       enabled: true
-      ingressClassName: traefik
+      ingressClassName: traefik-system-traefik
       host: longhorn.home
-      annotations:
-        kubernetes.io/ingress.class: traefik
     longhornManager:
       resources:
         limits:
