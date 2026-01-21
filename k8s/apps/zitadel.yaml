@@ -61,12 +61,12 @@ spec:
       - name: ZITADEL_DATABASE_POSTGRES_ADMIN_PASSWORD
         valueFrom:
           secretKeyRef:
-            name: "zitadel-secrets" 
+            name: "zitadel-secret" 
             key: "root_password"
       - name: ZITADEL_DATABASE_POSTGRES_USER_PASSWORD
         valueFrom:
           secretKeyRef:
-            name: "zitadel-secrets" 
+            name: "zitadel-secret" 
             key: "db_password"
     replicaCount: 1
     nodeSelector:
