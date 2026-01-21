@@ -33,4 +33,3 @@ spec:
     - "*.emoh.pl"
   duration: 2160h # 90 days
   renewBefore: 720h # 30 days
-
