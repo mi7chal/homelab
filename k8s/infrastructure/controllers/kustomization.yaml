@@ -10,3 +10,5 @@ resources:
   - longhorn.yaml
   - cert-manager-letsencrypt.yaml
   - intel-gpu-device-plugin.yaml
+  - intel-operator.yaml
+  - nfd.yaml
