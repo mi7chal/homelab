@@ -4,5 +4,4 @@ namespace: metallb-system
 resources:
   - metallb-pool.yaml
   - storage-fast.yaml
-  - nfs-storage.yaml
   - traefik-ingressroutes.yaml
