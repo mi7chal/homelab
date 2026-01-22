@@ -5,6 +5,8 @@ metadata:
   name: intel-device-plugins-operator
   namespace: flux-system
 spec:
+  dependsOn:
+    - name: nfd
   interval: 1h
   chart:
     spec:

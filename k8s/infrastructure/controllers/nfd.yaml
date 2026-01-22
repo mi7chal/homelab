@@ -27,7 +27,10 @@ spec:
   install:
     createNamespace: false
   values:
+    master:
+      enable: true
     worker:
+      enable: true
       config:
         core:
           sources:
