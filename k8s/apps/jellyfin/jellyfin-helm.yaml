@@ -43,7 +43,7 @@ spec:
       qnap:
         enabled: true
         existingClaim: jellyfin-media-qnap-pvc
-        mountPath: /qnap
+        mountPath: /mnt/qnap
         readOnly: true
       config:
         enabled: true
