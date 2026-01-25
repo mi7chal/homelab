@@ -37,7 +37,6 @@ spec:
         redirect_url = "https://sso.emoh.pl/oauth2/callback"
         cookie_path = "/"
         pass_access_token = true
-        pass_refresh_token = true
         pass_user_headers = true
         skip_auth_regex = "^/ping$,^/ready$"
     extraArgs:
