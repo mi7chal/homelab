@@ -18,7 +18,7 @@ spec:
   chart:
     spec:
       chart: oauth2-proxy
-      version: "7.x.x"
+      version: "10.x.x"
       sourceRef:
         kind: HelmRepository
         name: oauth2-proxy
@@ -41,11 +41,13 @@ spec:
       cookie-secure: true
       cookie-samesite: lax
       skip-provider-button: true
-      # Role based access control
       oidc-groups-claim: roles
       allowed-group: admin
     ingress:
-      enabled: false
+      enabled: true
+      className: traefik-system-traefik
+      hosts:
+        - sso.emoh.pl
     resources:
       limits:
         cpu: 100m
