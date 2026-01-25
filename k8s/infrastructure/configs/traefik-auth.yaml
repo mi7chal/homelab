@@ -6,7 +6,7 @@ metadata:
   namespace: traefik-system
 spec:
   forwardAuth:
-    address: http://oauth2-proxy.traefik-system.svc.cluster.local:80
+    address: http://traefik-system-oauth2-proxy.traefik-system.svc.cluster.local:80
     trustForwardHeader: true
     authResponseHeaders:
       - X-Auth-Request-User
