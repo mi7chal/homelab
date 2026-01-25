@@ -30,10 +30,20 @@ spec:
     ingressRoute:
       dashboard:
         enabled: true
+        middlewares:
+          - name: oauth-auth
+            namespace: traefik-system
         matchRule: Host(`traefik.emoh.pl`)
         entryPoints: ["websecure"]
     global:
       sendAnonymousUsage: false
+    resources:
+      requests:
+        cpu: "100m"
+        memory: "100Mi"
+      limits:
+        cpu: "1000m"
+        memory: "500Mi"
     service:
       enabled: true
       type: LoadBalancer

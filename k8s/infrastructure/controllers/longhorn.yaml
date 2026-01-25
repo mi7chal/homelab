@@ -18,7 +18,7 @@ spec:
   chart:
     spec:
       chart: longhorn
-      version: "1.10.x"
+      version: "1.10.0"
       sourceRef:
         kind: HelmRepository
         name: longhorn
@@ -43,6 +43,8 @@ spec:
     ingress:
       enabled: true
       ingressClassName: traefik-system-traefik
+      annotations:
+        traefik.ingress.kubernetes.io/router.middlewares: traefik-system-oauth-auth@kubernetescrd
       host: longhorn.emoh.pl
     longhornManager:
       resources:

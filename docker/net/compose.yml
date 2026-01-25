@@ -30,3 +30,35 @@ services:
       - NET_RAW
       - SYS_MODULE
     restart: unless-stopped
+  adguard-sync:
+    image: ghcr.io/bakito/adguardhome-sync:latest
+    container_name: adguard-sync
+
+    profiles: ["master"]
+    restart: unless-stopped
+    environment:
+      # Master
+      - ORIGIN_URL=${ADGUARD_MASTER_URL}
+      - ORIGIN_USERNAME=${ADGUARD_MASTER_USERNAME}
+      - ORIGIN_PASSWORD=${ADGUARD_MASTER_PASSWORD}
+
+      # Slave
+      - REPLICA_URL=${ADGUARD_SLAVE_URL}
+      - REPLICA_USERNAME=${ADGUARD_SLAVE_USERNAME}
+      - REPLICA_PASSWORD=${ADGUARD_SLAVE_PASSWORD}
+
+      # Split scope DHCP
+      - FEATURES_DHCP_SERVER_CONFIG=false
+      - FEATURES_DHCP_STATIC_LEASES=true
+
+  
+      # Sync everything
+      - FEATURES_GENERAL_SETTINGS=true
+      - FEATURES_FILTERS=true
+      - FEATURES_DNS_REWRITES=true
+      - FEATURES_CLIENT_SETTINGS=true
+      - FEATURES_SERVICES=true
+
+      # --- Częstotliwość ---
+      - CRON=*/10 * * * * # 10min
+      - RUN_ON_START=true 
