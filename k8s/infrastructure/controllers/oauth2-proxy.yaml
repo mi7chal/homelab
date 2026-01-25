@@ -37,11 +37,17 @@ spec:
     extraArgs:
       provider: oidc
       oidc-issuer-url: https://auth.emoh.pl
+      redirect-url: https://sso.emoh.pl/oauth2/callback
       cookie-domain: .emoh.pl
       whitelist-domain: .emoh.pl
       cookie-secure: true
       cookie-samesite: lax
+      cookie-path: /
       skip-provider-button: true
+      pass-access-token: true
+      pass-refresh-token: true
+      pass-user-headers: true
+      skip-auth-regex: ^/ping$,^/ready$
       oidc-groups-claim: roles
       allowed-group: admin
     ingress:
