@@ -35,6 +35,7 @@ spec:
             namespace: traefik-system
         matchRule: Host(`traefik.emoh.pl`)
         entryPoints: ["websecure"]
+    fullnameOverride: traefik
     global:
       sendAnonymousUsage: false
     resources:

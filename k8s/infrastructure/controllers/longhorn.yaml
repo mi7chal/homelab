@@ -42,9 +42,9 @@ spec:
       defaultFsType: ext4
     ingress:
       enabled: true
-      ingressClassName: traefik-system-traefik
+      ingressClassName: traefik
       annotations:
-        traefik.ingress.kubernetes.io/router.middlewares: traefik-system-oauth-auth@kubernetescrd
+        traefik.ingress.kubernetes.io/router.middlewares: oauth-auth@kubernetescrd
       host: longhorn.emoh.pl
     longhornManager:
       resources:

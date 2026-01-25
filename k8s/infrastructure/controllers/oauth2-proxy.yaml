@@ -27,6 +27,7 @@ spec:
   install:
     createNamespace: true
   values:
+    fullnameOverride: oauth2-proxy
     config:
       existingSecret: oauth2-proxy-creds
       configFile: |-
@@ -45,7 +46,7 @@ spec:
       allowed-group: admin
     ingress:
       enabled: true
-      className: traefik-system-traefik
+      className: traefik
       hosts:
         - sso.emoh.pl
     resources:
