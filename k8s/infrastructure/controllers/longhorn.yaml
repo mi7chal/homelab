@@ -44,7 +44,7 @@ spec:
       enabled: true
       ingressClassName: traefik
       annotations:
-        traefik.ingress.kubernetes.io/router.middlewares: oauth-auth@kubernetescrd
+        traefik.ingress.kubernetes.io/router.middlewares: traefik-system-oauth-auth@kubernetescrd
       host: longhorn.emoh.pl
     longhornManager:
       resources:
