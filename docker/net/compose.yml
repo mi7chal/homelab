@@ -10,12 +10,11 @@ services:
       - TZ=${TZ}
     restart: unless-stopped
     healthcheck:
-      # Custom healtheck needed to adguard-sync
-      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://127.0.0.1:8012/login"]
+      test: ["CMD-SHELL", "netstat -an | grep 80 | grep LISTEN || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 3
-      start_period: 5s
+      start_period: 10s
   tailscale:
     image: tailscale/tailscale:latest
     hostname: ${TAILSCALE_HOSTNAME}
