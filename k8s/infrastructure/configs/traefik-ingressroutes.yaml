@@ -90,7 +90,7 @@ subsets:
     ports:
       - port: 8123
 ---
-# Portainer - LOKALNY
+# Portainer 
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:

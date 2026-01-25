@@ -12,3 +12,5 @@ resources:
   - intel-gpu-device-plugin.yaml
   - intel-operator.yaml
   - nfd.yaml
+  - oauth2-proxy.yaml
+  - oauth2-proxy-secret.enc.yaml
