@@ -159,7 +159,6 @@ spec:
 
     persistence:
       config:
-        enabled: true
         existingClaim: media-config-pvc
         advancedMounts:
           main:
@@ -177,7 +176,6 @@ spec:
                 subPath: radarr
       
       media:
-        enabled: true
         existingClaim: media-data-pvc
         advancedMounts:
           main:
