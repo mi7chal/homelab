@@ -33,32 +33,36 @@ spec:
               repository: qmcgaw/gluetun
               tag: latest
             env:
-              VPN_SERVICE_PROVIDER: windscribe
-              VPN_TYPE: wireguard
-              WIREGUARD_PRIVATE_KEY:
+              - name: VPN_SERVICE_PROVIDER
+                value: windscribe
+              - name: VPN_TYPE
+                value: wireguard
+              - name: WIREGUARD_PRIVATE_KEY
                 valueFrom:
                   secretKeyRef:
                     name: vpn-secret
                     key: WIREGUARD_PRIVATE_KEY
-              WIREGUARD_PRESHARED_KEY:
+              - name: WIREGUARD_PRESHARED_KEY
                 valueFrom:
                   secretKeyRef:
                     name: vpn-secret
                     key: WIREGUARD_PRESHARED_KEY
-              WIREGUARD_ADDRESSES:
+              - name: WIREGUARD_ADDRESSES
                 valueFrom:
                   secretKeyRef:
                     name: vpn-secret
                     key: WIREGUARD_ADDRESSES
-              SERVER_CITIES: 
+              - name: SERVER_CITIES
                 valueFrom:
                   secretKeyRef:
                     name: vpn-secret
                     key: SERVER_CITIES
-                    optional: true
-              FIREWALL_VPN_INPUT_PORTS: "8080,9696,8989,7878,8191,55426,6881"
-              DNS: 10.255.255.3
-              WIREGUARD_MTU: 1280
+              - name: FIREWALL_VPN_INPUT_PORTS
+                value: "8080,9696,8989,7878,8191,55426,6881"
+              - name: DNS
+                value: "10.255.255.3"
+              - name: WIREGUARD_MTU
+                value: "1280"
             securityContext:
               capabilities:
                 add:
@@ -72,13 +76,6 @@ spec:
               TZ: Europe/Warsaw
               WEBUI_PORT: 8080
             dependsOn: gluetun
-            volumeMounts:
-              - name: config
-                mountPath: /config
-                subPath: qbittorrent
-              - name: media
-                mountPath: /media
-
 
           prowlarr:
             image:
@@ -87,10 +84,6 @@ spec:
             env:
               TZ: Europe/Warsaw
             dependsOn: gluetun
-            volumeMounts:
-              - name: config
-                mountPath: /config
-                subPath: prowlarr
 
           sonarr:
             image:
@@ -99,12 +92,6 @@ spec:
             env:
               TZ: Europe/Warsaw
             dependsOn: gluetun
-            volumeMounts:
-              - name: config
-                mountPath: /config
-                subPath: sonarr
-              - name: media
-                mountPath: /media
 
           radarr:
             image:
@@ -113,12 +100,6 @@ spec:
             env:
               TZ: Europe/Warsaw
             dependsOn: gluetun
-            volumeMounts:
-              - name: config
-                mountPath: /config
-                subPath: radarr
-              - name: media
-                mountPath: /media
 
           flaresolverr:
             image:
@@ -180,7 +161,29 @@ spec:
       config:
         enabled: true
         existingClaim: media-config-pvc
+        advancedMounts:
+          main:
+            qbittorrent:
+              - path: /config
+                subPath: qbittorrent
+            prowlarr:
+              - path: /config
+                subPath: prowlarr
+            sonarr:
+              - path: /config
+                subPath: sonarr
+            radarr:
+              - path: /config
+                subPath: radarr
       
       media:
         enabled: true
         existingClaim: media-data-pvc
+        advancedMounts:
+          main:
+            qbittorrent:
+              - path: /media
+            sonarr:
+              - path: /media
+            radarr:
+              - path: /media
