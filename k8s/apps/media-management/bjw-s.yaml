@@ -5,4 +5,4 @@ metadata:
   namespace: media-management
 spec:
   interval: 24h
-  url: https://bjw-s.github.io/helm-charts
+  url: https://bjw-s-labs.github.io/helm-charts
