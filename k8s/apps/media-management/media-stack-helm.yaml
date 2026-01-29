@@ -1,0 +1,186 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: media-stack
+  namespace: media-management
+spec:
+  interval: 1h
+  chart:
+    spec:
+      chart: app-template
+      version: 3.0.4
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    createNamespace: true
+  values:
+    defaultPodOptions:
+      hostname: media-stack
+      securityContext:
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+
+    controllers:
+      main:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          gluetun:
+            image:
+              repository: qmcgaw/gluetun
+              tag: latest
+            env:
+              VPN_SERVICE_PROVIDER: windscribe
+              VPN_TYPE: wireguard
+              WIREGUARD_PRIVATE_KEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: vpn-secret
+                    key: WIREGUARD_PRIVATE_KEY
+              WIREGUARD_PRESHARED_KEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: vpn-secret
+                    key: WIREGUARD_PRESHARED_KEY
+              WIREGUARD_ADDRESSES:
+                valueFrom:
+                  secretKeyRef:
+                    name: vpn-secret
+                    key: WIREGUARD_ADDRESSES
+              SERVER_CITIES: 
+                valueFrom:
+                  secretKeyRef:
+                    name: vpn-secret
+                    key: SERVER_CITIES
+                    optional: true
+              FIREWALL_VPN_INPUT_PORTS: "8080,9696,8989,7878,8191,55426,6881"
+              DNS: 10.255.255.3
+              WIREGUARD_MTU: 1280
+            securityContext:
+              capabilities:
+                add:
+                  - NET_ADMIN
+            
+          qbittorrent:
+            image:
+              repository: ghcr.io/linuxserver/qbittorrent
+              tag: latest
+            env:
+              TZ: Europe/Warsaw
+              WEBUI_PORT: 8080
+            dependsOn: gluetun
+            volumeMounts:
+              - name: config
+                mountPath: /config
+                subPath: qbittorrent
+              - name: media
+                mountPath: /media
+
+
+          prowlarr:
+            image:
+              repository: ghcr.io/linuxserver/prowlarr
+              tag: latest
+            env:
+              TZ: Europe/Warsaw
+            dependsOn: gluetun
+            volumeMounts:
+              - name: config
+                mountPath: /config
+                subPath: prowlarr
+
+          sonarr:
+            image:
+              repository: ghcr.io/linuxserver/sonarr
+              tag: latest
+            env:
+              TZ: Europe/Warsaw
+            dependsOn: gluetun
+            volumeMounts:
+              - name: config
+                mountPath: /config
+                subPath: sonarr
+              - name: media
+                mountPath: /media
+
+          radarr:
+            image:
+              repository: ghcr.io/linuxserver/radarr
+              tag: latest
+            env:
+              TZ: Europe/Warsaw
+            dependsOn: gluetun
+            volumeMounts:
+              - name: config
+                mountPath: /config
+                subPath: radarr
+              - name: media
+                mountPath: /media
+
+          flaresolverr:
+            image:
+              repository: ghcr.io/flaresolverr/flaresolverr
+              tag: latest
+            env:
+              TZ: Europe/Warsaw
+            dependsOn: gluetun
+
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: 8080
+          prowlarr:
+            port: 9696
+          sonarr:
+            port: 8989
+          radarr:
+            port: 7878
+          flaresolverr:
+            port: 8191
+
+    ingress:
+      main:
+        enabled: true
+        className: traefik
+        annotations:
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
+          traefik.ingress.kubernetes.io/router.tls: "true"
+        hosts:
+          - host: qbit.emoh.pl
+            paths:
+              - path: /
+                service:
+                  identifier: main
+                  port: http
+          - host: prowlarr.emoh.pl
+            paths:
+              - path: /
+                service:
+                  identifier: main
+                  port: prowlarr
+          - host: sonarr.emoh.pl
+            paths:
+              - path: /
+                service:
+                  identifier: main
+                  port: sonarr
+          - host: radarr.emoh.pl
+            paths:
+              - path: /
+                service:
+                  identifier: main
+                  port: radarr
+
+    persistence:
+      config:
+        enabled: true
+        existingClaim: media-config-pvc
+      
+      media:
+        enabled: true
+        existingClaim: media-data-pvc
