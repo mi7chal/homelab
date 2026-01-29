@@ -22,7 +22,7 @@ spec:
           main:
             image:
               repository: fallenbagel/jellyseerr
-              tag: latest
+              tag: preview-OIDC
             env:
               TZ: Europe/Warsaw
               LOG_LEVEL: "info"
