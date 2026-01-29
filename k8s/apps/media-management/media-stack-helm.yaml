@@ -132,7 +132,7 @@ spec:
           traefik.ingress.kubernetes.io/router.entrypoints: websecure
           traefik.ingress.kubernetes.io/router.tls: "true"
         hosts:
-          - host: qbit.example.com
+          - host: qbittorrent.example.com
             paths:
               - path: /
                 service:
