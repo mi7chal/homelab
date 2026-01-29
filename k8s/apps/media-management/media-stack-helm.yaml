@@ -53,12 +53,11 @@ spec:
                     name: vpn-secret
                     key: WIREGUARD_ADDRESSES
               - name: SERVER_CITIES
-                valueFrom:
-                  secretKeyRef:
-                    name: vpn-secret
-                    key: SERVER_CITIES
+                value: "Warsaw,Frankfurt"
               - name: FIREWALL_VPN_INPUT_PORTS
-                value: "8080,9696,8989,7878,8191,55426,6881"
+                value: "55426,6881"
+              - name: FIREWALL_INPUT_PORTS
+                value: "8080,9696,8989,7878,8191"
               - name: DNS
                 value: "10.255.255.3"
               - name: WIREGUARD_MTU
