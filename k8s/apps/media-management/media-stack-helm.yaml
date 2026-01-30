@@ -59,9 +59,11 @@ spec:
               - name: FIREWALL_INPUT_PORTS
                 value: "8080,9696,8989,7878,8191"
               - name: DNS_ADDRESS
-                value: "10.255.255.3"
+                value: "1.1.1.1"
               - name: WIREGUARD_MTU
                 value: "1280"
+              - name: DOT
+                value: "off"
 
             securityContext:
               capabilities:
