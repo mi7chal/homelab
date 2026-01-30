@@ -59,16 +59,9 @@ spec:
               - name: FIREWALL_INPUT_PORTS
                 value: "8080,9696,8989,7878,8191"
               - name: DNS_ADDRESS
-                value: "127.0.0.1"
+                value: "10.255.255.3"
               - name: WIREGUARD_MTU
                 value: "1280"
-            lifecycle:
-              postStart:
-                exec:
-                  command:
-                    - /bin/sh
-                    - -c
-                    - "iptables -t mangle -A OUTPUT -d 127.0.0.0/8 -j RETURN; iptables -t mangle -A OUTPUT -d 10.0.0.0/8 -j RETURN; iptables -t mangle -A OUTPUT -d 172.16.0.0/12 -j RETURN; iptables -t mangle -A OUTPUT -d 192.168.0.0/16 -j RETURN; iptables -t mangle -A OUTPUT -m owner --uid-owner 911 -j MARK --set-mark 0xca6c"
 
             securityContext:
               capabilities:
@@ -82,13 +75,7 @@ spec:
             env:
               TZ: Europe/Warsaw
               WEBUI_PORT: 8080
-            securityContext:
-              capabilities:
-                add:
-                  - NET_ADMIN
-                  - NET_RAW
             dependsOn: gluetun
-
           prowlarr:
             image:
               repository: ghcr.io/linuxserver/prowlarr
