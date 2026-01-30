@@ -65,6 +65,8 @@ spec:
                 value: "1.1.1.1"
               - name: WIREGUARD_MTU
                 value: "1280"
+              - name: MTU
+                value: "1280"
               - name: DOT
                 value: "off"
 
