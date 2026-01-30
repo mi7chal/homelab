@@ -61,6 +61,8 @@ spec:
                 value: "55426,6881"
               - name: FIREWALL_INPUT_PORTS
                 value: "8080,9696,8989,7878,8191"
+              - name: FIREWALL_OUTBOUND_SUBNETS
+                value: "10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
               - name: DNS_ADDRESS
                 value: "1.1.1.1"
               - name: WIREGUARD_MTU
