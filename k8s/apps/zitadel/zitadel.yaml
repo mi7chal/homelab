@@ -15,12 +15,12 @@ metadata:
   namespace: zitadel
 spec:
   dependsOn:
-    - name: zitadel-db
+    - name: zitadel-cnpg
   interval: 1h
   chart:
     spec:
       chart: zitadel
-      version: "9.x.x" 
+      version: "9.x.x"
       sourceRef:
         kind: HelmRepository
         name: zitadel
@@ -34,7 +34,7 @@ spec:
     zitadel:
       masterkeySecretName: "zitadel-secret"
       db:
-        host: "zitadel-postgresql" 
+        host: "zitadel-cnpg-rw"
         port: 5432
         database: "zitadel"
         user: "zitadel"
@@ -45,10 +45,10 @@ spec:
         ExternalSecure: true
         ExternalPort: 443
         TLS:
-          Enabled: false  # Cloudflare zajmuje się TLS
+          Enabled: false # Cloudflare zajmuje się TLS
         Database:
           Postgres:
-            Host: zitadel-postgresql 
+            Host: zitadel-cnpg-rw
             Port: 5432
             Database: zitadel
             User:
@@ -62,14 +62,12 @@ spec:
     env:
       - name: ZITADEL_DATABASE_POSTGRES_ADMIN_PASSWORD
         valueFrom:
-          secretKeyRef:
-            name: "zitadel-secret" 
-            key: "root_password"
+          name: "zitadel-cnpg-app"
+          key: "password"
       - name: ZITADEL_DATABASE_POSTGRES_USER_PASSWORD
         valueFrom:
-          secretKeyRef:
-            name: "zitadel-secret" 
-            key: "db_password"
+          name: "zitadel-cnpg-app"
+          key: "password"
     replicaCount: 1
     nodeSelector:
       hardware.home/tier: performance

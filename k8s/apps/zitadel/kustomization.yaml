@@ -5,3 +5,4 @@ resources:
   - zitadel.yaml
   - zitadel-db.yaml
   - zitadel-secret.enc.yaml
+  - zitadel-cnpg.yaml

@@ -14,3 +14,4 @@ resources:
   - nfd.yaml
   - oauth2-proxy.yaml
   - oauth2-proxy-secret.enc.yaml
+  - cloudnative-pg.yaml
