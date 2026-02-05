@@ -1,0 +1,35 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: zitadel-cnpg
+  namespace: zitadel
+spec:
+  instances: 3
+
+  # Ensure we use a compatible PostreSQL version
+  imageName: ghcr.io/cloudnative-pg/postgresql:16.1
+
+  # Bootstrapping from the existing Bitnami deployment
+  bootstrap:
+    initdb:
+      import:
+        type: microservice
+        databases:
+          - zitadel
+        source:
+          externalCluster: zitadel-bitnami
+
+  # Define the external cluster connection details
+  externalClusters:
+    - name: zitadel-bitnami
+      connectionParameters:
+        host: zitadel-postgresql
+        user: postgres
+        dbname: zitadel
+      password:
+        name: zitadel-secret
+        key: root_password
+
+  storage:
+    size: 10Gi
+    storageClass: longhorn-fast-single
