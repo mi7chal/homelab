@@ -4,12 +4,8 @@ metadata:
   name: zitadel-cnpg
   namespace: zitadel
 spec:
-  instances: 3
-
-  # Ensure we use a compatible PostreSQL version
+  instances: 1
   imageName: ghcr.io/cloudnative-pg/postgresql:16.1
-
-  # Bootstrapping from the existing Bitnami deployment
   bootstrap:
     initdb:
       import:
@@ -18,8 +14,6 @@ spec:
           - zitadel
         source:
           externalCluster: zitadel-bitnami
-
-  # Define the external cluster connection details
   externalClusters:
     - name: zitadel-bitnami
       connectionParameters:
