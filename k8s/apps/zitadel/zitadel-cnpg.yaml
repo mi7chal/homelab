@@ -6,8 +6,9 @@ metadata:
 spec:
   instances: 1
   imageName: ghcr.io/cloudnative-pg/postgresql:17.6
-  nodeSelector:
-    hardware.home/storage: nvme
+  affinity:
+    nodeSelector:
+      hardware.home/storage: nvme
   bootstrap:
     initdb:
       import:
