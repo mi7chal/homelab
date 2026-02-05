@@ -52,6 +52,10 @@ spec:
     redis:
       enabled: true
       architecture: standalone
+      image:
+        registry: public.ecr.aws
+        repository: bitnami/redis
+        tag: "7.4"
       auth:
         enabled: false # internal usage
     server:
@@ -62,7 +66,6 @@ spec:
           traefik.ingress.kubernetes.io/router.entrypoints: websecure
           traefik.ingress.kubernetes.io/router.tls: "true"
         hosts:
-          - host: auth.emoh.pl
-            paths:
-              - path: /
-                pathType: Prefix
+          - auth.emoh.pl
+        paths:
+          - /
