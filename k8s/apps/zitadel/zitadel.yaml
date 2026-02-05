@@ -54,7 +54,7 @@ spec:
               SSL:
                 Mode: disable
             Admin:
-              Username: postgres
+              Username: app
               SSL:
                 Mode: disable
     env:
