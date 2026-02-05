@@ -53,8 +53,8 @@ spec:
       enabled: true
       architecture: standalone
       image:
-        registry: public.ecr.aws
-        repository: bitnami/redis
+        registry: docker.io
+        repository: library/redis
         tag: "7.4"
       auth:
         enabled: false # internal usage

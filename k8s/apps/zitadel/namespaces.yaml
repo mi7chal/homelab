@@ -1,6 +1,0 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: zitadel
-  labels:
-    toolkit.fluxcd.io/tenant: main
