@@ -10,8 +10,9 @@ spec:
   storage:
     size: 20Gi
     storageClass: longhorn-fast-single
-  nodeSelector:
-    hardware.home/storage: nvme
+  affinity:
+    nodeSelector:
+      hardware.home/storage: nvme
   bootstrap:
     initdb:
       database: authentik
