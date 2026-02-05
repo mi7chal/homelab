@@ -6,6 +6,8 @@ metadata:
 spec:
   instances: 1
   imageName: ghcr.io/cloudnative-pg/postgresql:17.6
+  nodeSelector:
+    hardware.home/storage: nvme
   bootstrap:
     initdb:
       import:
@@ -25,5 +27,5 @@ spec:
         key: root_password
 
   storage:
-    size: 10Gi
+    size: 8Gi
     storageClass: longhorn-fast-single
