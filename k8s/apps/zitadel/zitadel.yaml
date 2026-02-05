@@ -39,7 +39,7 @@ spec:
         ssl:
           mode: "disable"
       configmapConfig:
-        ExternalDomain: "auth.emoh.pl"
+        ExternalDomain: "zitadel.emoh.pl"
         ExternalSecure: true
         ExternalPort: 443
         TLS:
@@ -83,7 +83,7 @@ spec:
         traefik.ingress.kubernetes.io/router.entrypoints: websecure
         traefik.ingress.kubernetes.io/router.tls: "true"
       hosts:
-        - host: auth.emoh.pl
+        - host: zitadel.emoh.pl
           paths:
             - path: /
               pathType: Prefix
@@ -97,7 +97,7 @@ spec:
           traefik.ingress.kubernetes.io/router.entrypoints: websecure
           traefik.ingress.kubernetes.io/router.tls: "true"
         hosts:
-          - host: auth.emoh.pl
+          - host: zitadel.emoh.pl
             paths:
               - path: /ui/v2/login
                 pathType: Prefix
