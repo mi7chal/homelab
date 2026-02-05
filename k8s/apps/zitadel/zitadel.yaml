@@ -14,8 +14,6 @@ metadata:
   name: zitadel
   namespace: zitadel
 spec:
-  dependsOn:
-    - name: zitadel-cnpg
   interval: 1h
   chart:
     spec:
