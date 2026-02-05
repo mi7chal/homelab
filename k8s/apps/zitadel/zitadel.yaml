@@ -60,12 +60,14 @@ spec:
     env:
       - name: ZITADEL_DATABASE_POSTGRES_ADMIN_PASSWORD
         valueFrom:
-          name: "zitadel-cnpg-app"
-          key: "password"
+          secretKeyRef:
+            name: "zitadel-cnpg-app"
+            key: "password"
       - name: ZITADEL_DATABASE_POSTGRES_USER_PASSWORD
         valueFrom:
-          name: "zitadel-cnpg-app"
-          key: "password"
+          secretKeyRef:
+            name: "zitadel-cnpg-app"
+            key: "password"
     replicaCount: 1
     nodeSelector:
       hardware.home/tier: performance
