@@ -54,7 +54,7 @@ spec:
       architecture: standalone
       image:
         registry: docker.io
-        repository: library/redis
+        repository: bitnami/redis
         tag: "7.4"
       auth:
         enabled: false # internal usage
