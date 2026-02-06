@@ -38,6 +38,18 @@ spec:
     postgresql:
       enabled: false
     worker:
+      livenessProbe:
+        failureThreshold: 5
+        timeoutSeconds: 10
+        periodSeconds: 20
+      readinessProbe:
+        failureThreshold: 5
+        timeoutSeconds: 10
+        periodSeconds: 20
+      startupProbe:
+        failureThreshold: 60
+        timeoutSeconds: 5
+        periodSeconds: 5
       volumes:
         - name: authentik-secret
           secret:
