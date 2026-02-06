@@ -35,6 +35,13 @@ spec:
         name: "authentik"
         user: "authentik"
         password: file:///secrets/password
+      email:
+        host: smpt.resend.com
+        username: resend
+        use_tls: true
+        port: 587
+        password: file:///secrets/resend_api_key
+        from: no-reply@emoh.pl
     postgresql:
       enabled: false
     worker:
