@@ -1,4 +1,3 @@
----
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
@@ -18,7 +17,7 @@ spec:
   chart:
     spec:
       chart: authentik
-      version: "2024.12.3" # Latest stable as of knowledge cutoff or use high version?
+      version: "2025.12.x"
       sourceRef:
         kind: HelmRepository
         name: authentik
@@ -27,6 +26,7 @@ spec:
     createNamespace: true
   values:
     authentik:
+      secret_key: file:///secrets/secret_key
       log_level: info
       error_reporting:
         enabled: false
@@ -34,31 +34,27 @@ spec:
         host: "postgres-main-rw.database.svc.cluster.local"
         name: "authentik"
         user: "authentik"
-        password: "" # Set via env var
-    global:
-      env:
-        - name: AUTHENTIK_SECRET_KEY
-          valueFrom:
-            secretKeyRef:
-              name: authentik-db-secret
-              key: secret_key
-        - name: AUTHENTIK_POSTGRESQL__PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: authentik-db-secret
-              key: password
+        password: file:///secrets/password
     postgresql:
       enabled: false
-    redis:
-      enabled: true
-      architecture: standalone
-      image:
-        registry: docker.io
-        repository: bitnami/redis
-        tag: "7.4"
-      auth:
-        enabled: false # internal usage
+    worker:
+      volumes:
+        - name: authentik-secret
+          secret:
+            secretName: authentik-db-secret
+      volumeMounts:
+        - name: authentik-secret
+          mountPath: /secrets
+          readOnly: true
     server:
+      volumes:
+        - name: authentik-secret
+          secret:
+            secretName: authentik-db-secret
+      volumeMounts:
+        - name: authentik-secret
+          mountPath: /secrets
+          readOnly: true
       ingress:
         enabled: true
         ingressClassName: traefik
