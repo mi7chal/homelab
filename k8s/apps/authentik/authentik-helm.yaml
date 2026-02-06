@@ -38,8 +38,8 @@ spec:
       email:
         host: smpt.resend.com
         username: resend
-        use_tls: true
-        port: 587
+        use_ssl: true
+        port: 465
         password: file:///secrets/resend_api_key
         from: no-reply@emoh.pl
     postgresql:
