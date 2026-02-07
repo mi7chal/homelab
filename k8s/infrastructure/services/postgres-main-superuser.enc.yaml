@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: postgres-main-superuser
+    namespace: database
+stringData:
+    password: ENC[AES256_GCM,data:bRayT4CY1c8OLHf4NBc0bUF9YL+86wKltWvKz1gQ45I=,iv:OlFXu/rtl6p34kykbpdEoHNps/k5NaIIx5SvR2rJV68=,tag:0KUs/suZ3pLwroG9MHO4hw==,type:str]
+sops:
+    age:
+        - recipient: age1cwwxvkg5r930j5y6vj3uu33tstmpdgwhv8uxq62vherkfwktu50qag25hr
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBFQVNKWmJrcGZ4WXdWZ2Z6
+            Uk5RNHhzYWhDVksvYmhZY0FCUDZ2NTNWUzBzCkdDK2hyTlVPVU1PZTl6QjNzWFM4
+            aGUrcHQ0cGplUjd6SGNUOU03TTJBTjQKLS0tIEtjMnlCMi9mSVZleGhkNGhWOUFH
+            NFg1MUl6UUlIeGZ1bmJYUUUxY1BtSFEK7hKtjUxO5RtKVfK868JIoDiEu/ufFAAF
+            99I+qcR6aWEZ9WHJvYhA3Tn+xVJn8nloelwrb627d3lv0pzEwYarUA==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2026-02-07T15:34:09Z"
+    mac: ENC[AES256_GCM,data:n2KdP90vo/qULsgglUeyD88RBpnFZ+J4e18TJxORD+3PfikByYlVPaSlRMMrobqzkNNMgByOjSQBFuNDlZwexKBsYGVrR65ljBDcXFgS8OQ3rdj6vdwFF7d7ytI2LHNZ2v4ktchDQUN6nQwsXQPRmKjqWRNb/nFA6m2ja/BFM3c=,iv:3Rl1IRpt8MnK7kLXl9c+bxhjlpbFwM390Ba2Sa0VydI=,tag:2XL49BSIqSA+8/osrzlsCg==,type:str]
+    encrypted_regex: ^(data|stringData)$
+    version: 3.11.0
