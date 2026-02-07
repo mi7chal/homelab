@@ -9,5 +9,4 @@ resources:
   - metallb
   - metrics-server
   - nfd
-  #  - oauth2-proxy
   - traefik
