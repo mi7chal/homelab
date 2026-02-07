@@ -4,19 +4,19 @@ metadata:
     name: postgres-main-superuser
     namespace: n8n
 stringData:
-    password: ENC[AES256_GCM,data:J660vr5WVvc9o5W6kNuwsMlNyr7zs53PknjROb+ileU=,iv:avQtiLVgY6Hgjv/XTj715kz+Zw+b0LA5Cjs0HXLNIo4=,tag:Ktz3ngmDoqmi4mNnbCA86g==,type:str]
+    password: ENC[AES256_GCM,data:TuWl9i7RtaOToNchjFjo229d4nEwtCe5Grm+o4nG+54=,iv:76xSaB3JBCot8/kaeHXqTE8skPYWTCnWGMzVc7RZuvg=,tag:88ai21WPKbNtnEMLhuvwhA==,type:str]
 sops:
     age:
         - recipient: age1cwwxvkg5r930j5y6vj3uu33tstmpdgwhv8uxq62vherkfwktu50qag25hr
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBxTFYwSFF1Y24yRzhucS9K
-            c2VQdTFxaGg2UE9XWG9hRW14UGlNNDBiY1hVCjh2bWU5S20wMWxnZGhpdllZQzZL
-            YlhvSnI5NG0rVHgrQm8rVFJWYkpKa1UKLS0tIE55WUIxOFFNZ0VDR05qVUtzUUFK
-            RGpvRUVtS2xic2YwNHE1ZzdTelptL3MKqrrSw1DubOs+YVa37z8IZusWzKdGVNIj
-            3n8UcXQ1ChRmxLSF4L1uPac/E/Pd3XHkXOPdNKjr7QGaDiLRCWFa8g==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBnVDA3VHg2R0tVVER6WitP
+            ZURrM28zTG1mdVRLK1J0NWVDSm5kdUNkdFFjClhVVGJyTjVkRjhyV09ieDQzcCty
+            ZmdzUHA3MEhGemlGeU1ST0dQaG4wQzgKLS0tIGhEVlg2L09lMHA2dE1VbUVIMVJC
+            dDlpbW4vVWhZWHZSa2VVY0lyd0pPaDQKVBL9QH+M2rR0SrNhvbObDdFqwHB5KJ/L
+            UCp3MOoo2pdjoqjgI3aiq8+DzS61aVdyrb1zJa8yMXNVQqhko4jwCg==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2026-02-07T15:25:09Z"
-    mac: ENC[AES256_GCM,data:FkIXj0EhVSW5NiD0XSXVOKYm+Ntg13XNMSbQVTq3dt9ddwSLzrYlei049zI3cJIc8qrV75pHYVqPwuPPtEtskdi2MByN3V+AcEzWOUloQygkp2LitoBxsJwtgeyRWHX1O9G8uCNdxDb0MvyPkuaXMYSmBPjxI9lHzlEo2OVVjGQ=,iv:L4Bki+tNEZkZm0vkbIkyWsesh7LqiRZbiVPH3U/adSU=,tag:kp3rCUOMvpy6bMcloiV54Q==,type:str]
+    lastmodified: "2026-02-07T15:34:09Z"
+    mac: ENC[AES256_GCM,data:E+pD55wWLiI6bk1ytqOQl0nGSOKkWpjBNq+F6HvcdQdyDsmKy1YaNlauGCfwzr+tXMfpr32YND4dSqaRkbLzpKDWeASsIRAgPdscMQFMbsclgYxiXYUYIN6VrydhYpUhRv0E4oh5L7jKG83s2rwTpz5Uj2dBOLKaafg96OkeFSk=,iv:Ca9m2XVIgjLmX4lTZ84/9M0gGnJphrWk0uLoIx8cRN4=,tag:7SX77B1/G0PoBryhNV49xg==,type:str]
     encrypted_regex: ^(data|stringData)$
     version: 3.11.0
