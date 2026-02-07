@@ -23,6 +23,7 @@ spec:
         kind: HelmRepository
         name: cloudnative-pg
         namespace: flux-system
+  targetNamespace: cnpg-system
   install:
     createNamespace: true
     crds: CreateReplace
