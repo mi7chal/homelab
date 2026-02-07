@@ -28,8 +28,8 @@ spec:
         login: true
         passwordSecret:
           name: n8n-db-secret
-    databases:
-      - name: authentik
-        owner: authentik
-      - name: n8n
-        owner: n8n
+  databases:
+    - name: authentik
+      owner: authentik
+    - name: n8n
+      owner: n8n
