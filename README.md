@@ -1,5 +1,4 @@
-# 🛸 Project Homelab: The Emoh Odyssey
-> "Everything is overkill, but everything is stable and fun."
+# Homelab
 
 [![FluxCD](https://img.shields.io/badge/GitOps-FluxCD-blue?style=for-the-badge&logo=flux)](https://fluxcd.io/)
 [![K3s](https://img.shields.io/badge/Orchestration-K3s-orange?style=for-the-badge&logo=kubernetes)](https://k3s.io/)
@@ -69,4 +68,3 @@ Everything else is managed declaratively via GitOps. If it's in this repo, it's 
 4. **Privacy**: My data is my own. No exceptions.
 
 ---
-*Crafted with ❤️ and a bit too much coffee by [mi7chal](https://github.com/mi7chal)*
