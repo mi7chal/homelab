@@ -2,7 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - namespace.yaml
-  - authentik-secret.enc.yaml
+  - n8n-secret.enc.yaml
   - postgres-main-superuser.enc.yaml
-  - authentik-db-init.yaml
-  - authentik-helm.yaml
+  - n8n-db-init.yaml
+  - n8n-helm.yaml

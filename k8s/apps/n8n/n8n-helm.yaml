@@ -1,0 +1,65 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: n8n
+  namespace: flux-system
+spec:
+  interval: 1h
+  url: https://community-charts.github.io/helm-charts
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: n8n
+  namespace: n8n
+spec:
+  interval: 1h
+  chart:
+    spec:
+      chart: n8n
+      version: "1.16.x"
+      sourceRef:
+        kind: HelmRepository
+        name: n8n
+        namespace: flux-system
+  install:
+    createNamespace: true
+  values:
+    # saving resources
+    postgresql:
+      enabled: false
+    redis:
+      enabled: false
+    db:
+      type: postgresdb
+    externalPostgresql:
+      host: postgres-main-rw.database.svc.cluster.local
+      port: 5432
+      database: n8n
+      username: n8n
+      existingSecret: "n8n-secret"
+    main:
+      persistence:
+        enabled: true
+        size: 4Gi
+        storageClass: longhorn
+        accessMode: ReadWriteOnce
+    ingress:
+      enabled: true
+      className: traefik
+      annotations:
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        traefik.ingress.kubernetes.io/router.tls: "true"
+      hosts:
+        - host: n8n.emoh.pl
+          paths:
+            - path: /
+              pathType: Prefix
+
+    resources:
+      requests:
+        cpu: 100m
+        memory: 256Mi
+      limits:
+        cpu: 1000m
+        memory: 1Gi

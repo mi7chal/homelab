@@ -5,3 +5,4 @@ resources:
   - jellyfin
   - jellyseerr
   - media-management
+  - n8n
