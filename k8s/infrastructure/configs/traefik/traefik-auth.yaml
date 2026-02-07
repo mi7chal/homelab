@@ -6,7 +6,7 @@ metadata:
   namespace: traefik-system
 spec:
   forwardAuth:
-    address: http://ak-outpost-traefik-proxy-outpost.authentik.svc.cluster.local:9000/outpost.goauthentik.io/auth/traefik?proto=https
+    address: https://auth.emoh.pl/outpost.goauthentik.io/auth/traefik
     trustForwardHeader: true
     authResponseHeaders:
       - X-authentik-username
