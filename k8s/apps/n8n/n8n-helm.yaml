@@ -39,6 +39,15 @@ spec:
       username: n8n
       existingSecret: "n8n-secret"
     main:
+      webhook:
+        url: https://n8n.example.com/
+      n8n:
+        host: n8n.example.com
+        protocol: https
+        port: 5678
+        proxy:
+          hops: 1
+
       persistence:
         enabled: true
         size: 4Gi
