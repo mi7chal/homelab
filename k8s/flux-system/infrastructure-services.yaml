@@ -4,12 +4,12 @@ metadata:
   name: infrastructure-services
   namespace: flux-system
 spec:
+  dependsOn:
+    - name: infrastructure-controllers
   interval: 10m
   path: ./k8s/infrastructure/services
   prune: true
   wait: true
-  dependsOn:
-    - name: infrastructure
   sourceRef:
     kind: GitRepository
     name: flux-system

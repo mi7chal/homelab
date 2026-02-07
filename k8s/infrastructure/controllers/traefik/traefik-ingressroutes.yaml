@@ -1,5 +1,4 @@
 ---
-# ServersTransport do ignorowania self-signed certów
 apiVersion: traefik.io/v1alpha1
 kind: ServersTransport
 metadata:
@@ -8,7 +7,6 @@ metadata:
 spec:
   insecureSkipVerify: true
 ---
-# Proxmox - LOKALNY
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
@@ -25,7 +23,6 @@ spec:
           port: 8006
           scheme: https
           serversTransport: insecure-transport
-  tls: {}
 ---
 apiVersion: v1
 kind: Service
@@ -50,7 +47,6 @@ subsets:
     ports:
       - port: 8006
 ---
-# Home Assistant - LOKALNY
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
@@ -65,7 +61,6 @@ spec:
       services:
         - name: homeassistant-external
           port: 8123
-  tls: {}
 ---
 apiVersion: v1
 kind: Service
@@ -90,7 +85,6 @@ subsets:
     ports:
       - port: 8123
 ---
-# Portainer 
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
@@ -105,7 +99,6 @@ spec:
       services:
         - name: portainer-external
           port: 9123
-  tls: {}
 ---
 apiVersion: v1
 kind: Service
@@ -130,7 +123,6 @@ subsets:
     ports:
       - port: 9123
 ---
-# AdGuard Home - LOKALNY
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
@@ -145,7 +137,6 @@ spec:
       services:
         - name: adguard-external
           port: 8012
-  tls: {}
 ---
 apiVersion: v1
 kind: Service
@@ -170,7 +161,6 @@ subsets:
     ports:
       - port: 8012
 ---
-# Qnap ui - LOKALNY
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
@@ -185,7 +175,6 @@ spec:
       services:
         - name: qnapui-external
           port: 8080
-  tls: {}
 ---
 apiVersion: v1
 kind: Service

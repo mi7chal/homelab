@@ -34,7 +34,7 @@ spec:
         host: "postgres-main-rw.database.svc.cluster.local"
         name: "authentik"
         user: "authentik"
-        password: file:///secrets/password
+        password: file:///secrets/postgres_password
       email:
         host: smpt.resend.com
         username: resend
