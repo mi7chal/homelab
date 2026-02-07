@@ -4,5 +4,6 @@ resources:
   - gotk-components.yaml
   - gotk-sync.yaml
   - infrastructure-controllers.yaml
+  - infrastructure-configs.yaml
   - infrastructure-services.yaml
   - apps.yaml

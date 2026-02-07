@@ -18,7 +18,7 @@ spec:
   chart:
     spec:
       chart: traefik
-      version: "38.x.x" 
+      version: "38.x.x"
       sourceRef:
         kind: HelmRepository
         name: traefik
@@ -31,7 +31,7 @@ spec:
       dashboard:
         enabled: true
         middlewares:
-          - name: oauth-auth
+          - name: authentik
             namespace: traefik-system
         matchRule: Host(`traefik.emoh.pl`)
         entryPoints: ["websecure"]
@@ -54,7 +54,7 @@ spec:
     ports:
       web:
         port: 8000
-        expose: 
+        expose:
           default: true
         exposedPort: 80
         protocol: TCP
@@ -64,7 +64,7 @@ spec:
             scheme: https
       websecure:
         port: 8443
-        expose: 
+        expose:
           default: true
         exposedPort: 443
         protocol: TCP

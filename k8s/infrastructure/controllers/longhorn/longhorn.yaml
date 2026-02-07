@@ -44,7 +44,7 @@ spec:
       enabled: true
       ingressClassName: traefik
       annotations:
-        traefik.ingress.kubernetes.io/router.middlewares: traefik-system-oauth-auth@kubernetescrd
+        traefik.ingress.kubernetes.io/router.middlewares: traefik-system-authentik@kubernetescrd
       host: longhorn.emoh.pl
     longhornManager:
       resources:
@@ -61,7 +61,7 @@ spec:
         limits:
           memory: 192Mi
     longhornUI:
-      replicas: 1 
+      replicas: 1
       resources:
         requests:
           cpu: 20m
