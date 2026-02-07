@@ -25,6 +25,7 @@ spec:
   install:
     createNamespace: true
   values:
+    existingEncryptionKeySecret: "n8n-secret"
     # saving resources
     postgresql:
       enabled: false
