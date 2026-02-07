@@ -39,6 +39,15 @@ spec:
       username: n8n
       existingSecret: "n8n-secret"
     main:
+      webhook:
+        url: https://n8n.emoh.pl/
+      n8n:
+        host: n8n.emoh.pl
+        protocol: https
+        port: 5678
+        proxy:
+          hops: 1
+
       persistence:
         enabled: true
         size: 4Gi
