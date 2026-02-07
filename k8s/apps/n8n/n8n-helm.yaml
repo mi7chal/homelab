@@ -40,22 +40,16 @@ spec:
       existingSecret: "n8n-secret"
     main:
       extraEnvVars:
-        - name: WEBHOOK_URL
-          value: https://n8n.emoh.pl/
-        - name: N8N_HOST
-          value: n8n.emoh.pl
-        - name: N8N_PROTOCOL
-          value: https
-        - name: N8N_PORT
-          value: "5678"
-        - name: N8N_PROXY_HOPS
-          value: "1"
-
-    persistence:
-      enabled: true
-      size: 4Gi
-      storageClass: longhorn
-      accessMode: ReadWriteOnce
+        WEBHOOK_URL: "https://n8n.emoh.pl/"
+        N8N_HOST: "n8n.emoh.pl"
+        N8N_PROTOCOL: "https"
+        N8N_PORT: "5678"
+        N8N_PROXY_HOPS: "1"
+      persistence:
+        enabled: true
+        size: 4Gi
+        storageClass: longhorn
+        accessMode: ReadWriteOnce
     ingress:
       enabled: true
       className: traefik
