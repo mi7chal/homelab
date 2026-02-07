@@ -6,3 +6,4 @@ resources:
   - n8n-db-secret.enc.yaml
   - postgres-main-superuser.enc.yaml
   - postgres-main.yaml
+  - databases.yaml
