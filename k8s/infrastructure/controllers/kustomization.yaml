@@ -1,18 +1,13 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - namespaces.yaml
-  - cert-manager-secret.enc.yaml
-  - cloudflared.yaml
-  - cloudflared-secret.enc.yaml
-  - metallb.yaml
-  - traefik.yaml
-  - longhorn.yaml
-  - cert-manager-letsencrypt.yaml
-  - intel-gpu-device-plugin.yaml
-  - intel-operator.yaml
-  - nfd.yaml
-  - oauth2-proxy.yaml
-  - oauth2-proxy-secret.enc.yaml
-  - cloudnative-pg.yaml
-  - metrics-server.yaml
+  - cert-manager
+  - cloudflared
+  - cloudnative-pg
+  - intel-gpu
+  - longhorn
+  - metallb
+  - metrics-server
+  - nfd
+  - oauth2-proxy
+  - traefik

@@ -3,6 +3,4 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - n8n-secret.enc.yaml
-  - postgres-main-superuser.enc.yaml
-  - n8n-db-init.yaml
   - n8n-helm.yaml

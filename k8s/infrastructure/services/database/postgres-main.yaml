@@ -13,13 +13,23 @@ spec:
   affinity:
     nodeSelector:
       hardware.home/storage: nvme
-  bootstrap:
-    initdb:
-      database: authentik
-      owner: authentik
-      secret:
-        name: authentik-db-secret
   superuserSecret:
     name: postgres-main-superuser
   monitoring:
     enablePodMonitor: true
+
+  managed:
+    roles:
+      - name: authentik
+        login: true
+        passwordSecret:
+          name: authentik-db-secret
+      - name: n8n
+        login: true
+        passwordSecret:
+          name: n8n-db-secret
+    databases:
+      - name: authentik
+        owner: authentik
+      - name: n8n
+        owner: n8n
