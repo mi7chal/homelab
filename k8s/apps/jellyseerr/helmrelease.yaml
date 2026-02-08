@@ -21,12 +21,12 @@ spec:
         containers:
           main:
             image:
-              repository: fallenbagel/jellyseerr
-              tag: preview-OIDC
+              repository: mi7chal/seerr
+              tag: oidc-autolink
             env:
               TZ: Europe/Warsaw
               LOG_LEVEL: "info"
-    
+
     service:
       main:
         controller: main
