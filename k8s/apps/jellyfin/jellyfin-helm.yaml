@@ -18,7 +18,7 @@ spec:
   chart:
     spec:
       chart: jellyfin
-      version: "2.x.x" 
+      version: "2.x.x"
       sourceRef:
         kind: HelmRepository
         name: jellyfin
@@ -35,7 +35,7 @@ spec:
         hardware.home/gpu: "true"
     nodeSelector:
       hardware.home/gpu: "true"
-    
+
     persistence:
       media:
         enabled: true
@@ -46,18 +46,18 @@ spec:
         enabled: true
         existingClaim: jellyfin-config
         mountPath: /config
-    
+
     volumes:
       - name: qnap
         persistentVolumeClaim:
           claimName: jellyfin-media-qnap-pvc
           readOnly: true
-    
+
     volumeMounts:
       - name: qnap
         mountPath: /qnap
         readOnly: true
-  
+
     securityContext:
       capabilities:
         add:
@@ -83,7 +83,7 @@ spec:
           value: "i965"
         - name: JELLYFIN_PublishedServerUrl
           value: "https://jellyfin.emoh.pl"
-    
+
     resources:
       requests:
         cpu: 500m
@@ -91,5 +91,5 @@ spec:
         gpu.intel.com/i915: 1
       limits:
         cpu: 2000m
-        memory: 2Gi
+        memory: 3Gi
         gpu.intel.com/i915: 1
