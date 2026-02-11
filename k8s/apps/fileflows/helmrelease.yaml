@@ -25,6 +25,12 @@ spec:
               tag: latest
             env:
               TZ: Europe/Warsaw
+              LIBVA_DRIVER_NAME: i965
+            resources:
+              requests:
+                gpu.intel.com/i915: 1
+              limits:
+                gpu.intel.com/i915: 1
 
     service:
       main:
@@ -40,13 +46,11 @@ spec:
         annotations:
           traefik.ingress.kubernetes.io/router.entrypoints: websecure
           traefik.ingress.kubernetes.io/router.tls: "true"
+          traefik.ingress.kubernetes.io/router.middlewares: traefik-system-authentik@kubernetescrd
         hosts:
           - host: fileflows.emoh.pl
             paths:
               - path: /
-                service:
-                  identifier: main
-                  port: http
 
     persistence:
       config:
