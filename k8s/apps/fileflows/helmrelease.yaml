@@ -21,12 +21,10 @@ spec:
         containers:
           main:
             image:
-              repository: hiken/fileflows
+              repository: revenz/fileflows
               tag: latest
             env:
               TZ: Europe/Warsaw
-              # FileFlows runs on port 5000 inside the container by default (based on docs/common practice, verifying if needed)
-              # Actually docs say port 5000 is for the server UI.
 
     service:
       main:
