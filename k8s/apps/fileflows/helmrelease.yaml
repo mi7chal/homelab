@@ -28,8 +28,12 @@ spec:
               LIBVA_DRIVER_NAME: i965
             resources:
               requests:
+                cpu: 100m
+                memory: 128Mi
                 gpu.intel.com/i915: 1
               limits:
+                cpu: 500m
+                memory: 1Gi
                 gpu.intel.com/i915: 1
 
     service:
@@ -51,6 +55,9 @@ spec:
           - host: fileflows.emoh.pl
             paths:
               - path: /
+                service:
+                  identifier: main
+                  port: http
 
     persistence:
       config:
