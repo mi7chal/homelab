@@ -22,7 +22,12 @@ spec:
               volumeMounts:
                 - name: config
                   mountPath: /config
+                - name: config-file
+                  mountPath: /config/recyclarr.yml
+                  subPath: recyclarr.yml
           volumes:
             - name: config
+              emptyDir: {}
+            - name: config-file
               configMap:
                 name: recyclarr-config
