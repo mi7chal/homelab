@@ -17,7 +17,7 @@ spec:
               image: ghcr.io/recyclarr/recyclarr:latest
               command: ["recyclarr", "sync"]
               env:
-                - name: RECYCLARR_APP_DATA
+                - name: RECYCLARR_CONFIG_DIR
                   value: /config
               envFrom:
                 - secretRef:
