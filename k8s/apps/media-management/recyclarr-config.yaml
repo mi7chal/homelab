@@ -19,12 +19,6 @@ data:
           - template: web-1080p-v4
           - template: web-2160p-v4
           
-        quality_profiles:
-          - name: Standard
-          - name: Standard High Quality
-          - name: Standard Polish
-          - name: Standard Polish High Quality
-          
           # Built-in Language formats
           - template: radarr-custom-language-polish
 
@@ -35,6 +29,12 @@ data:
           - template: radarr-custom-format-av1-2160p
           - template: radarr-custom-format-golden-rule-size-hd
           - template: radarr-custom-format-golden-rule-size-uhd
+          
+        quality_profiles:
+          - name: Standard
+          - name: Standard High Quality
+          - name: Standard Polish
+          - name: Standard Polish High Quality
           
         custom_formats:
           # Apply standard preferences to the 1080p profiles
@@ -77,12 +77,6 @@ data:
           - template: sonarr-quality-definition-series
           - template: web-1080p-v4
           - template: web-2160p-v4
-          
-        quality_profiles:
-          - name: Standard
-          - name: Standard High Quality
-          - name: Standard Polish
-          - name: Standard Polish High Quality
           - template: sonarr-custom-language-polish
 
           # Codecs and Size
@@ -92,6 +86,12 @@ data:
           - template: sonarr-custom-format-av1-2160p
           - template: sonarr-custom-format-golden-rule-size-hd
           - template: sonarr-custom-format-golden-rule-size-uhd
+          
+        quality_profiles:
+          - name: Standard
+          - name: Standard High Quality
+          - name: Standard Polish
+          - name: Standard Polish High Quality
           
         custom_formats:
           - trash_ids:
