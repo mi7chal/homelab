@@ -8,4 +8,4 @@ resources:
   - media-stack-helm.yaml
   - recyclarr-config.yaml
   - recyclarr-cronjob.yaml
-  - recyclarr-secret.secret.yaml
+  - recyclarr-secret.enc.yaml
