@@ -17,17 +17,13 @@ data:
           
           # Built-in Standard & High Quality profiles
           - template: web-1080p-v4
-            profile:
-              name: Standard
           - template: web-2160p-v4
-            profile:
-              name: Standard High Quality
-          - template: web-1080p-v4
-            profile:
-              name: Standard Polish
-          - template: web-2160p-v4
-            profile:
-              name: Standard Polish High Quality
+          
+        quality_profiles:
+          - name: Standard
+          - name: Standard High Quality
+          - name: Standard Polish
+          - name: Standard Polish High Quality
           
           # Built-in Language formats
           - template: radarr-custom-language-polish
@@ -80,17 +76,13 @@ data:
         include:
           - template: sonarr-quality-definition-series
           - template: web-1080p-v4
-            profile:
-              name: Standard
           - template: web-2160p-v4
-            profile:
-              name: Standard High Quality
-          - template: web-1080p-v4
-            profile:
-              name: Standard Polish
-          - template: web-2160p-v4
-            profile:
-              name: Standard Polish High Quality
+          
+        quality_profiles:
+          - name: Standard
+          - name: Standard High Quality
+          - name: Standard Polish
+          - name: Standard Polish High Quality
           - template: sonarr-custom-language-polish
 
           # Codecs and Size
