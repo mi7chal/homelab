@@ -7,117 +7,19 @@ data:
   recyclarr.yml: |
     # yaml-language-server: $schema=https://raw.githubusercontent.com/recyclarr/recyclarr/master/schemas/config-schema.json
     radarr:
-      main:
-        base_url: http://media-stack-main:7878
+      radarr:
+        base_url: http://media-stack:7878
         api_key: !env_var RADARR_API_KEY
-        
-        include:
-          # Quality definitions
-          - template: radarr-quality-definition-movie
-          
-          # Built-in Standard & High Quality profiles
-          - template: web-1080p-v4
-          - template: web-2160p-v4
-          
-          # Built-in Language formats
-          - template: radarr-custom-language-polish
-
-          # Built-in Codec & Size preferred formats 
-          - template: radarr-custom-format-h265-1080p
-          - template: radarr-custom-format-h265-2160p
-          - template: radarr-custom-format-av1-1080p
-          - template: radarr-custom-format-av1-2160p
-          - template: radarr-custom-format-golden-rule-size-hd
-          - template: radarr-custom-format-golden-rule-size-uhd
-          
+        quality_definition:
+          type: movie
         quality_profiles:
           - name: Standard
-          - name: Standard High Quality
-          - name: Standard Polish
-          - name: Standard Polish High Quality
-          
-        custom_formats:
-          # Apply standard preferences to the 1080p profiles
-          - trash_ids:
-              - c30009c9d5db7b1fc65eb8eb2ab22fc9 # x265 (HD)
-              - 0122171120eb58b5b7b13ec27b8782ee # AV1
-              - c806543ed9b83b3815b364bd5b78f8cb # Golden Rule Size (HD) (approx 5-15GB focus)
-            assign_scores_to:
-              - name: Standard
-                score: 500
-              - name: Standard Polish
-                score: 500
-                
-          # Apply standard preferences to the 4k profiles
-          - trash_ids:
-              - 67b670da41dd368cdfb6dc84e929ab26 # x265 (UHD)
-              - ee61b3cd3551dbbbcf8aedc26372bf94 # AV1
-              - 777f978e8b0edce031abdc2cbb24e6de # Golden Rule Size (UHD) (approx 10-30GB focus)
-            assign_scores_to:
-              - name: Standard High Quality
-                score: 500
-              - name: Standard Polish High Quality
-                score: 500
-
-          # Polish language ONLY applies to the Polish profiles
-          - trash_ids:
-              - 4d50c76ad1a90abde1f4ab9bce413348 # Polish Language
-            assign_scores_to:
-              - name: Standard Polish
-                score: 5000
-              - name: Standard Polish High Quality
-                score: 5000
 
     sonarr:
-      main:
-        base_url: http://media-stack-main:8989
+      sonarr:
+        base_url: http://media-stack:8989
         api_key: !env_var SONARR_API_KEY
-        
-        include:
-          - template: sonarr-quality-definition-series
-          - template: web-1080p-v4
-          - template: web-2160p-v4
-          - template: sonarr-custom-language-polish
-
-          # Codecs and Size
-          - template: sonarr-custom-format-h265-1080p
-          - template: sonarr-custom-format-h265-2160p
-          - template: sonarr-custom-format-av1-1080p
-          - template: sonarr-custom-format-av1-2160p
-          - template: sonarr-custom-format-golden-rule-size-hd
-          - template: sonarr-custom-format-golden-rule-size-uhd
-          
+        quality_definition:
+          type: series
         quality_profiles:
           - name: Standard
-          - name: Standard High Quality
-          - name: Standard Polish
-          - name: Standard Polish High Quality
-          
-        custom_formats:
-          - trash_ids:
-              - d382531cd0cf5a73e1634674c05f7783 # x265 (HD)
-              - 0210e309bf1f2b57e795a9836fbd8aee # AV1
-              - fb7581b7642ce213d2a63d9defcc86fb # Golden Rule Size (HD)
-            assign_scores_to:
-              - name: Standard
-                score: 500
-              - name: Standard Polish
-                score: 500
-                
-          - trash_ids:
-              - bb27add036b12a9accbabb4f5baf2a40 # x265 (UHD)
-              - 736f8a8bbd83f1cd57099f6aa6e2b34b # AV1
-              - 15a2e6669527ecb871ed878e1cce2a2c # Golden Rule Size (UHD)
-            assign_scores_to:
-              - name: Standard High Quality
-                score: 500
-              - name: Standard Polish High Quality
-                score: 500
-
-          - trash_ids:
-              - 0bd85aeea0d306b38c237882afb186b8 # Polish Language
-            assign_scores_to:
-              - name: Standard Polish
-                score: 5000
-              - name: Standard Polish High Quality
-                score: 5000
