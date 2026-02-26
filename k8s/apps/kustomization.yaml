@@ -5,5 +5,6 @@ resources:
   - fileflows
   - jellyfin
   - jellyseerr
+  - maintainerr
   - media-management
   - n8n
