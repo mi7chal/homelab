@@ -29,7 +29,7 @@ spec:
           main:
             image:
               repository: ghcr.io/maintainerr/maintainerr
-              tag: jellyfin-dev
+              tag: latest
             env:
               TZ: Europe/Warsaw
 
