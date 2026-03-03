@@ -6,4 +6,5 @@ resources:
   - infrastructure-controllers.yaml
   - infrastructure-configs.yaml
   - infrastructure-services.yaml
+  - repositories.yaml
   - apps.yaml
