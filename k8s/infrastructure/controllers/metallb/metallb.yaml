@@ -21,14 +21,14 @@ spec:
     controller:
       livenessProbe:
         failureThreshold: 10
-        timeoutSeconds: 10
+        timeoutSeconds: 30
       readinessProbe:
         failureThreshold: 10
-        timeoutSeconds: 10
+        timeoutSeconds: 30
     speaker:
       livenessProbe:
         failureThreshold: 10
-        timeoutSeconds: 10
+        timeoutSeconds: 30
       readinessProbe:
         failureThreshold: 10
-        timeoutSeconds: 10
+        timeoutSeconds: 30
