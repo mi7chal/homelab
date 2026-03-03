@@ -24,7 +24,6 @@ spec:
       nodeSelector:
         hardware.home/storage: nvme
 
-
     controllers:
       main:
         type: statefulset
@@ -76,7 +75,7 @@ spec:
               capabilities:
                 add:
                   - NET_ADMIN
-            
+
           qbittorrent:
             image:
               repository: ghcr.io/linuxserver/qbittorrent
@@ -85,6 +84,32 @@ spec:
               TZ: Europe/Warsaw
               WEBUI_PORT: 8080
             dependsOn: gluetun
+            resources:
+              requests:
+                cpu: 200m
+                memory: 500Mi
+              limits:
+                cpu: 1000m
+                memory: 1536Mi
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: 8080
+                  initialDelaySeconds: 15
+                  periodSeconds: 20
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: 8080
+                  initialDelaySeconds: 15
+                  periodSeconds: 20
           prowlarr:
             image:
               repository: ghcr.io/linuxserver/prowlarr
@@ -92,6 +117,32 @@ spec:
             env:
               TZ: Europe/Warsaw
             dependsOn: gluetun
+            resources:
+              requests:
+                cpu: 50m
+                memory: 128Mi
+              limits:
+                cpu: 500m
+                memory: 512Mi
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /ping
+                    port: 9696
+                  initialDelaySeconds: 15
+                  periodSeconds: 20
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /ping
+                    port: 9696
+                  initialDelaySeconds: 15
+                  periodSeconds: 20
 
           sonarr:
             image:
@@ -100,6 +151,32 @@ spec:
             env:
               TZ: Europe/Warsaw
             dependsOn: gluetun
+            resources:
+              requests:
+                cpu: 100m
+                memory: 256Mi
+              limits:
+                cpu: 750m
+                memory: 1024Mi
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /ping
+                    port: 8989
+                  initialDelaySeconds: 15
+                  periodSeconds: 20
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /ping
+                    port: 8989
+                  initialDelaySeconds: 15
+                  periodSeconds: 20
 
           radarr:
             image:
@@ -108,6 +185,32 @@ spec:
             env:
               TZ: Europe/Warsaw
             dependsOn: gluetun
+            resources:
+              requests:
+                cpu: 100m
+                memory: 256Mi
+              limits:
+                cpu: 750m
+                memory: 1024Mi
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /ping
+                    port: 7878
+                  initialDelaySeconds: 15
+                  periodSeconds: 20
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /ping
+                    port: 7878
+                  initialDelaySeconds: 15
+                  periodSeconds: 20
 
           flaresolverr:
             image:
@@ -116,6 +219,32 @@ spec:
             env:
               TZ: Europe/Warsaw
             dependsOn: gluetun
+            resources:
+              requests:
+                cpu: 50m
+                memory: 256Mi
+              limits:
+                cpu: 1000m
+                memory: 1024Mi
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: 8191
+                  initialDelaySeconds: 15
+                  periodSeconds: 20
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: 8191
+                  initialDelaySeconds: 15
+                  periodSeconds: 20
 
           bazarr:
             image:
@@ -124,6 +253,32 @@ spec:
             env:
               TZ: Europe/Warsaw
             dependsOn: gluetun
+            resources:
+              requests:
+                cpu: 50m
+                memory: 128Mi
+              limits:
+                cpu: 500m
+                memory: 512Mi
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /ping
+                    port: 6767
+                  initialDelaySeconds: 15
+                  periodSeconds: 20
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /ping
+                    port: 6767
+                  initialDelaySeconds: 15
+                  periodSeconds: 20
 
     service:
       main:
@@ -201,7 +356,7 @@ spec:
             bazarr:
               - path: /config
                 subPath: bazarr
-      
+
       media:
         existingClaim: media-data-pvc
         advancedMounts:

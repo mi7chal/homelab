@@ -81,6 +81,25 @@ spec:
           value: "i965"
         - name: JELLYFIN_PublishedServerUrl
           value: "https://jellyfin.emoh.pl"
+      probes:
+        liveness:
+          enabled: true
+          custom: true
+          spec:
+            httpGet:
+              path: /health
+              port: 8096
+            initialDelaySeconds: 15
+            periodSeconds: 20
+        readiness:
+          enabled: true
+          custom: true
+          spec:
+            httpGet:
+              path: /health
+              port: 8096
+            initialDelaySeconds: 15
+            periodSeconds: 20
 
     resources:
       requests:
