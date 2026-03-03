@@ -4,7 +4,7 @@ metadata:
   name: fileflows
   namespace: fileflows
 spec:
-  interval: 1h
+  interval: 72h
   chart:
     spec:
       chart: app-template

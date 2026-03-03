@@ -4,7 +4,7 @@ metadata:
   name: jellyseerr
   namespace: jellyseerr
 spec:
-  interval: 1h
+  interval: 72h
   chart:
     spec:
       chart: app-template
