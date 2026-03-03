@@ -29,3 +29,11 @@ spec:
     crds: CreateReplace
   upgrade:
     crds: CreateReplace
+  values:
+    webhook:
+      livenessProbe:
+        failureThreshold: 10
+        timeoutSeconds: 10
+      readinessProbe:
+        failureThreshold: 10
+        timeoutSeconds: 10

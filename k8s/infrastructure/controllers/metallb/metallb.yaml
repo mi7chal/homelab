@@ -17,3 +17,18 @@ spec:
   targetNamespace: metallb-system
   install:
     createNamespace: true
+  values:
+    controller:
+      livenessProbe:
+        failureThreshold: 10
+        timeoutSeconds: 10
+      readinessProbe:
+        failureThreshold: 10
+        timeoutSeconds: 10
+    speaker:
+      livenessProbe:
+        failureThreshold: 10
+        timeoutSeconds: 10
+      readinessProbe:
+        failureThreshold: 10
+        timeoutSeconds: 10
