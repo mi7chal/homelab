@@ -27,12 +27,16 @@ spec:
       leaderElection:
         namespace: cert-manager
     webhook:
+      livenessProbe:
+        timeoutSeconds: 60
+      readinessProbe:
+        timeoutSeconds: 60
       resources:
         requests:
           cpu: 50m
           memory: 64Mi
         limits:
-          cpu: 1000m
+          cpu: 200m
           memory: 256Mi
     cainjector:
       resources:
@@ -40,12 +44,12 @@ spec:
           cpu: 50m
           memory: 128Mi
         limits:
-          cpu: 1000m
+          cpu: 300m
           memory: 512Mi
     resources:
       requests:
         cpu: 50m
         memory: 128Mi
       limits:
-        cpu: 1000m
+        cpu: 200m
         memory: 256Mi
