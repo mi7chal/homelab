@@ -4,7 +4,6 @@ resources:
   - namespaces.yaml
   - vpn-secret.enc.yaml
   - pvc.yaml
-  - bjw-s.yaml
   - media-stack-helm.yaml
   - recyclarr-config.yaml
   - recyclarr-cronjob.yaml
