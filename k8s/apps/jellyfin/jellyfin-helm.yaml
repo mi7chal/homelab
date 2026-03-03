@@ -5,7 +5,7 @@ metadata:
   name: jellyfin
   namespace: flux-system
 spec:
-  interval: 24h
+  interval: 72h
   url: https://jellyfin.github.io/jellyfin-helm
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
@@ -14,7 +14,7 @@ metadata:
   name: jellyfin
   namespace: jellyfin
 spec:
-  interval: 24h
+  interval: 72h
   chart:
     spec:
       chart: jellyfin

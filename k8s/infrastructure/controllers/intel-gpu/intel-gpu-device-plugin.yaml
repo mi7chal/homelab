@@ -6,7 +6,7 @@ metadata:
 spec:
   dependsOn:
     - name: intel-device-plugins-operator
-  interval: 1h
+  interval: 24h
   chart:
     spec:
       chart: intel-device-plugins-gpu

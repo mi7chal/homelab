@@ -4,7 +4,7 @@ metadata:
   name: media-stack
   namespace: media-management
 spec:
-  interval: 1h
+  interval: 72h
   chart:
     spec:
       chart: app-template
