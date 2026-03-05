@@ -17,6 +17,8 @@ spec:
   install:
     createNamespace: true
   values:
+    nodeSelector:
+      hardware.home/tier: performance
     existingEncryptionKeySecret: "n8n-secret"
     # saving resources
     postgresql:
