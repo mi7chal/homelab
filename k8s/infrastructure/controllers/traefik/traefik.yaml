@@ -29,6 +29,8 @@ spec:
     fullnameOverride: traefik
     global:
       sendAnonymousUsage: false
+    nodeSelector:
+      hardware.home/tier: performance
     resources:
       requests:
         cpu: "100m"

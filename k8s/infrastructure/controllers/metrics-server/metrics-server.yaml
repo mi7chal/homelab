@@ -27,6 +27,8 @@ spec:
   install:
     createNamespace: true
   values:
+    nodeSelector:
+      hardware.home/tier: performance
     args:
       - --kubelet-insecure-tls
     resources:
