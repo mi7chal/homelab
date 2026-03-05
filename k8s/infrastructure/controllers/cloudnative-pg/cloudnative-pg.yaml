@@ -30,6 +30,8 @@ spec:
   upgrade:
     crds: CreateReplace
   values:
+    nodeSelector:
+      hardware.home/tier: performance
     webhook:
       livenessProbe:
         failureThreshold: 10
