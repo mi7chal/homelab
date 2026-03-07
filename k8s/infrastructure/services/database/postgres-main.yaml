@@ -28,3 +28,7 @@ spec:
         login: true
         passwordSecret:
           name: n8n-db-secret
+      - name: netweave
+        login: true
+        passwordSecret:
+          name: netweave-db-secret
