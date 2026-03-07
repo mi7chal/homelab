@@ -36,14 +36,14 @@ spec:
             env:
               TZ: Europe/Warsaw
               RUST_LOG: info
-              PORT: "5173"
+              PORT: "8789"
 
     service:
       main:
         controller: main
         ports:
           http:
-            port: 5173
+            port: 8789
 
     ingress:
       main:
@@ -53,7 +53,7 @@ spec:
           traefik.ingress.kubernetes.io/router.entrypoints: websecure
           traefik.ingress.kubernetes.io/router.tls: "true"
         hosts:
-          - host: example.com
+          - host: netweave.example.com
             paths:
               - path: /
                 service:
