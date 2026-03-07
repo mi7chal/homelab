@@ -56,6 +56,14 @@ spec:
           - host: example.com
             paths:
               - path: /
+                pathType: Prefix
+                service:
+                  identifier: main
+                  port: http
+          - host: netweave.example.com
+            paths:
+              - path: /
+                pathType: Prefix
                 service:
                   identifier: main
                   port: http
