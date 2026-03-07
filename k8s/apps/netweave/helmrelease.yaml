@@ -60,10 +60,3 @@ spec:
                 service:
                   identifier: main
                   port: http
-          - host: netweave.emoh.pl
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: main
-                  port: http
