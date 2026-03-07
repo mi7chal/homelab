@@ -1,0 +1,61 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: netweave
+  namespace: netweave
+spec:
+  interval: 72h
+  chart:
+    spec:
+      chart: app-template
+      version: 3.0.4
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: media-management
+  install:
+    createNamespace: true
+  values:
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: mi7chal/netweave
+              tag: latest
+            envFrom:
+              - secretRef:
+                  name: netweave-secret
+            env:
+              TZ: Europe/Warsaw
+              RUST_LOG: info
+              PORT: "5173"
+
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: 5173
+
+    ingress:
+      main:
+        enabled: true
+        className: traefik
+        annotations:
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
+          traefik.ingress.kubernetes.io/router.tls: "true"
+        hosts:
+          - host: example.com
+            paths:
+              - path: /
+                service:
+                  identifier: main
+                  port: http

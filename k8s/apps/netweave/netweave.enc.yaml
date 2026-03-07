@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: netweave-secret
+    namespace: netweave
+type: Opaque
+stringData:
+    DATABASE_URL: ENC[AES256_GCM,data:rRSFWikp9wMZ52lttt0taLQvm143BBIn076rLRztMPOROM3Miit+Ue6Wlsrbg73fvzWJx9VRJGKe3ctZqxcsZkS2IBzl2jwpnqXHOOgHffawIngv9yuovEoFrB5XXmB2tbojWzU5+Zutt90X3f4jxJNQ2em0wkGiyr2iep+keUIw9495iJyv7LeOaPZOvA==,iv:/G/Pi9t3YPT5TYEws4+xFcT9JepKpMkQzDzZZPTC0S0=,tag:8WteTjmicd/ZzdIsQ9B0sw==,type:str]
+    DEFAULT_ADMIN_USER: ENC[AES256_GCM,data:iQY46zE=,iv:daiNmle8ie2eIU3n6ENaCE1MAHFzDgTBor0CFWg5HI0=,tag:1IK6oD1xeNUmPe0c7cLzWQ==,type:str]
+    DEFAULT_ADMIN_PASSWORD: ENC[AES256_GCM,data:60ftPzd0ReqC6DvM8FpWpmj/3TD5Bul//w4ci4IinW8LXIort8rlj/gHhXcrm95/YaF7ITy/O08TGNq2/n5ykA==,iv:Tpxc9nQZVbw/bwludnfKLR678R1B+fg94bTe8NSqyVM=,tag:t2wn1arU3bVQJpcmugEpBg==,type:str]
+    ENCRYPTION_KEY: ENC[AES256_GCM,data:22S3u4tNH3CbOBRstljrpDpWjhwnadPittaDi65x60LoWHJuDRIoKYv/aFFrh+oWYUh4CKP/vA9yTbMy1aUm6Q==,iv:Rz1Ky2YFAkt3H0xmr+ZouNztcWgAL+G1dt4Bxx9jt9w=,tag:JH+jrX18vSGEwJIrUC3Eog==,type:str]
+    SESSION_SECRET: ENC[AES256_GCM,data:iaRskOAdA4YCcnmpeycfO1dG53Bgk+W3Pzj/CcrzaV1Oki4wNIgiFqRRqBNs2sB4qrm76UV8mwyXkVqvmAmBWg==,iv:rFk9awVUjmg3+OWtOCt67z9W9Y1n2FWdMevxM0BVqno=,tag:6G3PVChgxlRIyixaZAtsjA==,type:str]
+    SESSION_SECURE_COOKIE: ENC[AES256_GCM,data:Px/vEQ==,iv:e6bpr9uNOL2H9OED8HSpB/NU0P1meRpNN/s+K1MYo0w=,tag:d5uQWFjMrZh01xGABr9u0Q==,type:str]
+sops:
+    age:
+        - recipient: age1cwwxvkg5r930j5y6vj3uu33tstmpdgwhv8uxq62vherkfwktu50qag25hr
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSA5aW9QeGgrYy9sa3pDSEps
+            djZqbEJRRTZ5d1RTNzhzazJLMk1wRXJZM2xFCnFKdnNReDV4TlIvQzlUOEZjSkwr
+            a3psRGVzOGZYTnlValQzVDdYRXd1SjAKLS0tIFhpWDdBTjhXSVllMlFSTGpNTnhI
+            VU9wdWNwUEljNC9nTDhFUFdvZW03QlkKj05Htd1P/3BHS/JGhBA+35a12ExDqL49
+            Ly6edzUhktVnTa07w/Ps3jaBF3Z+Ugxx51hTPg5XC+Rbc5CblMWFTQ==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2026-03-07T20:45:54Z"
+    mac: ENC[AES256_GCM,data:wkU171cZjvUPHVAPDjTQcfWTVLCLwMf2HZXtwcPLC+SkF6vsJw4PW9x9iWfzBoMkjg2LhYzUoQ1tHYJd2/h+9dI0IUNTlk+qFt7vj8SiTxhNIWq8QUHtDq5yVWgNLJhQFDe5j4v8C5j05zjhKDGH/jkN0Z9W2Vna0e2JskGsQFQ=,iv:NtkoOf96lIG0yyMYlqqq6FrvKKCzEt/N/BeuQwIYMEg=,tag:mGQ7L4t1l9mVkCo8Fd02fA==,type:str]
+    encrypted_regex: ^(data|stringData)$
+    version: 3.11.0

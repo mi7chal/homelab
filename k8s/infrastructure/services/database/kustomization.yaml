@@ -7,3 +7,4 @@ resources:
   - postgres-main-superuser.enc.yaml
   - postgres-main.yaml
   - databases.yaml
+  - netweave-db.enc.yaml
