@@ -19,3 +19,14 @@ spec:
   owner: n8n
   cluster:
     name: postgres-main
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: netweave
+  namespace: database
+spec:
+  name: netweave
+  owner: netweave
+  cluster:
+    name: postgres-main
