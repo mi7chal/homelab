@@ -33,7 +33,7 @@ spec:
           gluetun:
             image:
               repository: qmcgaw/gluetun
-              tag: latest
+              tag: v3
             env:
               - name: VPN_SERVICE_PROVIDER
                 value: windscribe
