@@ -4,7 +4,7 @@ metadata:
   name: netweave
   namespace: netweave
 spec:
-  interval: 72h
+  interval: 1h
   chart:
     spec:
       chart: app-template
