@@ -36,6 +36,21 @@ services:
       - NET_RAW
       - SYS_MODULE
     restart: unless-stopped
+  netbird:
+      container_name: netbird
+      hostname: ${NETBIRD_HOSTNAME}
+      cap_add:
+          - NET_ADMIN
+          - SYS_ADMIN
+          - SYS_RESOURCE
+      devices:
+          - /dev/net/tun
+      network_mode: host
+      environment:
+          - NB_SETUP_KEY=${NETBIRD_SETUP_KEY}
+      volumes:
+          - /opt/docker/netbird/:/var/lib/netbird
+      image: netbirdio/netbird:latest
   adguard-sync:
     image: ghcr.io/bakito/adguardhome-sync:latest
     container_name: adguard-sync
@@ -66,6 +81,6 @@ services:
       - FEATURES_CLIENT_SETTINGS=true
       - FEATURES_SERVICES=true
 
-      # --- Częstotliwość ---
+      # Sync time
       - CRON=*/10 * * * * # 10min
       - RUN_ON_START=true
