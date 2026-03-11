@@ -18,13 +18,15 @@ services:
   netbird:
       container_name: netbird
       hostname: ${NETBIRD_HOSTNAME}
+      network_mode: host
+      restart: unless-stopped
       cap_add:
           - NET_ADMIN
           - SYS_ADMIN
           - SYS_RESOURCE
       devices:
           - /dev/net/tun
-      network_mode: host
+
       environment:
           - NB_SETUP_KEY=${NETBIRD_SETUP_KEY}
       volumes:
