@@ -39,13 +39,13 @@ spec:
         cpu: "1000m"
         memory: "500Mi"
     readinessProbe:
-      failureThreshold: 5
+      failureThreshold: 10
       timeoutSeconds: 5
-      initialDelaySeconds: 10
+      initialDelaySeconds: 20
     livenessProbe:
-      failureThreshold: 5
+      failureThreshold: 10
       timeoutSeconds: 5
-      initialDelaySeconds: 10
+      initialDelaySeconds: 20
     service:
       enabled: true
       type: LoadBalancer
