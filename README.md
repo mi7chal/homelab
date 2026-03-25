@@ -6,10 +6,7 @@ It is based on Kubernetes (K3s) and Docker. Docker is used for core networking (
 
 > **What is Homelab?**
 > 
-> A homelab is a personal home network with server (or servers) and services running on it. Typically it is destined to learn, > experiment and host personal services. Now it becames popular to also host AI agents, which are perfect example of homelabing but ?> this repo is focused on standard infrastracture. Full definition and community may be found on [r/homelab](https://www.reddit.com/r/homelab/).
-
-## Project goals and ideas
-to be added
+> A homelab is a personal home network with server (or servers) and services running on it. Typically it is destined to learn,  experiment and host personal services. Now it becames popular to also host AI agents, which are perfect example of homelabing, but this repo is focused on standard infrastracture. Full definition and community may be found on [r/homelab](https://www.reddit.com/r/homelab/).
 
 ## Tech stack summary
 
@@ -17,7 +14,7 @@ to be added
 [![FluxCD](https://img.shields.io/badge/GitOps-FluxCD-blue?style=for-the-badge&logo=flux)](https://fluxcd.io/)
 [![K3s](https://img.shields.io/badge/Orchestration-K3s-orange?style=for-the-badge&logo=kubernetes)](https://k3s.io/)
 [![Proxmox](https://img.shields.io/badge/Proxmox-E57000?style=for-the-badge&logo=proxmox&logoColor=white)](https://www.proxmox.com/)
-[![Ubuntu](https://img.shields.io/badge/Ubuntu-E95420?style=for-the-badge&logo=ubuntu&logoColor=white)](https://ubuntu.com/)
+[![Debian](https://img.shields.io/badge/Debian-E95420?style=for-the-badge&logo=debian&logoColor=white)](https://debian.org/)
 [![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
 [![PostgreSQL](https://img.shields.io/badge/Database-CloudNativePG-336791?style=for-the-badge&logo=postgresql)](https://cloudnative-pg.io/)
 [![Security](https://img.shields.io/badge/Secrets-SOPS-green?style=for-the-badge&logo=locklizard)](https://github.com/getsops/sops)
