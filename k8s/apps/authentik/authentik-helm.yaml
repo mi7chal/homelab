@@ -39,15 +39,15 @@ spec:
     worker:
       livenessProbe:
         failureThreshold: 5
-        timeoutSeconds: 10
+        timeoutSeconds: 15
         periodSeconds: 20
       readinessProbe:
         failureThreshold: 5
-        timeoutSeconds: 10
+        timeoutSeconds: 15
         periodSeconds: 20
       startupProbe:
-        failureThreshold: 60
-        timeoutSeconds: 5
+        failureThreshold: 10
+        timeoutSeconds: 15
         periodSeconds: 5
       volumes:
         - name: authentik-secret
@@ -58,6 +58,19 @@ spec:
           mountPath: /secrets
           readOnly: true
     server:
+      livenessProbe:
+        failureThreshold: 10
+        timeoutSeconds: 10
+        periodSeconds: 20
+      readinessProbe:
+        failureThreshold: 10
+        timeoutSeconds: 10
+        periodSeconds: 20
+      startupProbe:
+        initialDelaySeconds: 10
+        failureThreshold: 30
+        timeoutSeconds: 10
+        periodSeconds: 5
       volumes:
         - name: authentik-secret
           secret:

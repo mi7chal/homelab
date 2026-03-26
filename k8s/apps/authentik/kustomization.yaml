@@ -4,3 +4,4 @@ resources:
   - namespace.yaml
   - authentik-secret.enc.yaml
   - authentik-helm.yaml
+  - authentik-outpost-ingressroute.yaml
