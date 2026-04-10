@@ -5,7 +5,7 @@ metadata:
   name: cloudflared
   namespace: cloudflared
 spec:
-  replicas: 2
+  replicas: 0 # temporary disbaled
   selector:
     matchLabels:
       app: cloudflared
@@ -15,41 +15,41 @@ spec:
         app: cloudflared
     spec:
       containers:
-      - name: cloudflared
-        image: cloudflare/cloudflared:latest
-        args:
-        - tunnel
-        - --no-autoupdate
-        - run
-        - --token
-        - $(TUNNEL_TOKEN)
-        env:
-        - name: TUNNEL_TOKEN
-          valueFrom:
-            secretKeyRef:
-              name: cloudflared-token
-              key: token
-        metrics:
-          enabled: true
-          port: 20241
-          serviceMonitor:
-            enabled: false
-
-        livenessProbe:
-          httpGet:
-            path: /ready
+        - name: cloudflared
+          image: cloudflare/cloudflared:latest
+          args:
+            - tunnel
+            - --no-autoupdate
+            - run
+            - --token
+            - $(TUNNEL_TOKEN)
+          env:
+            - name: TUNNEL_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: cloudflared-token
+                  key: token
+          metrics:
+            enabled: true
             port: 20241
-          initialDelaySeconds: 10
-          periodSeconds: 10
+            serviceMonitor:
+              enabled: false
 
-        readinessProbe:
-          httpGet:
-            path: /ready
-            port: 20241
-        resources:
-          requests:
-            cpu: 50m
-            memory: 64Mi
-          limits:
-            cpu: 100m
-            memory: 128Mi
+          livenessProbe:
+            httpGet:
+              path: /ready
+              port: 20241
+            initialDelaySeconds: 10
+            periodSeconds: 10
+
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 20241
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 100m
+              memory: 128Mi
