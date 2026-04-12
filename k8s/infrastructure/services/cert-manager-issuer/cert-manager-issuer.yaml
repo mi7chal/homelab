@@ -9,14 +9,14 @@ spec:
     privateKeySecretRef:
       name: letsencrypt-dns-private-key
     solvers:
-    - dns01:
-        cloudflare:
-          apiTokenSecretRef:
-            name: cloudflare-api-token
-            key: api-token
-      selector:
-        dnsZones:
-          - example.com
+      - dns01:
+          cloudflare:
+            apiTokenSecretRef:
+              name: cloudflare-api-token
+              key: api-token
+        selector:
+          dnsZones:
+            - example.com
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
@@ -31,5 +31,8 @@ spec:
   dnsNames:
     - "example.com"
     - "*.example.com"
+    # Wildcard covers one level only
+    - "s3.rustfs.example.com"
+    - "*.s3.rustfs.example.com"
   duration: 2160h # 90 days
   renewBefore: 720h # 30 days
