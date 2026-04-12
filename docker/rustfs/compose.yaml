@@ -1,0 +1,13 @@
+services:
+  rustfs:
+    image: rustfs/rustfs:latest
+    container_name: rustfs
+    ports:
+      - 9000:9000
+      - 9001:9001
+    volumes:
+      - /opt/docker/rustfs/data:/data
+    restart: unless-stopped
+    environment:
+      RUSTFS_ACCESS_KEY: ${ACCESS_KEY}
+      RUSTFS_SECRET_KEY: ${SECRET_KEY}
