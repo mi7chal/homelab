@@ -33,7 +33,7 @@ spec:
         use_ssl: true
         port: 465
         password: file:///secrets/resend_api_key
-        from: no-reply@example.com
+        from: no-reply@${SECRET_DOMAIN}
     postgresql:
       enabled: false
     worker:
@@ -86,6 +86,6 @@ spec:
           traefik.ingress.kubernetes.io/router.entrypoints: websecure
           traefik.ingress.kubernetes.io/router.tls: "true"
         hosts:
-          - auth.example.com
+          - auth.${SECRET_DOMAIN}
         paths:
           - /

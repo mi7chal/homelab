@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: cluster-settings
+    namespace: flux-system
+stringData:
+    SECRET_DOMAIN: ENC[AES256_GCM,data:WNTa6GsJMA==,iv:oj4E7liiSkQ+zFmKIi3xO5BWkbt9RL4qZUk2AJIlP8s=,tag:epzan9Npme+KwaU9zZkPnw==,type:str]
+    SECRET_MAIN_NFS_IP: ENC[AES256_GCM,data:ZbuG7iLBLhp8g8Br,iv:b8IYVkeCZSiU+evmF+AznLPc562pwzS5zNxMhkaSYbU=,tag:qrYwlEEHRXPNpZX0MyJRRw==,type:str]
+    SECRET_NAS_IP: ENC[AES256_GCM,data:5ZwB5J9DEm3buamB,iv:mvuedNfnMyFFi1nbA1eG9QBJnW9LNELS8jhV+Isd/6Q=,tag:F8fhmN/0A5nHBoxJTOyOOA==,type:str]
+    SECRET_METALLB_IP: ENC[AES256_GCM,data:E6tszYURnUwxFTE5,iv:HH7A7BDEnIbEqywS24phMUYVg7o3d5hPk9vGtPz3SyE=,tag:6JtzcfZwVxjX36mnTP090A==,type:str]
+    SECRET_PROXMOX_IP: ENC[AES256_GCM,data:JrQVV5h03WXSufY=,iv:wy42XRXbfKPCSoMPsTYLoHA7dFA+epQR1cvb4MoS42s=,tag:x5fhFCnfp+kgjYxSqJ2RJg==,type:str]
+    SECRET_HOMEASSISTANT_IP: ENC[AES256_GCM,data:ML/UZdrjhDw/B3MX,iv:mHFxgDPZZvlb/5cSAi3E8BedP7UiagA8SwIMhZYdNkI=,tag:VLQ5yFufw2I2Ltfa04MK5g==,type:str]
+    SECRET_NET_LXC_IP: ENC[AES256_GCM,data:GEQX3e/ih5voeZfL,iv:QWSH3UbR7skoTIv4zHqWQU8hDDlFUQJAX3eesa2enDU=,tag:z6Dnr4l70eKdZpY8NvGrqg==,type:str]
+    SECRET_VPS_IP: ENC[AES256_GCM,data:OqX+iZuOSlrQHUTQ,iv:OxXQ8O1e2vmuM5aiJiA0ckHevSOjrwGNQ15HBaoYTaU=,tag:8FtAEUAAqPGtSnH3T3k0Nw==,type:str]
+sops:
+    age:
+        - recipient: age1cwwxvkg5r930j5y6vj3uu33tstmpdgwhv8uxq62vherkfwktu50qag25hr
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBqTGlHNFk3VEtzMG1Fbmkz
+            MVpla0gwR0dST3FPREY1UUM5WXFsai9tZmdRCnA2aFhlNGNJN2lWbTdqaklXNUht
+            OU1YRG1PbWpUemxQbmNWa0VncTFMYVUKLS0tIEpBMjhLMHZIZ2MyZGdCZUlIdjl1
+            MXVZdFRjYnNTU1pybWczcnlhUTk0Y1EKkGe8h5//8gJRZHGkc6+G0fbIlyJd1R8g
+            eczwF2SYZ89R9eIC4mZlSXv0NO5/1SarTQgQ0dlk0jym/R2oJaLARA==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2026-04-18T11:55:36Z"
+    mac: ENC[AES256_GCM,data:fcDwmXu2PxvuQlQQZIXKzoG1dW1srItozxVugwur0SERIZQBZJQcLhYg6a0l+Lu2Jj0Ye5uC5/t/2YeQMDBWKRy7xh1kK5Og0LFZyfBVgDTufP4sZzfY1Dl0eaE5FVWYwSHp1WuxPzTpmurlEjsz/RB270/zmzFo4rIvApbcDeU=,iv:jaOjIboixkRitfE4Vm66uNmXwxI6VbDXIUynoILO/ZE=,tag:u7lI9rRslZ8XezIwgFgzKw==,type:str]
+    encrypted_regex: ^(data|stringData)$
+    version: 3.12.2

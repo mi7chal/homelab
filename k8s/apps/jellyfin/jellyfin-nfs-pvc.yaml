@@ -8,7 +8,7 @@ spec:
   accessModes:
     - ReadWriteMany
   nfs:
-    server: 10.0.0.1
+    server: ${SECRET_MAIN_NFS_IP}
     path: /mnt/media 
   mountOptions:
     - nfsvers=4.1
@@ -37,7 +37,7 @@ spec:
   accessModes:
     - ReadOnlyMany
   nfs:
-    server: 10.0.0.2
+    server: ${SECRET_NAS_IP}
     path: /Public 
   mountOptions:
     - nfsvers=4.1

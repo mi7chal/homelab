@@ -5,7 +5,7 @@ metadata:
 spec:
   acme:
     server: https://acme-v02.api.letsencrypt.org/directory
-    email: scrums.stapler_6o@icloud.com
+    email: mi7chal.dev@gmail.com # public dev email
     privateKeySecretRef:
       name: letsencrypt-dns-private-key
     solvers:
@@ -16,7 +16,7 @@ spec:
               key: api-token
         selector:
           dnsZones:
-            - example.com
+            - ${SECRET_DOMAIN}
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
@@ -29,10 +29,10 @@ spec:
     name: letsencrypt-dns
     kind: ClusterIssuer
   dnsNames:
-    - "example.com"
-    - "*.example.com"
+    - "${SECRET_DOMAIN}"
+    - "*.${SECRET_DOMAIN}"
     # Wildcard covers one level only
-    - "s3.rustfs.example.com"
-    - "*.s3.rustfs.example.com"
+    - "s3.rustfs.${SECRET_DOMAIN}"
+    - "*.s3.rustfs.${SECRET_DOMAIN}"
   duration: 2160h # 90 days
   renewBefore: 720h # 30 days

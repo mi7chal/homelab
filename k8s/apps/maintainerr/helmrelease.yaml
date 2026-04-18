@@ -49,7 +49,7 @@ spec:
           traefik.ingress.kubernetes.io/router.tls: "true"
           traefik.ingress.kubernetes.io/router.middlewares: traefik-system-authentik@kubernetescrd
         hosts:
-          - host: maintainerr.example.com
+          - host: maintainerr.${SECRET_DOMAIN}
             paths:
               - path: /
                 service:

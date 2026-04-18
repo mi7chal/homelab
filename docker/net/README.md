@@ -2,20 +2,20 @@
 
 Basic networking setup for my homelab
 
-## Tailscale
+## Netbird
 
 Allows outside of home connections.
 
 > [!IMPORTANT]
-> Tailscale on Debian 13 may require additional iptables rules. Rules below may be used 
+> Netbird on Debian 13 may require additional iptables rules. Rules below may be used 
 > with package `iptables-persistent`.
->
+>   
 > ```bash
-> iptables -I DOCKER-USER -i tailscale0 -j ACCEPT
-> iptables -I DOCKER-USER -o tailscale0 -j ACCEPT
+> iptables -I DOCKER-USER -i ntb -j ACCEPT
+> iptables -I DOCKER-USER -o ntb -j ACCEPT
 > ```
 >
 
-## Aguard
+## AdGuard
 
 Serves as network DNS and DHCP.

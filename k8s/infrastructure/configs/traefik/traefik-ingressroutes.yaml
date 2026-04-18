@@ -16,7 +16,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`proxmox.example.com`)
+    - match: Host(`proxmox.${SECRET_DOMAIN}`)
       kind: Rule
       services:
         - name: proxmox-external
@@ -43,7 +43,7 @@ metadata:
   namespace: traefik-system
 subsets:
   - addresses:
-      - ip: 10.0.0.4
+      - ip: ${SECRET_PROXMOX_IP}
     ports:
       - port: 8006
 ---
@@ -56,7 +56,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`homeassistant.example.com`)
+    - match: Host(`homeassistant.${SECRET_DOMAIN}`)
       kind: Rule
       services:
         - name: homeassistant-external
@@ -81,7 +81,7 @@ metadata:
   namespace: traefik-system
 subsets:
   - addresses:
-      - ip: 10.0.0.5
+      - ip: ${SECRET_HOMEASSISTANT_IP}
     ports:
       - port: 8123
 ---
@@ -94,7 +94,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`portainer.example.com`)
+    - match: Host(`portainer.${SECRET_DOMAIN}`)
       kind: Rule
       services:
         - name: portainer-external
@@ -119,7 +119,7 @@ metadata:
   namespace: traefik-system
 subsets:
   - addresses:
-      - ip: 10.0.0.6
+      - ip: ${SECRET_NET_LXC_IP}
     ports:
       - port: 9123
 ---
@@ -132,7 +132,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`adguard.example.com`)
+    - match: Host(`adguard.${SECRET_DOMAIN}`)
       kind: Rule
       services:
         - name: adguard-external
@@ -157,7 +157,7 @@ metadata:
   namespace: traefik-system
 subsets:
   - addresses:
-      - ip: 10.0.0.6
+      - ip: ${SECRET_NET_LXC_IP}
     ports:
       - port: 8012
 ---
@@ -170,7 +170,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`qnap.example.com`)
+    - match: Host(`qnap.${SECRET_DOMAIN}`)
       kind: Rule
       services:
         - name: qnapui-external
@@ -195,7 +195,7 @@ metadata:
   namespace: traefik-system
 subsets:
   - addresses:
-      - ip: 10.0.0.2
+      - ip: ${SECRET_NAS_IP}
     ports:
       - port: 8080
 ---
@@ -208,7 +208,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`rustfs.example.com`)
+    - match: Host(`rustfs.${SECRET_DOMAIN}`)
       kind: Rule
       services:
         - name: rustfs-webui-external
@@ -233,7 +233,7 @@ metadata:
   namespace: traefik-system
 subsets:
   - addresses:
-      - ip: 10.0.0.7
+      - ip: ${SECRET_VPS_IP}
     ports:
       - port: 9001
 ---
@@ -247,7 +247,7 @@ spec:
     - websecure
   routes:
     # Path-style access and virtual host-style access
-    - match: Host(`s3.rustfs.example.com`) || HostRegexp(`^[a-z0-9-]+\.s3\.rustfs\.emoh\.pl$`)
+    - match: Host(`s3.rustfs.${SECRET_DOMAIN}`) || HostRegexp(`^[a-z0-9-]+\.s3\.rustfs\.${SECRET_DOMAIN}$`)
       kind: Rule
       services:
         - name: rustfs-s3-external
@@ -272,6 +272,6 @@ metadata:
   namespace: traefik-system
 subsets:
   - addresses:
-      - ip: 10.0.0.7
+      - ip: ${SECRET_VPS_IP}
     ports:
       - port: 9000

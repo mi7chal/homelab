@@ -35,8 +35,8 @@ spec:
       existingSecret: "n8n-secret"
     main:
       extraEnvVars:
-        WEBHOOK_URL: "https://n8n.example.com/"
-        N8N_HOST: "n8n.example.com"
+        WEBHOOK_URL: "https://n8n.${SECRET_DOMAIN}/"
+        N8N_HOST: "n8n.${SECRET_DOMAIN}"
         N8N_PROTOCOL: "https"
         N8N_PORT: "5678"
         N8N_PROXY_HOPS: "1"
@@ -68,7 +68,7 @@ spec:
         traefik.ingress.kubernetes.io/router.entrypoints: websecure
         traefik.ingress.kubernetes.io/router.tls: "true"
       hosts:
-        - host: n8n.example.com
+        - host: n8n.${SECRET_DOMAIN}
           paths:
             - path: /
               pathType: Prefix

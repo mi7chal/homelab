@@ -11,4 +11,4 @@ services:
     environment:
       RUSTFS_ACCESS_KEY: ${ACCESS_KEY}
       RUSTFS_SECRET_KEY: ${SECRET_KEY}
-      RUSTFS_SERVER_DOMAINS: s3.rustfs.example.com 
+      RUSTFS_SERVER_DOMAINS: s3.rustfs.${DOMAIN} 

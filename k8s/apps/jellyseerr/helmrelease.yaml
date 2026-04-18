@@ -42,7 +42,7 @@ spec:
           traefik.ingress.kubernetes.io/router.entrypoints: websecure
           traefik.ingress.kubernetes.io/router.tls: "true"
         hosts:
-          - host: jellyseerr.example.com
+          - host: jellyseerr.${SECRET_DOMAIN}
             paths:
               - path: /
                 service:

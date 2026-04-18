@@ -71,7 +71,7 @@ spec:
         traefik.ingress.kubernetes.io/router.entrypoints: websecure
         traefik.ingress.kubernetes.io/router.tls: "true"
       hosts:
-        - host: jellyfin.example.com
+        - host: jellyfin.${SECRET_DOMAIN}
           paths:
             - path: /
               pathType: Prefix
@@ -80,7 +80,7 @@ spec:
         - name: LIBVA_DRIVER_NAME
           value: "i965"
         - name: JELLYFIN_PublishedServerUrl
-          value: "https://jellyfin.example.com"
+          value: "https://jellyfin.${SECRET_DOMAIN}"
       probes:
         liveness:
           enabled: true

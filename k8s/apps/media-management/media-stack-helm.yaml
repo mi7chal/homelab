@@ -305,31 +305,31 @@ spec:
           traefik.ingress.kubernetes.io/router.entrypoints: websecure
           traefik.ingress.kubernetes.io/router.tls: "true"
         hosts:
-          - host: qbittorrent.example.com
+          - host: qbittorrent.${SECRET_DOMAIN}
             paths:
               - path: /
                 service:
                   identifier: main
                   port: http
-          - host: prowlarr.example.com
+          - host: prowlarr.${SECRET_DOMAIN}
             paths:
               - path: /
                 service:
                   identifier: main
                   port: prowlarr
-          - host: sonarr.example.com
+          - host: sonarr.${SECRET_DOMAIN}
             paths:
               - path: /
                 service:
                   identifier: main
                   port: sonarr
-          - host: radarr.example.com
+          - host: radarr.${SECRET_DOMAIN}
             paths:
               - path: /
                 service:
                   identifier: main
                   port: radarr
-          - host: bazarr.example.com
+          - host: bazarr.${SECRET_DOMAIN}
             paths:
               - path: /
                 service:
