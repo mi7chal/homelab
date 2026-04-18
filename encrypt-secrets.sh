@@ -11,7 +11,7 @@ secrets=$(find "./k8s" -type f -name "*.secret.yaml" -not -path '*/.git/*')
 count=0
 
 for file in $secrets; do
-    outfile="${file%.secret.yaml}.enc.yaml"
+    outfile="${file%.secret.yaml}-secret.enc.yaml"
     
     # Run sops encryption
     if sops -e "$file" > "$outfile"; then

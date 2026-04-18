@@ -8,4 +8,4 @@ resources:
   - infrastructure-services.yaml
   - repositories.yaml
   - apps.yaml
-  - cluster-settings.enc.yaml
+  - cluster-settings-secret.enc.yaml

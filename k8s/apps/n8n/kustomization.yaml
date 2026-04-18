@@ -3,4 +3,4 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - n8n-secret.enc.yaml
-  - n8n-helm.yaml
+  - helmrelease.yaml
