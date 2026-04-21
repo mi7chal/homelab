@@ -13,4 +13,4 @@ spec:
     - "${SECRET_DOMAIN}"
     - "*.${SECRET_DOMAIN}"
   duration: 2160h # 90 days
-  renewBefore: 720h # 30 days before expiry
+  renewBefore: 720h # 30 days 
