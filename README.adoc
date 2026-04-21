@@ -28,10 +28,10 @@ For more info, why it is may seem so overkill, go to <<philosophy-and-rules, Phi
 === Core Services
 Core (Docker) services are kept in link:docker[Docker folder].
 
-
-> [!NOTE]
-> These services must be deployed manually (see <<deployment, deployment section>>). Author manages them using Portainer, but this is optional.
-
+[!NOTE]
+====
+These services must be deployed manually (see <<deployment, deployment section>>). Author manages them using Portainer, but this is optional.
+====
 
 These services include mostly networking (DNS, DHCP, VPN etc.). For more see link:docker/README.md[Docker README].
 
