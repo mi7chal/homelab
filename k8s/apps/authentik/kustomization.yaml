@@ -5,3 +5,4 @@ resources:
   - authentik-secret.enc.yaml
   - helmrelease.yaml
   - authentik-outpost-ingressroute.yaml
+  - authentik-outpost-certificate.yaml
