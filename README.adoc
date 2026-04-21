@@ -1,5 +1,6 @@
 = Homelab
 :toc:
+:toclevels: 1
 
 This project is a GitOps configuration of a home server infrastructure. It contains services for smart home, media, automations, data storage and more. It is not only a template, but a fully working configuration which can be implemented by everyone with access to a personal server(s). This repo is deployed and used by the author, regularly updated and maintained. It uses best practices for the author which may not work for everyone.
 
@@ -27,7 +28,7 @@ For more info, why it is may seem so overkill, go to <<philosophy-and-rules, Phi
 === Core Services
 Core (Docker) services are kept in link:docker[Docker folder].
 
-[NOTE]
+[!NOTE]
 ====
 These services must be deployed manually (see <<deployment, deployment section>>). Author manages them using Portainer, but this is optional.
 ====
