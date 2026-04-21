@@ -1,126 +1,126 @@
 # Homelab
 
-This project is a GitOps configuration of a home server infrastructure. It contains services for smart home, media, automations, data storage and more. It is not only a template, but a fully working configuration which can be implemented by everyone with access to a personal server(s). This repo is deployed and used by the author, regularly updated and maintained. It uses best practices for the author which may not work for everyone.
+This project is a GitOps configuration of a home server infrastructure. It contains services for smart home, media, automations, data storage, and more. It is not only a template, but a fully working configuration that can be adopted by anyone with access to a personal server or servers. This repo is deployed and actively used by the author, and is regularly updated and maintained. It follows best practices that work well for the author, but may not suit everyone.
 
-If you want to use this project as template, go to the [deployment section](#deployment).
+If you want to use this project as a template, go to the [deployment section](#deployment).
 
 <details>
 <summary><strong>What is a Homelab?</strong></summary>
 
-A homelab is a personal home network with server (or servers) and services running on it. Typically it is destined to learn, experiment and host personal services. Now it becames popular to also host AI agents, which are perfect example of homelabing, but this repo is focused on standard infrastracture. Full definition and community may be found on [r/homelab](https://www.reddit.com/r/homelab/).
+A homelab is a personal home network with one or more servers and services running on it. It is typically used for learning, experimenting, and hosting personal services. Hosting AI agents has recently become popular in the homelab community, but this repo is focused on standard infrastructure. A full definition and a vibrant community can be found on [r/homelab](https://www.reddit.com/r/homelab/).
 
 </details>
 
 ## Overview
 
-This repo contains two main modules - Docker and Kubernetes. Docker is used for core services on which the whole network depends or services hosted externally. Kubernetes is used for everything else.
+This repo contains two main modules — Docker and Kubernetes. Docker is used for core services that the whole network depends on, or for services hosted externally. Kubernetes is used for everything else.
 
-In a diagram below there is a simplified overview of this repo architecture.
+The diagram below provides a simplified overview of this repo's architecture.
 
 ![Software Architecture Schema](docs/images/software_schema.png)
 
-For more info, why it is may seem so overkill, go to [Philosophy and Rules](#philosophy-and-rules).
+For more information on why this may seem overkill, go to [Philosophy and Rules](#philosophy-and-rules).
 
 ### Core Services
 
-Core (Docker) services are kept in [Docker folder](docker).
+Core (Docker) services are kept in the [Docker folder](docker).
 
 > [!NOTE]
-> These services must be deployed manually (see [deployment section](#deployment)). Author manages them using Portainer, but this is optional.
+> These services must be deployed manually (see the [deployment section](#deployment)). The author manages them using Portainer, but this is optional.
 
-These services include mostly networking (DNS, DHCP, VPN etc.). For more see [Docker README](docker/README.md).
+These services include mostly networking (DNS, DHCP, VPN, etc.). For more details, see the [Docker README](docker/README.md).
 
 ### External Services
 
-As it is strictly advised backups or independent/vulnerable data are not stored on home servers. It means some services are hosted externally. For now author uses S3 storage hosted by himself ([RustFS](https://rustfs.com)) on [OCI VPS](https://www.oracle.com/cloud/).
+Since it is strongly advised not to store backups or critical data on home servers, some services are hosted externally. Currently, the author uses S3 storage hosted on an [OCI VPS](https://www.oracle.com/cloud/) running [RustFS](https://rustfs.com).
 
-These VPS is connected to home network using Netbird, which allows it to be managed from self-hosted Portainer and expose services only to the homelab network.
+The VPS is connected to the home network using Netbird, which allows it to be managed from self-hosted Portainer and exposes its services only within the homelab network.
 
 > [!NOTE]
-> VPS does not belong to Kubernetes Cluster and it's strongly disadvised to add VPS to a self-hosted Kubernetes cluster, especially one using Longhorn.
+> The VPS does not belong to the Kubernetes cluster. It is strongly advised against adding a VPS to a self-hosted Kubernetes cluster, especially one using Longhorn.
 
 > [!WARNING]
-> Connecting VPS to home network via VPN may have security implications, so it should be thoroughly considered. Author strictly separates VPS from acccessing homelab servers via Netbird Access Control. VPS also has its own strict firewall.
+> Connecting a VPS to a home network via VPN has security implications and should be carefully considered. The author strictly prevents the VPS from accessing homelab servers via Netbird Access Control. The VPS also has its own strict firewall rules.
 
 ### Kubernetes Cluster
 
-Kubernetes cluster is the hearth of this homelab. it is default place where services and apps live. For simplicity and lightness it is managed declaratively (using this repo) via FluxCD.
+The Kubernetes cluster is the heart of this homelab — it is the default place where services and apps live. For simplicity and resource efficiency, it is managed declaratively (using this repo) via FluxCD.
 
 > [!NOTE]
-> This repo actual implementation uses K3S as Kubernetes distro, but other distros (K0S, K8S, MicroK8 etc.) may be used as well.
+> This repo's implementation uses K3S as the Kubernetes distribution, but other distributions (K0S, K8S, MicroK8s, etc.) may be used as well.
 
-Thanks to GitOps apporach, services are deployed and updated automatically. (Almost) complete cluster configuration is stored in this repo (including ecnrypted secrets). K8S ensure stability and high uptime.
+Thanks to the GitOps approach, services are deployed and updated automatically. Almost the complete cluster configuration is stored in this repo, including encrypted secrets. Kubernetes ensures stability and high uptime.
 
-Cluster uses Traefik as ingress controller, Longhorn for storage (and data replication). For more specific infrastrure details see [Kubernetes README](k8s/README.md).
+The cluster uses Traefik as the ingress controller and Longhorn for storage and data replication. For more specific infrastructure details, see the [Kubernetes README](k8s/README.md).
 
 > [!TIP]
 > **Alternatives**
 >
-> There is excellent alternative to FluxCD - ArgoCD. It is more popular but in home networks it may be to heavy and complex. FluxCD was choosen for this repo due to its simplicity and lightness.
+> There is an excellent alternative to FluxCD — ArgoCD. It is more popular, but in home networks it may be too heavy and complex. FluxCD was chosen for this repo due to its simplicity and low resource footprint.
 >
-> Also insteand of Kubernetes Docker Swarm ma be used, but it was not choosen for this repo, because author have exceeded its limits and wanted to have more control over services.
+> Docker Swarm is also an alternative to Kubernetes, but it was not chosen here because the author outgrew its limitations and wanted more control over service management.
 
 ## Philosophy and Rules
 
-This project is built to be as stable and reliable as possible, while also being easy to manage and update. It may seems overkill for most homelabs, but going for Kubernetes has it's advantages, which may not be obvious for everyone. These advantages are listed below.
+This project is built to be as stable and reliable as possible, while also being easy to manage and update. It may seem like overkill for most homelabs, but using Kubernetes has advantages that may not be immediately obvious. These advantages are listed below.
 
-- **Firstly, versioning.** In K8S image updates are automatic. Author specifies version (e.g. `1.2.x`) and patches are applied automatically. No need to manually update images. In case of major updates, it is good practice to update the version manually and test it, but this philosohpgy is not taken for granted for each service separately.
+- **Firstly, versioning.** In Kubernetes, image updates are automatic. The author specifies a version range (e.g. `1.2.x`) and patches are applied automatically. There is no need to manually update images. For major updates, it is good practice to update the version manually and test the changes, though this is not enforced for every service individually.
 
-- **Secondly, stability and reliability.** In K8S pods can be restarted or rebuilt automatically on failure. Some pods (like Cloudflare tunnels) can run on multiple nodes, which ensures high availability.
+- **Secondly, stability and reliability.** In Kubernetes, pods can be restarted or rebuilt automatically on failure. Some pods (like Cloudflare tunnels) can run on multiple nodes, which ensures high availability.
 
-- **Thirdly, data integrity and safety.** Longhorn ensures each service data are stored reduntantly on minimum two devices and backuped on the external S3 storage. All of these is automated and management is centralised.
+- **Thirdly, data integrity and safety.** Longhorn ensures each service's data is stored redundantly on at least two devices and backed up to external S3 storage. All of this is automated and centrally managed.
 
-- **Fourthly, flexibility.** In k8s applications are automatically distributed between nodes based on their resources and availability. Specific services can be pinned, but for most automatic distribution is more convienient and allows to scale (e.g. add more servers) without moving services manually.
+- **Fourthly, flexibility.** In Kubernetes, applications are automatically distributed across nodes based on available resources. Specific services can be pinned to nodes, but for most workloads, automatic distribution is more convenient and allows scaling (e.g. adding more servers) without manually migrating services.
 
-- **Fifthly, centralised management and monitoring.** K8S (with FluxCD) allows for automatic and declaration-based deployment for the whole cluster. It means all services can be updated even without any access to the server - just by updating this repo.
+- **Fifthly, centralised management and monitoring.** Kubernetes with FluxCD enables automatic, declarative deployment for the entire cluster. This means all services can be updated without any direct access to the server — just by updating this repo.
 
-- **Sixthly, secrets management.** K8S allows for the secrets to be encrypted and stored in this repository. It's secure and allows for simple updating secrets (also without direct access to the server).
+- **Sixthly, secrets management.** Kubernetes allows secrets to be encrypted and stored in this repository, making it secure while also simplifying secret rotation without requiring direct server access.
 
-- **Seventhly, security** in K8S is more advanced than in Docker. It allows for the granular control of the network access and resources. Traefik (Reverse Proxy) is seamlessly integrated with the whole cluster and allows for easy and secury exposing services.
+- **Seventhly, security.** Security in Kubernetes is more advanced than in Docker. It allows granular control over network access and resource usage. Traefik (the reverse proxy) is seamlessly integrated with the cluster and enables easy and secure service exposure.
 
 ## Applications
 
-This repository may be used as template for hosting various applications. Author uses it for hosting media (Jellyfin), automations (N8N), data storage (Postgres) and more. For more how to deploy apps details see [Kubernetes README](k8s/README.md).
+This repository can be used as a template for hosting various applications. The author uses it to host media (Jellyfin), automations (N8N), data storage (Postgres), and more. For details on deploying apps, see the [Kubernetes README](k8s/README.md).
 
 ## Security, Durability and Reliability
 
-Since self-hosting is often chosen for privacy and control, ensuring securit, durability and reliability is crucial and was one of the main goals for this project. Below is a detailed explaination of meet problems and applied solutions.
+Since self-hosting is often chosen for privacy and control, ensuring security, durability, and reliability was one of the main goals of this project. Below is a detailed explanation of the problems encountered and the solutions applied.
 
 ### Backups
 
-Since data losses tend to happen (for example due to SSDs failures) and in home environemnts data is usaually not replicated like in cloud, this repo stores all data on Longhorn volumes, which are replicated on (at least) two devices. What's more data are backed up on external S3 storage (hosted by the author on external VPS) and can be easily restored.
+Data loss can happen (for example due to SSD failures), and in home environments data is usually not replicated the way it is in the cloud. To address this, all data in this repo is stored on Longhorn volumes, which are replicated across at least two devices. Additionally, data is backed up to external S3 storage (hosted by the author on an external VPS) and can be easily restored.
 
-Author also hosts Home Assistant (which is not included in this repo) which is backuped on google drive using [hassio plugin](https://github.com/sabeechen/hassio-google-drive-backup).
+The author also hosts Home Assistant (not included in this repo), which is backed up to Google Drive using the [hassio-google-drive-backup](https://github.com/sabeechen/hassio-google-drive-backup) plugin.
 
 ### Secrets Management
 
-Secretes for Kubernetes cluster are stored and encrypted using SOPS and Age. It means that they are assymetrcially encrypted, pushed to this repo and decrypted only on the cluster. It is safe, simple and convienent.
+Secrets for the Kubernetes cluster are stored and encrypted using SOPS and Age. They are asymmetrically encrypted, pushed to this repo, and decrypted only on the cluster. This approach is safe, simple, and convenient.
 
 ### Updates and Versions
 
-All versions of apps and services are carefully choosen for stability and secuirty. Usually best way to define version is to specify major and minor only (e.g. `1.2.x` for Kubernetes, `1.2` for Docker), which allows for automatic patch updates, but prevents from breaking changes in case of major updates. For more details see [Philosophy and Rules](#philosophy-and-rules).
+All versions of apps and services are carefully chosen for stability and security. The recommended approach is to specify only the major and minor version (e.g. `1.2.x` for Kubernetes, `1.2` for Docker), which allows automatic patch updates while preventing breaking changes from major releases. For more details, see [Philosophy and Rules](#philosophy-and-rules).
 
-Some crucial services tho should be set to explicit versions (e.g. Traefik) to prevent from any unexpected changes. There are also some that should be just set to latest, when they are still in early development and updates are common part of their lifecycle (e.g. N8N).
+Some critical services should be pinned to an explicit version (e.g. Traefik) to prevent unexpected changes. Others that are in early development with frequent releases may be set to `latest` (e.g. N8N).
 
 ### Monitoring
 
-Due to author is not a big fan of equipping homelab with various heavy monitoring tools, there is only basic and lightwight stack for monitoring. It includes Traefik dashboard, Portainer, Longhorn UI, Kubernets Metrics Server Home Asssitant Statistics and Netweave.
+The author prefers a lightweight monitoring setup over heavy tooling, so only a minimal stack is used. It includes the Traefik dashboard, Portainer, Longhorn UI, Kubernetes Metrics Server, Home Assistant statistics, and Netweave.
 
-Obviously using tools like Uptime Kuma is also an excellent choice, but this repo focuses on deploying lightweight and essential stack.
+Using tools like Uptime Kuma is also an excellent choice, but this repo focuses on a lightweight and essential stack.
 
 ## Development Workflow
 
-This repo is managed using standard Git workflow. Author decided to use only main branch (which is a standard for small GitOps environments without separate development and staging environments).
+This repo follows a standard Git workflow. The author uses a single `main` branch, which is typical for small GitOps environments without separate development and staging environments.
 
-However a few tools were used to make work safer, easier and more convienent.
+A few tools are used to make the workflow safer, easier, and more convenient.
 
 ### Prek (Pre-Commit)
 
-Before every commit [Prek](https://prek.j178.dev) is run, which checks for YAML syntax, validates Kubernetes secretes etc.
+Before every commit, [Prek](https://prek.j178.dev) is run to check YAML syntax, validate Kubernetes secrets, and more.
 
 ### Quick Commands
 
-Author also created specific script for encrypting secrets. They are store in files named `name.secret.yaml` and encrypted automatically using script below to `name-secret.enc.yaml`. It makes work easier and more convienient, while also ensuring that secrets are always encrypted before commiting.
+The author created a script for encrypting secrets. Secret files are named `name.secret.yaml` and are automatically encrypted to `name-secret.enc.yaml` using the script below. This simplifies the workflow and ensures secrets are always encrypted before committing.
 
 ```bash
 # Encrypt all secrets before committing
@@ -154,16 +154,16 @@ Author also created specific script for encrypting secrets. They are store in fi
 
 ## Hardware
 
-This section focues not only on software infrastracture but rather on specific author deployment. It is added just to visualise the whole picture and give broader context.
+This section focuses not only on the software infrastructure but also on the author's specific deployment. It is included to give a broader picture and additional context.
 
-Homelabs differ a lot in terms of hardware (and price ranges). Author is limited by available hardware and budget, so the hardware infrastructre is rather modest, but deploying highly available K3s cluster is a proof of how important is software architrecture rather than only actual devices.
+Homelabs vary greatly in terms of hardware and budget. The author is limited by available hardware, so the setup is rather modest — but deploying a highly available K3s cluster on it is a testament to how much software architecture matters, regardless of the underlying hardware.
 
 | Name | Role | CPU | RAM | Storage | OS | Comment |
 |------|------|-----|-----|---------|-----|---------|
-| GMKtec NucBox G3 | K3s control pane, Home Assistant Server, Network services root, NFS server | Intel N100 | 16GB | 1TB NVMe | Proxmox VE | |
-| Raspberry Pi 5 | K3s support node, Backup network | BCM2712 | 4GB | 128GB SSD | RPi OS Lite | |
-| QNAP TS213P | Storage | AnnapurnaLabs Alpine AL212 1.7 GHz | 1GB | 2TB HDD | QNAP QTS | |
-| Funbox 6 | ISP Router | - | - | - | - | Will be replaced soon |
+| GMKtec NucBox G3 | K3s control plane, Home Assistant server, network services host, NFS server | Intel N100 | 16 GB | 1 TB NVMe | Proxmox VE | |
+| Raspberry Pi 5 | K3s worker node, backup network | BCM2712 | 4 GB | 128 GB SSD | RPi OS Lite | |
+| QNAP TS213P | Storage | AnnapurnaLabs Alpine AL212 1.7 GHz | 1 GB | 2 TB HDD | QNAP QTS | |
+| Funbox 6 | ISP Router | — | — | — | — | Will be replaced soon |
 
 ## Deployment
 
