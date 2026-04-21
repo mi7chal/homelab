@@ -1,6 +1,7 @@
 = Homelab
 :toc:
 :toclevels: 1
+:icons: font
 
 This project is a GitOps configuration of a home server infrastructure. It contains services for smart home, media, automations, data storage and more. It is not only a template, but a fully working configuration which can be implemented by everyone with access to a personal server(s). This repo is deployed and used by the author, regularly updated and maintained. It uses best practices for the author which may not work for everyone.
 
