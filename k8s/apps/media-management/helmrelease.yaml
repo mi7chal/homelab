@@ -57,7 +57,7 @@ spec:
               - name: SERVER_CITIES
                 value: "Warsaw,Frankfurt"
               - name: FIREWALL_VPN_INPUT_PORTS
-                value: "10311,6881"
+                value: "10514,6881"
               - name: FIREWALL_INPUT_PORTS
                 value: "8080,9696,8989,7878,8191,6767"
               - name: FIREWALL_OUTBOUND_SUBNETS
