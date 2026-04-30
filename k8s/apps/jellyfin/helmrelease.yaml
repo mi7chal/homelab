@@ -19,6 +19,8 @@ spec:
     createNamespace: true
   values:
     replicaCount: 1
+    strategy:
+      type: Recreate
     defaultPodOptions:
       nodeSelector:
         hardware.home/gpu: "true"
