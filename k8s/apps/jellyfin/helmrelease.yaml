@@ -68,6 +68,8 @@ spec:
               pathType: Prefix
     jellyfin:
       env:
+        - name: DOTNET_USE_POLLING_FILE_WATCHER
+          value: "true"
         - name: LIBVA_DRIVER_NAME
           value: "i965"
         - name: JELLYFIN_PublishedServerUrl
