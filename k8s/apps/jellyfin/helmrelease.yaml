@@ -19,7 +19,7 @@ spec:
     createNamespace: true
   values:
     replicaCount: 1
-    strategy:
+    deploymentStrategy:
       type: Recreate
     defaultPodOptions:
       nodeSelector:
@@ -50,12 +50,12 @@ spec:
         readOnly: true
 
     securityContext:
+      privileged: false
       capabilities:
         add:
           - "SYS_ADMIN"
         drop:
           - "ALL"
-        privileged: false
 
     ingress:
       enabled: true
