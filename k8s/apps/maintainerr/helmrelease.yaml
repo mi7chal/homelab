@@ -28,7 +28,7 @@ spec:
         containers:
           main:
             image:
-              repository: ghcr.io/maintainerr/maintainerr
+              repository: maintainerr/maintainerr
               tag: latest
             env:
               TZ: Europe/Warsaw
