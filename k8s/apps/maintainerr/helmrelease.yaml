@@ -29,7 +29,7 @@ spec:
           main:
             image:
               repository: maintainerr/maintainerr
-              tag: latest
+              tag: 3
             env:
               TZ: Europe/Warsaw
 
