@@ -21,8 +21,8 @@ spec:
         containers:
           main:
             image:
-              repository: mi7chal/seerr
-              tag: oidc-autolink
+              repository: seerr/seerr
+              tag: preview-new-oidc
             env:
               TZ: Europe/Warsaw
               LOG_LEVEL: "info"
