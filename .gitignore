@@ -50,3 +50,6 @@ charts/*/Chart.lock
 # OS
 Thumbs.db
 .DS_Store
+
+# misc
+.local/
