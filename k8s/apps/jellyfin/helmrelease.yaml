@@ -18,6 +18,9 @@ spec:
   install:
     createNamespace: true
   values:
+    image:
+      tag: "10.11"
+      pullPolicy: Always
     replicaCount: 1
     deploymentStrategy:
       type: Recreate
