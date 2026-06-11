@@ -50,7 +50,13 @@ spec:
           traefik.ingress.kubernetes.io/router.entrypoints: websecure
           traefik.ingress.kubernetes.io/router.tls: "true"
         hosts:
-          - host: jellyseerr.${SECRET_DOMAIN}
+          - host: jellyseerr.${SECRET_DOMAIN} # alternative legacy domain
+            paths:
+              - path: /
+                service:
+                  identifier: main
+                  port: http
+          - host: seerr.${SECRET_DOMAIN}
             paths:
               - path: /
                 service:
