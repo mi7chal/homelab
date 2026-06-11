@@ -30,6 +30,7 @@ spec:
             image:
               repository: seerr/seerr
               tag: preview-new-oidc
+              pullPolicy: Always
             env:
               TZ: Europe/Warsaw
               LOG_LEVEL: "info"

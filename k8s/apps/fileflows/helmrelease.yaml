@@ -23,6 +23,7 @@ spec:
             image:
               repository: revenz/fileflows
               tag: modded
+              pullPolicy: Always
             env:
               TZ: Europe/Warsaw
               LIBVA_DRIVER_NAME: i965

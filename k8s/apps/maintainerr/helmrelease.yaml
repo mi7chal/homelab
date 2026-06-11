@@ -30,6 +30,7 @@ spec:
             image:
               repository: maintainerr/maintainerr
               tag: 3
+              pullPolicy: Always
             env:
               TZ: Europe/Warsaw
 
