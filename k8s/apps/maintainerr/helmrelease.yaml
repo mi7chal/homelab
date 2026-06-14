@@ -28,6 +28,7 @@ spec:
         containers:
           main:
             image:
+              registry: ghcr.io
               repository: maintainerr/maintainerr
               tag: 3
               pullPolicy: Always
