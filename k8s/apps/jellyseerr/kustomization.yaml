@@ -4,3 +4,4 @@ resources:
   - namespace.yaml
   - pvc.yaml
   - helmrelease.yaml
+  - redirect-middleware.yaml
