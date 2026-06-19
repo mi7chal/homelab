@@ -49,15 +49,8 @@ spec:
         annotations:
           traefik.ingress.kubernetes.io/router.entrypoints: websecure
           traefik.ingress.kubernetes.io/router.tls: "true"
-          traefik.ingress.kubernetes.io/router.middlewares: jellyseerr-redirect-jellyseerr@kubernetescrd # legacy domain redirect
 
         hosts:
-          - host: jellyseerr.${SECRET_DOMAIN} # alternative legacy domain
-            paths:
-              - path: /
-                service:
-                  identifier: main
-                  port: http
           - host: seerr.${SECRET_DOMAIN}
             paths:
               - path: /
