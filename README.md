@@ -32,7 +32,7 @@ These services include mostly networking (DNS, DHCP, VPN, etc.). For more detail
 
 ### External Services
 
-Since it is strongly advised not to store backups or critical data on home servers, some services are hosted externally. Currently, the author uses S3 storage hosted on an [OCI VPS](https://www.oracle.com/cloud/) running [RustFS](https://rustfs.com).
+Since it is strongly advised not to store backups or critical data on home servers, some services are hosted externally. Currently, the author uses S3 storage hosted on an [OCI VPS](https://www.oracle.com/cloud/) running [RustFS](https://rustfs.com) and [Termix](https://github.com/termix-ssh/termix) for server management.
 
 The VPS is connected to the home network using Netbird, which allows it to be managed from self-hosted Portainer and exposes its services only within the homelab network.
 
@@ -146,6 +146,7 @@ The author created a script for encrypting secrets. Secret files are named `name
 ![Oracle Cloud](https://img.shields.io/badge/Oracle%20Cloud-F80000?logo=oracle&logoColor=white)
 ![Raspberry Pi](https://img.shields.io/badge/Raspberry%20Pi-C51A4A?logo=raspberrypi&logoColor=white)
 ![RustFS](https://img.shields.io/badge/RustFS-000000?logo=rust&logoColor=white)
+![Termix](https://img.shields.io/badge/Termix-F39044?logo=gnometerminal&logoColor=white)
 ![N8N](https://img.shields.io/badge/N8N-EA4B71?logo=n8n&logoColor=white)
 ![Authentik](https://img.shields.io/badge/Authentik-FD4B2D?logo=auth0&logoColor=white)
 ![Longhorn](https://img.shields.io/badge/Longhorn-00AEEF?logo=kubernetes&logoColor=white)
