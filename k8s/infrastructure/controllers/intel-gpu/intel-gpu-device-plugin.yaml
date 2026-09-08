@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: intel-device-plugins-gpu
-      version: "0.x.x"
+      version: "0.36.x"
       sourceRef:
         kind: HelmRepository
         name: intel
@@ -25,7 +25,7 @@ spec:
     devicePlugin:
       image:
         repository: intel/intel-gpu-plugin
-        tag: "0.34.1"
+        tag: "0.36.0"
 
       resources:
         requests:
