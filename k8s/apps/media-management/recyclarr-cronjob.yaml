@@ -9,12 +9,14 @@ spec:
   failedJobsHistoryLimit: 2
   jobTemplate:
     spec:
+      backoffLimit: 2
+      activeDeadlineSeconds: 600
       template:
         spec:
           restartPolicy: OnFailure
           containers:
             - name: recyclarr
-              image: ghcr.io/recyclarr/recyclarr:latest
+              image: ghcr.io/recyclarr/recyclarr:8
               command: ["recyclarr", "sync"]
               env:
                 - name: RECYCLARR_CONFIG_DIR
