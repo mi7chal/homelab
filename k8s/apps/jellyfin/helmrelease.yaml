@@ -76,7 +76,7 @@ spec:
         - name: DOTNET_USE_POLLING_FILE_WATCHER
           value: "true"
         - name: LIBVA_DRIVER_NAME
-          value: "i965"
+          value: "iHD"
         - name: JELLYFIN_PublishedServerUrl
           value: "https://jellyfin.${SECRET_DOMAIN}"
       probes:
