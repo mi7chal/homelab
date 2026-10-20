@@ -41,17 +41,6 @@ spec:
         existingClaim: jellyfin-config
         mountPath: /config
 
-    volumes:
-      - name: qnap
-        persistentVolumeClaim:
-          claimName: jellyfin-media-qnap-pvc
-          readOnly: true
-
-    volumeMounts:
-      - name: qnap
-        mountPath: /qnap
-        readOnly: true
-
     securityContext:
       privileged: false
       capabilities:
