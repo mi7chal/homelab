@@ -164,8 +164,4 @@ Homelabs vary greatly in terms of hardware and budget. The author is limited by 
 | GMKtec NucBox G3 | K3s control plane, Home Assistant server, network services host, NFS server | Intel N100 | 16 GB | 1 TB NVMe | Proxmox VE | |
 | Raspberry Pi 5 | K3s worker node, backup network | BCM2712 | 4 GB | 128 GB SSD | RPi OS Lite | |
 | QNAP TS213P | Storage | AnnapurnaLabs Alpine AL212 1.7 GHz | 1 GB | 2 TB HDD | QNAP QTS | |
-| Funbox 6 | ISP Router | — | — | — | — | Will be replaced soon |
-
-## Deployment
-
-Deployment guide will be available soon!
+| Funbox 6 | ISP Router | — | — | — | — | - |
