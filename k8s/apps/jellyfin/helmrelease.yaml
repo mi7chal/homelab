@@ -41,6 +41,36 @@ spec:
         existingClaim: jellyfin-config
         mountPath: /config
 
+    volumes:
+      - name: jellyfin-web
+        emptyDir: {}
+
+    volumeMounts:
+      - name: jellyfin-web
+        mountPath: /jellyfin/jellyfin-web
+
+    extraInitContainers:
+      - name: abyss-spotlight
+        image: docker.io/jellyfin/jellyfin:12
+        command:
+          - sh
+          - -c
+          - |
+            cp -a /jellyfin/jellyfin-web/. /mnt/web/
+            base=https://cdn.jsdelivr.net/gh/AumGupta/abyss-jellyfin@v1.2.3/scripts/spotlight
+            mkdir -p /mnt/web/ui
+            if curl -fsSL "$base/spotlight.html" -o /mnt/web/ui/spotlight.html \
+              && curl -fsSL "$base/spotlight.css" -o /mnt/web/ui/spotlight.css \
+              && curl -fsSL "$base/spotlight-loader.js" -o /mnt/web/ui/spotlight-loader.js; then
+              grep -q 'spotlight-loader.js' /mnt/web/index.html || \
+                sed -i 's|</body>|<script src="ui/spotlight-loader.js" data-abyss-spotlight></script></body>|' /mnt/web/index.html
+            else
+              echo "WARN: Abyss Spotlight download failed; booting vanilla jellyfin-web" >&2
+            fi
+        volumeMounts:
+          - name: jellyfin-web
+            mountPath: /mnt/web
+
     securityContext:
       privileged: false
       capabilities:
