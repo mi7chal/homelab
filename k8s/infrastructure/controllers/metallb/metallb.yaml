@@ -25,7 +25,11 @@ spec:
       readinessProbe:
         failureThreshold: 10
         timeoutSeconds: 30
+    frrk8s:
+      enabled: false
     speaker:
+      frr:
+        enabled: false
       livenessProbe:
         failureThreshold: 10
         initialDelaySeconds: 20
