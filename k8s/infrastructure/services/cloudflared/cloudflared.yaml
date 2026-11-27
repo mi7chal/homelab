@@ -23,6 +23,8 @@ spec:
           labelSelector:
             matchLabels:
               app: cloudflared
+          matchLabelKeys:
+            - pod-template-hash
       containers:
         - name: cloudflared
           image: cloudflare/cloudflared:2026.11.2
