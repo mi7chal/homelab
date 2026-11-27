@@ -8,6 +8,8 @@
     "**/*.enc.yaml",
     "**/*.secret.yaml"
   ],
+  "platformAutomerge": false,
+  "automergeType": "pr",
   "flux": {
     "managerFilePatterns": ["/^k8s/.+\\.ya?ml$/"]
   },
@@ -22,6 +24,18 @@
       "matchManagers": ["flux"],
       "matchPackageNames": ["/fluxcd/"],
       "groupName": "flux"
+    },
+    {
+      "description": "Auto-merge non-major app updates after 3 days",
+      "matchFileNames": ["k8s/apps/**"],
+      "matchUpdateTypes": ["minor", "patch", "digest"],
+      "minimumReleaseAge": "3 days",
+      "automerge": true
+    },
+    {
+      "description": "Keep Authentik updates manual",
+      "matchFileNames": ["k8s/apps/authentik/**"],
+      "automerge": false
     }
   ]
 }
