@@ -13,10 +13,23 @@ spec:
   affinity:
     nodeSelector:
       hardware.home/storage: nvme
+  # todo: consider migrating backups to cnpg in the future
+  inheritedMetadata:
+    labels:
+      recurring-job.longhorn.io/source: "enabled"
+      recurring-job-group.longhorn.io/default: "enabled"
+      recurring-job.longhorn.io/daily-snapshot: "enabled"
   superuserSecret:
     name: postgres-main-superuser
   monitoring:
-    enablePodMonitor: true
+    enablePodMonitor: false
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 1000m
+      memory: 1Gi
 
   managed:
     roles:

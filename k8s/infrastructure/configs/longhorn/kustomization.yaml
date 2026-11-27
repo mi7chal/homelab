@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
   - storage-fast.yaml
   - longhorn-s3-secret.enc.yaml
+  - recurring-jobs.yaml

@@ -23,3 +23,13 @@ rev = "v0.2.0"
 
 [[repos.hooks]]
 id = "k8svalidate"
+
+[[repos]]
+repo = "local"
+
+[[repos.hooks]]
+id = "check-sops-encrypted"
+name = "Verify *.enc.yaml files are SOPS-encrypted"
+language = "system"
+entry = "bash -c 'for f in \"$@\"; do grep -q \"^sops:\" \"$f\" || { echo \"Unencrypted: $f\" >&2; exit 1; }; done' --"
+files = '\.enc\.yaml$'

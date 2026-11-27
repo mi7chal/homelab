@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: traefik
-      version: "38.x.x"
+      version: "38.0.2"
       sourceRef:
         kind: HelmRepository
         name: traefik
@@ -49,9 +49,9 @@ spec:
     service:
       enabled: true
       type: LoadBalancer
-      loadBalancerIP: "${SECRET_METALLB_IP}"
       annotations:
-        metallb.universe.tf/address-pool: home-pool
+        metallb.io/address-pool: home-pool
+        metallb.io/loadBalancerIPs: "${SECRET_METALLB_IP}"
     ports:
       web:
         port: 8000
@@ -74,7 +74,7 @@ spec:
     tlsStore:
       default:
         defaultCertificate:
-          secretName: wildcard-emoh-pl-tls
+          secretName: wildcard-domain-tls
     providers:
       kubernetesCRD:
         allowCrossNamespace: true # Allow Traefik to watch all namespaces

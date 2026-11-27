@@ -10,7 +10,7 @@ services:
       - TZ=${TZ}
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "netstat -an | grep 80 | grep LISTEN || exit 1"]
+      test: ["CMD-SHELL", "netstat -an | grep -E ':(80|8012)[[:space:]]' | grep -q LISTEN || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 3

@@ -35,6 +35,13 @@ spec:
               pullPolicy: Always
             env:
               TZ: Europe/Warsaw
+            resources:
+              requests:
+                cpu: 50m
+                memory: 128Mi
+              limits:
+                cpu: 500m
+                memory: 512Mi
 
     service:
       main:

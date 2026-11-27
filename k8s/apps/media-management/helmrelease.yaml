@@ -27,8 +27,6 @@ spec:
     controllers:
       main:
         type: statefulset
-        annotations:
-          reloader.stakater.com/auto: "true"
         containers:
           gluetun:
             image:
@@ -76,6 +74,36 @@ spec:
               capabilities:
                 add:
                   - NET_ADMIN
+            resources:
+              requests:
+                cpu: 50m
+                memory: 64Mi
+              limits:
+                cpu: 250m
+                memory: 256Mi
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: 9999
+                  initialDelaySeconds: 20
+                  periodSeconds: 30
+                  timeoutSeconds: 5
+                  failureThreshold: 3
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: 9999
+                  initialDelaySeconds: 20
+                  periodSeconds: 30
+                  timeoutSeconds: 5
+                  failureThreshold: 3
 
           qbittorrent:
             image:
@@ -311,6 +339,7 @@ spec:
         annotations:
           traefik.ingress.kubernetes.io/router.entrypoints: websecure
           traefik.ingress.kubernetes.io/router.tls: "true"
+          traefik.ingress.kubernetes.io/router.middlewares: traefik-system-lan-only@kubernetescrd
         hosts:
           - host: qbittorrent.${SECRET_DOMAIN}
             paths:

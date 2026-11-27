@@ -18,6 +18,9 @@ spec:
   routes:
     - match: Host(`proxmox.${SECRET_DOMAIN}`)
       kind: Rule
+      middlewares:
+        - name: lan-only
+          namespace: traefik-system
       services:
         - name: proxmox-external
           port: 8006
@@ -96,6 +99,9 @@ spec:
   routes:
     - match: Host(`portainer.${SECRET_DOMAIN}`)
       kind: Rule
+      middlewares:
+        - name: lan-only
+          namespace: traefik-system
       services:
         - name: portainer-external
           port: 9123
@@ -134,6 +140,9 @@ spec:
   routes:
     - match: Host(`adguard.${SECRET_DOMAIN}`)
       kind: Rule
+      middlewares:
+        - name: lan-only
+          namespace: traefik-system
       services:
         - name: adguard-external
           port: 8012
@@ -172,6 +181,9 @@ spec:
   routes:
     - match: Host(`qnap.${SECRET_DOMAIN}`)
       kind: Rule
+      middlewares:
+        - name: lan-only
+          namespace: traefik-system
       services:
         - name: qnapui-external
           port: 8080
@@ -210,6 +222,9 @@ spec:
   routes:
     - match: Host(`rustfs.${SECRET_DOMAIN}`)
       kind: Rule
+      middlewares:
+        - name: lan-only
+          namespace: traefik-system
       services:
         - name: rustfs-webui-external
           port: 9001
@@ -249,6 +264,9 @@ spec:
     # Path-style access and virtual host-style access
     - match: Host(`s3.rustfs.${SECRET_DOMAIN}`) || HostRegexp(`^[a-z0-9-]+\.s3\.rustfs\.${SECRET_DOMAIN}$`)
       kind: Rule
+      middlewares:
+        - name: lan-only
+          namespace: traefik-system
       services:
         - name: rustfs-s3-external
           port: 9000
@@ -287,6 +305,9 @@ spec:
   routes:
     - match: Host(`termix.${SECRET_DOMAIN}`)
       kind: Rule
+      middlewares:
+        - name: lan-only
+          namespace: traefik-system
       services:
         - name: termix-external
           port: 9456

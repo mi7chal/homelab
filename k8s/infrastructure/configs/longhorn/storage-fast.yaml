@@ -12,12 +12,4 @@ parameters:
   fromBackup: ""
   fsType: "ext4"
   dataLocality: "strict-local" 
-  recurringJobs: |
-    [
-      {
-        "name":"daily-snapshot",
-        "task":"snapshot",
-        "cron":"0 0 * * *",
-        "retain":3
-      }
-    ]
+  recurringJobSelector: '[{"name":"default","isGroup":true},{"name":"daily-snapshot","isGroup":false}]'

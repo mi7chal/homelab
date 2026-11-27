@@ -24,9 +24,6 @@ spec:
     replicaCount: 1
     deploymentStrategy:
       type: Recreate
-    defaultPodOptions:
-      nodeSelector:
-        hardware.home/gpu: "true"
     nodeSelector:
       hardware.home/gpu: "true"
 
@@ -74,8 +71,6 @@ spec:
     securityContext:
       privileged: false
       capabilities:
-        add:
-          - "SYS_ADMIN"
         drop:
           - "ALL"
 

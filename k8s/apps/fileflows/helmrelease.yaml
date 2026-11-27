@@ -26,7 +26,7 @@ spec:
               pullPolicy: Always
             env:
               TZ: Europe/Warsaw
-              LIBVA_DRIVER_NAME: i965
+              LIBVA_DRIVER_NAME: iHD
             resources:
               requests:
                 cpu: 100m
